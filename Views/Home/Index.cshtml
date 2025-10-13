@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Inicio - VitaLink";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
+</head>
+
+<body>
+    <!-- Encabezado con Navbar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                💚 VitaLink
+            </div>
+            <ul class="nav-links">
+                <li><a href="/Home/Index">Inicio</a></li>
+                <li><a href="/Home/Calendario">Calendario</a></li>
+                <li><a href="/Home/Crianzas">Crianza</a></li>
+                <li><a href="/Home/HistorialMedico">Historial Médico</a></li>
+                <li><a href="/Home/Medicamentos">Medicamentos</a></li>
+                <li><a href="/Home/Perfil">Perfil</a></li>
+                <li><a href="/Home/LogIn">Iniciar Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Contenido principal -->
+    <main>
+        <section class="welcome">
+            <h1>Bienvenido a VitaLink</h1>
+            <p>
+                Accedé a tu información médica, calendario, medicamentos y más, todo en un solo lugar.
+            </p>
+        </section>
+    </main>
+</body>
+</html>
