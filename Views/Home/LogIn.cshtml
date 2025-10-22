@@ -1,6 +1,5 @@
 @{
     ViewData["Title"] = "Iniciar sesión - VitaLink";
-    Layout = null; <!-- Esto evita que cargue el layout general con el texto "NombreProyecto" -->
 }
 
 <!DOCTYPE html>
@@ -10,14 +9,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
 
-    <!-- ✅ Enlace correcto al CSS global -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 
 <body>
     <main class="main-container">
         <section class="login-container">
-            <div class="logo">💚</div>
+            <div class="logo"></div>
             <h1>Iniciar sesión</h1>
 
             <form>
