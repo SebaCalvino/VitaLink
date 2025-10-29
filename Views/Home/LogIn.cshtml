@@ -2,40 +2,24 @@
     ViewData["Title"] = "Iniciar sesión - VitaLink";
 }
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
-
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-</head>
-
 <body>
     <main class="main-container">
         <section class="login-container">
-            <div class="logo"></div>
-            <h1>Iniciar sesión</h1>
+            <div>
+                <img src = "" alt = "Logo Vitalink chico" class = "logo chico">
+                <h1>Iniciar sesión</h1>
+            </div>
 
             <form>
                 <input type="text" placeholder="Usuario" required />
                 <input type="password" placeholder="Contraseña" required />
-                <button type="submit">Entrar</button>
+                <button type="submit">Iniciar sesión</button>
             </form>
 
-            <p class="register">
+            <p class="registro">
                 ¿No tienes una cuenta?
                 <a href="/Home/Registro">Regístrate</a>
             </p>
         </section>
     </main>
-
-    <footer>
-        <div class="footer-content">
-            <img src="/Img/Logo%20VitaLink.png" alt="Logo VitaLink" />
-            <span>© 2025 · VitaLink — Conectando tu salud con tu vida</span>
-        </div>
-    </footer>
 </body>
-</html>
