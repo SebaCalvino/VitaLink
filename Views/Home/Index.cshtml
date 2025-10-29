@@ -1,6 +1,7 @@
-﻿@{
+@{
     ViewData["Title"] = "Inicio - VitaLink";
 }
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -12,79 +13,103 @@
     <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
 </head>
 
+
 <body>
+
+
     <main>
-        <section class ="Banner-Principal">
-            <img src="">
-            <button>Empezar</button>
+
+
+        <!-- Banner Principal -->
+        <section class="Banner-Principal">
+            <img src="" alt="Banner principal de VitaLink" />
+            <button class="btn-principal" aria-label="Comenzar con VitaLink">Empezar</button>
         </section>
+
+
+        <!-- Sección CTA inicial -->
         <section class="CTA-1">
             <div>
-                <img src="">
+                <img src="" alt="Icono de registro médico" />
                 <h3>Registro Médico</h3>
                 <p>Siempre disponible en tu celular</p>
             </div>
             <div>
-                <img src="">
+                <img src="" alt="Icono de seguridad" />
                 <h3>Seguridad</h3>
                 <p>Datos protegidos en la nube</p>
             </div>
             <div>
-                <img src="">
-                <h3>Conexión Medica</h3>
-                <p>Intervensión Profesional</p>
+                <img src="" alt="Icono de conexión médica" />
+                <h3>Conexión Médica</h3>
+                <p>Intervención profesional al instante</p>
             </div>
         </section>
+
+
+        <!-- Argumento 1 -->
         <section class="Argumento-1">
-            <div class=Texto-Argumento-1>
-                <h3>Tu salud, siempre conecta</h3>
+            <div class="Texto-Argumento-1">
+                <h3>Tu salud, siempre conectada</h3>
                 <p>Cuidar tu salud nunca fue tan simple, accesible y seguro.</p>
             </div>
-            <div class= "Foto-Argumentos">
-                <img src="">
+            <div class="Foto-Argumentos">
+                <img src="" alt="Vista previa de la aplicación VitaLink" />
             </div>
-            <div class=Texto-Argumento-1>
+            <div class="Texto-Argumento-1">
                 <p>Centraliza toda tu información médica en un solo lugar, para acceder a tus estudios, tratamientos y vacunas desde cualquier dispositivo, sin depender de una obra social o prepaga.</p>
             </div>
         </section>
+
+
+        <!-- Argumento 2 -->
         <section class="Argumento-2">
-            <div class ="Foto-Argumentos">
-                <img src="">
+            <div class="Foto-Argumentos">
+                <img src="" alt="Persona usando la app en su celular" />
             </div>
             <div class="Texto-Argumento-2">
                 <h3>Tu salud, en un solo lugar</h3>
+                <p>Desde recordatorios médicos hasta artículos informativos y mapas de farmacias u hospitales cercanos.</p>
             </div>
         </section>
-        </section class="Beneficios">
+
+
+        <!-- Beneficios -->
+        <section class="Beneficios">
             <div class="Beneficios-Item">
-                <img src="">
+                <img src="" alt="Icono de historial médico" />
                 <h3>Historial Médico</h3>
                 <p>Visualizá diagnósticos, tratamientos y vacunas.</p>
             </div>
             <div class="Beneficios-Item">
-                <img src="">
+                <img src="" alt="Icono de recordatorios" />
                 <h3>Recordatorios</h3>
                 <p>No olvides tus turnos o medicaciones.</p>
             </div>
             <div class="Beneficios-Item">
-                <img src="">
+                <img src="" alt="Icono de seguridad de datos" />
                 <h3>Acceso Seguro</h3>
                 <p>Tus datos están protegidos y disponibles cuando los necesites.</p>
             </div>
-            
-            <button>Ver más</button>
-        <section>
+            <button class="btn-secundario" aria-label="Ver más funcionalidades">Ver más</button>
+        </section>
+
+
+        <!-- CTA 2 -->
         <section class="CTA-2">
             <div class="Texto-CTA-2">
                 <h3>Cuidarte nunca fue tan fácil</h3>
             </div>
             <div class="Imagen-CTA2">
-                <img src="">
+                <img src="" alt="Persona usando VitaLink desde su celular" />
             </div>
         </section>
+
+
+        <!-- Sobre Nosotros -->
         <section class="Sobre-Nosotros">
-            <h3>Sobre Nosotros</h3>
-            <div>
+            <h2>Sobre Nosotros</h2>
+            <div class="Valores-Contenedor">
                 <div>
                     <h3>Misión</h3>
                     <p>Queremos que todas las personas, especialmente quienes no cuentan con obra social o prepaga, puedan acceder a su información médica de forma digital, fácil, segura y accesible.</p>
@@ -98,32 +123,39 @@
                     <p>Empatía, solidaridad, compañerismo, optimismo, resiliencia, perseverancia, salud y bienestar.</p>
                 </div>
             </div>
-            <div class="Texto-CTA-2">
-                <h3>Cuidarte nunca fue tan fácil</h3>
-            </div>
         </section>
+
+
+        <!-- Equipo -->
         <section class="Quienes-Somos">
-            <div class="Persona">
-                <img src="">
-                <h3>Uriel Grinfeld</h3>
-                <p>Front-End Developer</p>
-            </div>
-            <div class="Persona">
-                <img src="">
-                <h3>Sebastián Calviño</h3>
-                <p>UI/UX Designer</p>
-            </div>
-            <div class="Persona">
-                <img src="">
-                <h3>Joaquín Stock</h3>
-                <p>Project Leader & Full Stack<br>Developer</p>
-            </div>
-            <div class="Persona">
-                <img src="">
-                <h3>Augusto Pérez Rodríguez</h3>
-                <p>Back-End Developer</p>
+            <h2>Quiénes Somos</h2>
+            <div class="Equipo">
+                <div class="Persona">
+                    <img src="" alt="Foto de Uriel Grinfeld" />
+                    <h3>Uriel Grinfeld</h3>
+                    <p>Front-End Developer</p>
+                </div>
+                <div class="Persona">
+                    <img src="" alt="Foto de Sebastián Calviño" />
+                    <h3>Sebastián Calviño</h3>
+                    <p>UI/UX Designer</p>
+                </div>
+                <div class="Persona">
+                    <img src="" alt="Foto de Joaquín Stock" />
+                    <h3>Joaquín Stock</h3>
+                    <p>Project Leader & Full Stack Developer</p>
+                </div>
+                <div class="Persona">
+                    <img src="~/img/augusto.jpg" alt="Foto de Augusto Pérez Rodríguez" />
+                    <h3>Augusto Pérez Rodríguez</h3>
+                    <p>Back-End Developer</p>
+                </div>
             </div>
         </section>
+
+
     </main>
+
+
 </body>
 </html>
