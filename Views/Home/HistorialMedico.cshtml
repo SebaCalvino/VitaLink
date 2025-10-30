@@ -1,0 +1,133 @@
+
+@{
+    ViewData["Title"] = "Historial Médico - VitaLink";
+}
+
+<main class="Historial-Medico">
+
+    <section class="Historial-Header">
+        <h2>Historial Médico de @ViewBag.Usuario.Nombre @ViewBag.Usuario.Apellido</h2>
+        <p>Visualizá toda tu información médica registrada en VitaLink.</p>
+    </section>
+
+    <!-- ===================== ENFERMEDADES ===================== -->
+    <section class="Historial-Seccion">
+        <h3>Enfermedades</h3>
+        @if (ViewBag.Diagnosticos != null && ViewBag.Diagnosticos.Count > 0)
+        {
+            <div class="Historial-Grid">
+                @foreach (var enf in ViewBag.Diagnosticos)
+                {
+                    <div class="Historial-Item">
+                        <h4>@enf.NombrePatologia</h4>
+                        <p>@enf.Descripcion</p>
+                        <p><strong>Inicio:</strong> @enf.FechaInicio?.ToString("dd/MM/yyyy")</p>
+                        @if (enf.FechaFin != null)
+                        {
+                            <p><strong>Fin:</strong> @enf.FechaFin?.ToString("dd/MM/yyyy")</p>
+                        }
+                        <button class="btn-vermas">Ver más</button>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p class="Historial-Vacio">No hay enfermedades registradas.</p>
+        }
+    </section>
+
+    <!-- ===================== DIAGNÓSTICOS ===================== -->
+    <section class="Historial-Seccion">
+        <h3>Diagnósticos</h3>
+        @if (ViewBag.Diagnosticos != null && ViewBag.Diagnosticos.Count > 0)
+        {
+            <div class="Historial-Grid">
+                @foreach (var diag in ViewBag.Diagnosticos)
+                {
+                    <div class="Historial-Item">
+                        <h4>@diag.NombrePatologia</h4>
+                        <p><strong>Descripción:</strong> @diag.Descripcion</p>
+                        <p><strong>Fecha:</strong> @diag.FechaInicio?.ToString("dd/MM/yyyy")</p>
+                        <button class="btn-vermas">Ver más</button>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p class="Historial-Vacio">No hay diagnósticos disponibles.</p>
+        }
+    </section>
+
+    <!-- ===================== ESTUDIOS / INFORMES ===================== -->
+    <section class="Historial-Seccion">
+        <h3>Estudios / Informes</h3>
+        @if (ViewBag.Documentos != null && ViewBag.Documentos.Count > 0)
+        {
+            <div class="Historial-Grid">
+                @foreach (var doc in ViewBag.Documentos)
+                {
+                    <div class="Historial-Item">
+                        <h4>@doc.NombreArchivo</h4>
+                        <p><strong>Tipo:</strong> @doc.TipoArchivo</p>
+                        <p><strong>Fecha:</strong> @doc.FechaCreacion?.ToString("dd/MM/yyyy")</p>
+                        <button class="btn-vermas">Ver más</button>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p class="Historial-Vacio">No hay estudios o informes disponibles.</p>
+        }
+    </section>
+
+    <!-- ===================== VACUNACIONES ===================== -->
+    <section class="Historial-Seccion">
+        <h3>Vacunaciones</h3>
+        @if (ViewBag.Vacunas != null && ViewBag.Vacunas.Count > 0)
+        {
+            <div class="Historial-Grid">
+                @foreach (var vac in ViewBag.Vacunas)
+                {
+                    <div class="Historial-Item">
+                        <h4>@vac.NombreVacuna</h4>
+                        <p><strong>Dosis:</strong> @vac.Dosis</p>
+                        <p><strong>Aplicación:</strong> @vac.Aplicacion</p>
+                        <p><strong>Fecha:</strong> @vac.FechaAplicacion?.ToString("dd/MM/yyyy")</p>
+                        <button class="btn-vermas">Ver más</button>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p class="Historial-Vacio">No hay vacunas registradas.</p>
+        }
+    </section>
+
+    <!-- ===================== ANTECEDENTES FAMILIARES ===================== -->
+    <section class="Historial-Seccion">
+        <h3>Antecedentes Familiares</h3>
+        @if (ViewBag.AntecedentesFamiliares != null && ViewBag.AntecedentesFamiliares.Count > 0)
+        {
+            <div class="Historial-Grid">
+                @foreach (var ant in ViewBag.AntecedentesFamiliares)
+                {
+                    <div class="Historial-Item">
+                        <h4>@ant.NombreFamiliar</h4>
+                        <p><strong>Relación:</strong> @ant.Relacion</p>
+                        <p><strong>Condición:</strong> @ant.Condicion</p>
+                        <button class="btn-vermas">Ver más</button>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p class="Historial-Vacio">No hay antecedentes familiares cargados.</p>
+        }
+    </section>
+
+</main>

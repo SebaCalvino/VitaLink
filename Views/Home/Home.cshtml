@@ -1,0 +1,91 @@
+
+@{
+    ViewData["Title"] = "Inicio - VitaLink";
+}
+
+<main class="Inicio-App">
+
+    <!-- PERFIL DEL USUARIO -->
+    <section class="Usuario-Card">
+        <div class="Usuario-Header">
+            <img src="~/img/default-profile.png" alt="Foto de perfil" class="Usuario-Foto" />
+            <div class="Usuario-Info">
+                <h2>@ViewBag.Usuario.Nombre @ViewBag.Usuario.Apellido</h2>
+
+                @if (ViewBag.Medicaciones != null && ViewBag.Medicaciones.Count > 0)
+                {
+                    <p><strong>Medicamentos actuales:</strong></p>
+                    <ul>
+                        @foreach (var med in ViewBag.Medicaciones)
+                        {
+                            <li>@med.Nombre_Comercial</li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p>No hay medicamentos activos.</p>
+                }
+            </div>
+        </div>
+
+        <button class="btn-principal"
+                onclick="location.href='@Url.Action("Perfil", "Usuario", new { id = ViewBag.Usuario.Id })'">
+            Ver Perfil
+        </button>
+    </section>
+
+    <!-- NOTIFICACIONES -->
+    <section class="Notificaciones">
+        @if (ViewBag.Notificaciones != null && ViewBag.Notificaciones.Count > 0)
+        {
+            foreach (var notif in ViewBag.Notificaciones)
+            {
+                <div class="Notificacion">
+                    <p>@notif</p>
+                    <button class="btn-vermas">Ver más</button>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="Notificacion vacia">
+                <p>No hay notificaciones recientes.</p>
+            </div>
+        }
+    </section>
+
+    <!-- ACCESOS PRINCIPALES -->
+    <section class="Accesos">
+        <div class="Acceso-Boton">
+            <a asp-controller="Historial" asp-action="Index"
+               asp-route-idUsuario="@ViewBag.Usuario.Id">
+                <h3>Historial Médico</h3>
+            </a>
+        </div>
+
+        <div class="Acceso-Boton">
+            <a asp-controller="Calendario" asp-action="Index"
+               asp-route-idUsuario="@ViewBag.Usuario.Id">
+                <h3>Calendario</h3>
+            </a>
+        </div>
+
+        <div class="Acceso-Boton">
+            <a asp-controller="Crianza" asp-action="Index"
+               asp-route-idUsuario="@ViewBag.Usuario.Id">
+                <h3>Crianza</h3>
+            </a>
+        </div>
+
+        <div class="Acceso-Boton">
+            <a asp-controller="Medicamentos" asp-action="Index"
+               asp-route-idUsuario="@ViewBag.Usuario.Id">
+                <h3>Medicamentos</h3>
+            </a>
+        </div>
+    </section>
+
+</main>
+
+

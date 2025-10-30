@@ -42,8 +42,95 @@ public class HomeController : Controller
         return View("Perfil");
     }
     
-    public IActionResult Home()
+    public IActionResult Home(int idUsuario)
     {
+        var usuario = BD.ObtenerUsuarioPorId(idUsuario);
+        var medicaciones = BD.ObtenerMedicacionesPorUsuario(idUsuario);
+        var encuentros = BD.ObtenerEncuentrosPorUsuario(idUsuario);
+
+        ViewBag.Usuario = usuario;
+        ViewBag.Medicaciones = medicaciones;
+        ViewBag.Encuentros = encuentros;
+        ViewBag.Notificaciones = GenerarNotificaciones(usuario.Id);
+
         return View("Home");
     }
+    private List<string> GenerarNotificaciones(int idUsuario)
+{
+    var notificaciones = new List<string>();
+    var medicaciones = BD.ObtenerMedicacionesPorUsuario(idUsuario);
+    var encuentros = BD.ObtenerEncuentrosPorUsuario(idUsuario);
+    var vacunas = BD.ObtenerVacunasPorUsuario(idUsuario);
+    var encuentrosConEstudios = BD.ObtenerEncuentrosPorUsuario(idUsuario);
+
+    DateTime ahora = DateTime.Now;
+
+    // MEDICACIONES
+    foreach (var med in medicaciones)
+    {
+        if (DateTime.TryParse(med.HoraProgramada, out DateTime horaMedicacion))
+        {
+            TimeSpan diff = horaMedicacion - ahora;
+            if (diff.TotalMinutes <= 10 && diff.TotalMinutes > 5)
+                notificaciones.Add($"En 10 minutos debes tomar {med.Nombre_Comercial} ({med.Dosis}).");
+            else if (diff.TotalMinutes <= 5 && diff.TotalMinutes > 0)
+                notificaciones.Add($"En 5 minutos debes tomar {med.Nombre_Comercial} ({med.Dosis}).");
+            else if (Math.Abs(diff.TotalMinutes) < 1)
+                notificaciones.Add($"Es hora de tomar {med.Nombre_Comercial} ({med.Dosis}).");
+        }
+    }
+
+    // TURNOS / ENCUENTROS
+    foreach (var enc in encuentros)
+    {
+        if (enc.FechaInicio.HasValue)
+        {
+            double dias = (enc.FechaInicio.Value - ahora).TotalDays;
+            if (dias <= 5 && dias > 0)
+                notificaciones.Add($"En {Math.Ceiling(dias)} días tienes turno con {enc.NombreMedico} ({enc.NombreOrganizacion}).");
+            else if (Math.Abs(dias) < 0.5)
+                notificaciones.Add($"Hoy tienes turno con {enc.NombreMedico} ({enc.NombreOrganizacion}).");
+        }
+    }
+
+    // VACUNAS
+    foreach (var vac in vacunas)
+    {
+        if (vac.FechaAplicacion.HasValue)
+        {
+            double dias = (vac.FechaAplicacion.Value - ahora).TotalDays;
+            if (dias <= 5 && dias > 0)
+                notificaciones.Add($"En {Math.Ceiling(dias)} días tienes programada la vacunación de {vac.NombreVacuna}.");
+            else if (Math.Abs(dias) < 0.5)
+                notificaciones.Add($"Hoy debes aplicarte la vacuna {vac.NombreVacuna}.");
+            else if (dias < -1)
+                notificaciones.Add($"Te aplicaste la vacuna {vac.NombreVacuna} el {vac.FechaAplicacion.Value:dd/MM}.");
+        }
+    }
+
+    // ESTUDIOS (Imagenes o Documentos Clínicos)
+    foreach (var enc in encuentrosConEstudios)
+    {
+        var estudios = BD.ObtenerImagenesPorEncuentro(enc.Id);
+        foreach (var est in estudios)
+        {
+            if (est.Fecha.HasValue)
+            {
+                double dias = (est.Fecha.Value - ahora).TotalDays;
+                if (dias <= 3 && dias > 0)
+                    notificaciones.Add($"Tienes un estudio ({est.Modalidad}) programado en {Math.Ceiling(dias)} días.");
+                else if (Math.Abs(dias) < 0.5)
+                    notificaciones.Add($"Hoy tienes el estudio {est.Modalidad} de la región {est.Region}.");
+                else if (dias < -1)
+                    notificaciones.Add($"El estudio {est.Modalidad} fue realizado el {est.Fecha.Value:dd/MM}.");
+            }
+        }
+    }
+
+    return notificaciones;
 }
+
+
+
+    
+    }
