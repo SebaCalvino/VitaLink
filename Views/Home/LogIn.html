@@ -1,172 +1,202 @@
 @{
     ViewData["Title"] = "Iniciar sesión - VitaLink";
 }
-<body>
-    <main class="main-container">
-        <section class="login-container">
-            <div>
-                <img src = "https://github.com/SebaCalvino/VitaLink/blob/main/wwwroot/Img/Logo%20VitaLink.png" alt = "Logo Vitalink chico" class = "logo chico">
-                <h1>Iniciar sesión</h1>
+
+<main class="main-screen">
+    <section class="login-card">
+        <header class="login-header">
+            <div class="login-logo-row">
+                <img src="/Img/Logo VitaLink.png" alt="VitaLink" class="login-logo">
             </div>
+            <h1 class="login-title">Iniciar Sesión</h1>
+        </header>
+        <form class="login-form">
+            <input type="text" placeholder="Usuario" required />
+            <input type="password" placeholder="Contraseña" required />
 
-            <form>
-                <input type="text" placeholder="Usuario" required />
-                <input type="password" placeholder="Contraseña" required />
-                
-                <p class="registro">
+            <p class="registro">
                 ¿No tienes una cuenta?
-                <a href="VitaLink/Views/Home/SignUp.cshtml">Regístrate</a>
-                </p>
-                <button type="submit">Ingresar</button>
-            </form>
-        </section>
-    </main>
-</body>
+                <a href="#">Regístrate</a>
+            </p>
+
+            <button type="submit">Ingresar</button>
+        </form>
+    </section>
+</main>
 <style>
-    /*Style Log In*/
-:root{
-    --bg-start:#6ad0b2;
-    --bg-end:#0d7f6c;
-    --panel:#ffffff;
-    --panel-alpha:0.14;
-    --text:#ffffff;
-    --text-muted:#e6faf5;
-    --primary:#69d5ba;
-    --primary-hover:#5bcdb1;
-    --input-bg:#83d8c3;
-    --input-bg-alpha:0.35;
-    --shadow:0 20px 50px rgba(0,0,0,.35);
-    --radius-lg:22px;
-    --radius-pill:999px;
-  }
-  
-  *{box-sizing:border-box}
-  
-  html,body{
-    height:100%;
-  }
-  
-  body{
-    margin:0;
-    font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;
-    color:var(--text);
-    background:linear-gradient(180deg,var(--bg-start),var(--bg-end));
-  }
-  
-  /* Lienzo centrado */
-  .login{
-    min-height:100dvh;
-    display:grid;
-    place-items:center;
-    padding:24px 16px;
-  }
-  
-  /* Panel “glassmorphism” */
-  .login__panel{
-    width:min(360px,92vw);
-    padding:40px 28px 34px;
-    border-radius:var(--radius-lg);
-    background:rgba(255,255,255,var(--panel-alpha));
-    backdrop-filter:saturate(140%) blur(16px);
-    -webkit-backdrop-filter:saturate(140%) blur(16px);
-    box-shadow:var(--shadow);
-    position:relative;
-  }
-  
-  /* Logo opcional */
-  .login__logo{
-    display:block;
-    width:56px;
-    height:56px;
-    margin:0 auto 14px;
-    object-fit:contain;
-    opacity:.95;
-  }
-  
-  /* Título */
-  .login__title{
-    margin:0 0 22px;
-    text-align:center;
-    font-weight:800;
-    letter-spacing:.2px;
-  }
-  
-  /* Formulario */
-  .login__form{
-    display:grid;
-    gap:14px;
-  }
-  
-  /* Grupo de entrada */
-  .login__group{
-    display:flex;
-    align-items:center;
-    background:color-mix(in srgb, var(--input-bg) var(--input-bg-alpha*100%), transparent);
-    background:rgba(255,255,255,.18);
-    border-radius:var(--radius-pill);
-    padding:10px 14px;
-    outline:1px solid rgba(255,255,255,.18);
-  }
-  
-  .login__input{
-    appearance:none;
-    border:0;
-    outline:0;
-    width:100%;
-    padding:10px 8px;
-    background:transparent;
-    color:#eafff8;
-    font-size:15px;
-  }
-  .login__input::placeholder{color:#d9fff6; opacity:.9}
-  
-  /* Línea “¿No tienes una cuenta? Regístrate” */
-  .login__meta{
-    margin-top:2px;
-    text-align:center;
-    font-size:14px;
-    color:var(--text-muted);
-  }
-  .login__link{
-    color:#ffffff;
-    font-weight:700;
-    text-decoration:none;
-  }
-  .login__link:hover{text-decoration:underline}
-  
-  /* Botón */
-  .login__btn{
-    margin-top:6px;
-    width:100%;
-    border:0;
-    border-radius:var(--radius-pill);
-    padding:12px 18px;
-    background:var(--primary);
-    color:#0a564c;
-    font-weight:700;
-    font-size:16px;
-    cursor:pointer;
-    box-shadow:0 8px 24px rgba(0,0,0,.25);
-    transition:transform .05s ease, filter .15s ease, background .15s ease;
-  }
-  .login__btn:hover{background:var(--primary-hover); filter:saturate(1.1)}
-  .login__btn:active{transform:translateY(1px)}
-  
-  /* Ajustes responsivos mínimos */
-  @media (min-width:400px){
-    .login__panel{padding:46px 32px 38px}
-    .login__title{font-size:28px}
-  }
-  
-  /* Accesibilidad: foco visible */
-  .login__input:focus-visible,
-  .login__btn:focus-visible,
-  .login__link:focus-visible{
-    outline:2px solid #b9ffee;
-    outline-offset:2px;
-    border-radius:var(--radius-pill);
-  }
-
-
-  /*Fin Style Log In*/
-</style>
+/* RESET */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    
+    /* PANTALLA COMPLETA CON FONDO */
+    .main-screen {
+        width: 100%;
+        height: 100%;
+        background-image: url('C:\Users\48795975\Downloads\VitaLink\wwwroot\Img\FondoHospital1.png') !important;
+        background-size: cover;
+        background-position: center top;
+        background-repeat: no-repeat;
+    
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    
+        /* en la maqueta hay un padding lateral tipo "modo celular" */
+        padding: 2rem 1rem;
+        color: #fff;
+    }
+    
+    /* CARD TRANSLÚCIDA CON BLUR (panel verde clarito) */
+    .login-card {
+        width: 50%;
+        height: auto;
+        max-width: 320px;
+    
+        /* tono verdoso translúcido como en la maqueta */
+        background: rgba(0, 80, 70, 0.1);
+    
+        /* desenfoque vidrio */
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+    
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 4px;
+    
+        /* en la maqueta el panel es ALTO, porque deja espacio para el botón casi tocando el edificio */
+        padding: 1.5rem 1rem 6rem; /* bottom grande para empujar el botón abajo visualmente */
+    
+        box-shadow: 0 30px 40px rgba(0,0,0,0.6);
+        text-align: center;
+        position: relative;
+        color: #fff;
+    }
+    
+    /* HEADER (logo + título) */
+    .login-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 1rem;
+        color: #fff;
+    }
+    
+    .login-logo-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .login-logo {
+        width: 48px;
+        height: 48px;
+        object-fit: contain;
+        background: transparent;
+        border: none;
+        filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5));
+        margin-bottom: 0.5rem;
+    }
+    
+    .login-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #ffffff;
+        line-height: 1.2;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+    }
+    
+    /* FORMULARIO */
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.6rem;
+        color: #fff;
+    }
+    
+    /* INPUTS estilo píldora angosta como en la maqueta */
+    .login-form input {
+        width: 100%;
+        background: rgba(200,255,235,0.28); /* verde menta translúcido */
+        border: 1px solid rgba(255,255,255,0.4);
+        border-radius: 999px;
+        padding: 0.6rem 0.9rem;
+    
+        color: #ffffff;
+        font-size: 0.8rem;
+        font-weight: 500;
+        line-height: 1.2;
+    
+        outline: none;
+        box-shadow:
+            0 2px 4px rgba(0,0,0,0.4) inset,
+            0 2px 3px rgba(0,0,0,0.4);
+    }
+    
+    .login-form input::placeholder {
+        color: #ffffff;
+        opacity: 0.9;
+        font-weight: 500;
+    }
+    
+    .login-form input:focus {
+        background: rgba(200,255,235,0.4);
+    }
+    
+    /* TEXTO "¿No tienes una cuenta? Regístrate" */
+    .registro {
+        color: #ffffff;
+        font-size: 0.75rem;
+        line-height: 1.2;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+        margin-top: 0.4rem;
+        margin-bottom: 0.4rem;
+        text-align: center;
+    }
+    
+    .registro a {
+        color: #ffffff;
+        font-weight: 600;
+        text-decoration: none;
+    }
+    
+    .registro a:hover {
+        text-decoration: underline;
+    }
+    
+    /* BOTÓN */
+    .login-form button {
+        width: 100%;
+        background: rgba(200,255,235,0.28);
+        border: 1px solid rgba(255,255,255,0.4);
+        border-radius: 999px;
+        padding: 0.6rem 0.9rem;
+    
+        color: #ffffff;
+        font-size: 0.8rem;
+        font-weight: 600;
+        line-height: 1.2;
+        cursor: pointer;
+    
+        text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+        box-shadow:
+            0 2px 4px rgba(0,0,0,0.4) inset,
+            0 2px 3px rgba(0,0,0,0.4);
+    }
+    
+    .login-form button:hover {
+        filter: brightness(1.08);
+    }
+    
+    /* RESPONSIVE SAFE */
+    @media (max-width: 360px) {
+        .login-card {
+            max-width: 290px;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+    }
+    </style>
