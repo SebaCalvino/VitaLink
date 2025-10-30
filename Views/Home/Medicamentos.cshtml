@@ -3,23 +3,20 @@
 }
 
 <body>
-    <main class="main-container">
-        <section class="login-container">
-            <div>
-                <img src = "https://github.com/SebaCalvino/VitaLink/blob/main/wwwroot/Img/Logo%20VitaLink.png" alt = "Logo Vitalink chico" class = "logo chico">
-                <h1>Iniciar sesión</h1>
-            </div>
-
-            <form>
-                <input type="text" placeholder="Usuario" required />
-                <input type="password" placeholder="Contraseña" required />
-                
-                <p class="registro">
-                ¿No tienes una cuenta?
-                <a href="VitaLink/Views/Home/SignUp.cshtml">Regístrate</a>
-                </p>
-                <button type="submit">Ingresar</button>
-            </form>
+    <main>
+        <section class="medicamentos-contenedor">
+            <h1>Mis medicamentos</h1>
         </section>
+        <section>
+        @foreach(Medicamento medicamento in ListaMedicamentos){
+            <h2>@medicamento.Nombre</h2>
+            <h3>@medicamento.Frecuencia</h3>
+            foreach(string toma in medicamento.Horario){
+                <p>@toma</p>
+            }
+        }
+        <button id = "Indicaciones">Indicaciones</button>
+        </section>
+
     </main>
 </body>
