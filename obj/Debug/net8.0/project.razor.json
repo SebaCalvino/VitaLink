@@ -19344,11 +19344,6 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\48793668\\Downloads\\a\\VitaLink\\Views\\Home\\LogIn.cshtml",
-      "TargetPath": "Views\\Home\\LogIn.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "c:\\Users\\48793668\\Downloads\\a\\VitaLink\\Views\\Home\\Calendario.cshtml",
       "TargetPath": "Views\\Home\\Calendario.cshtml",
       "FileKind": "mvc"
