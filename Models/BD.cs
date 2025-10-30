@@ -6,7 +6,7 @@ using System.Linq;
 
 public static class BD
 {
-    private static string _connectionString = @"Server=localhost;Database=;Integrated Security=True;TrustServerCertificate=True;";
+    private static string _connectionString = @"Server=localhost;Database=BDVitalink;Integrated Security=True;TrustServerCertificate=True;";
 
 
     public static List<Usuario> ObtenerUsuarios()
@@ -23,8 +23,8 @@ public static class BD
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
-            string sql = "SELECT * FROM Usuarios WHERE Id = @id";
-            return db.QueryFirstOrDefault<Usuario>(sql, new { id });
+            string sql = "SELECT * FROM Usuarios WHERE Id = @pid";
+            return db.QueryFirstOrDefault<Usuario>(sql, new { pid = id });
         }
     }
 
