@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "bVq13u83TB+z1+MeY1rBUZnddzxi5VavoVzAgsoZoia0AywA+d2cTWs++DDMPPfr8nSYiHXvnIf0zwnUApv2aA==",
+  "dgSpecHash": "15FKuaB/lyk9Viu6QFcRHxU5tZwb7ejMEQwK8BB3hQWGP/+fNmzte9yHGR3R8O16RQq7mJ9ItxvrNu40d7dWlA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\48793668\\Downloads\\Nueva carpeta\\VitaLink\\VitaLink.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\48793668\\Downloads\\a\\VitaLink\\VitaLink.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\48793668\\.nuget\\packages\\dapper\\2.1.66\\dapper.2.1.66.nupkg.sha512"
+  ],
   "logs": []
 }
