@@ -14,9 +14,8 @@ public class Usuario{
     public double AlturaEnCm{get; set;}
     public int Telefono{get; set;}
     public string Email{get; set;}
-    public string Contrasena{get; private set;}
+    [JsonProperty]
+    private string Contrasena;
     
-    public bool ModificarContrasena(){
-
-    }
+    //Agregar cambiar contraseña con intentos y de forma segura
 }
