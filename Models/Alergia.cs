@@ -6,7 +6,8 @@ public class Alergia{
     public string Severidad{get; set;}
     public bool Estado{get; set;}
 
-    public void CambiarEstado(){
-        Estado = !Estado;
+    public void CambiarEstado(bool Activa)
+    {
+        Estado = Activa;
     }
 }

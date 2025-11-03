@@ -1,0 +1,87 @@
+
+@{
+    ViewData["Title"] = "Perfil - VitaLink";
+}
+
+<main class="Perfil-Container">
+
+    <!-- PERFIL PRINCIPAL -->
+    <section class="Perfil-Tarjeta">
+        <div class="Perfil-Foto">
+            <img src="~/img/default-profile.png" alt="Foto de perfil" />
+            <button class="btn-editar">Editar Perfil</button>
+        </div>
+
+        <!-- INFORMACIÓN PRINCIPAL -->
+        <div class="Info-Principal">
+            <h4>Información Principal</h4>
+            <div class="Info-Datos">
+                <div class="dato">@ViewBag.Usuario.Peso kg</div>
+                <div class="dato">@ViewBag.Usuario.Altura m</div>
+                <div class="dato">@ViewBag.Usuario.FechaNacimiento?.ToString("dd/MM/yyyy")</div>
+            </div>
+        </div>
+
+        <!-- ALERGIAS -->
+        <div class="Info-Alergias">
+            <h4>Alergias:</h4>
+            <div class="chips">
+                @if (ViewBag.Alergias != null && ViewBag.Alergias.Count > 0)
+                {
+                    foreach (var a in ViewBag.Alergias)
+                    {
+                        <span class="chip">@a.Nombre</span>
+                    }
+                }
+                else
+                {
+                    <span class="chip">Sin alergias</span>
+                }
+            </div>
+        </div>
+
+        <!-- ENFERMEDAD ACTUAL -->
+        <div class="Info-Enfermedad">
+            <h4>Enfermedad:</h4>
+            @{
+                if (ViewBag.Diagnosticos != null && ViewBag.Diagnosticos.Count > 0)
+                {
+                    var enfermedadActual = ((IEnumerable<dynamic>)ViewBag.Diagnosticos)
+                        .OrderByDescending(d => d.FechaInicio)
+                        .FirstOrDefault();
+
+                    <p>@enfermedadActual.NombrePatologia</p>;
+                }
+                else
+                {
+                    <p>Sin enfermedades registradas</p>;
+                }
+            }
+        </div>
+    </section>
+
+    <!-- ENFERMEDADES RELEVANTES -->
+    <section class="Enfermedades-Relevantes">
+        <h3>Enfermedades Relevantes</h3>
+
+        @if (ViewBag.Diagnosticos != null && ViewBag.Diagnosticos.Count > 0)
+        {
+            foreach (var enf in ((IEnumerable<dynamic>)ViewBag.Diagnosticos).OrderByDescending(e => e.FechaInicio))
+            {
+                <div class="Enfermedad-Item">
+                    <div class="Enfermedad-Info">
+                        <h4>@enf.NombrePatologia</h4>
+                        <p>@(string.IsNullOrEmpty(enf.Tipo) ? "Crónica" : enf.Tipo)</p>
+                    </div>
+                    <p class="fecha">@enf.FechaInicio?.ToString("dd/MM/yyyy")</p>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="Historial-Vacio">No hay enfermedades relevantes registradas.</p>
+        }
+    </section>
+
+</main>
+

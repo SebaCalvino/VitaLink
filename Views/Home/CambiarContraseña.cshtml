@@ -1,0 +1,37 @@
+<form id="formCambio">
+    <input type="password" id="contrasenaActual" placeholder="Contraseña actual" required />
+    <input type="password" id="contrasenaNueva" placeholder="Nueva contraseña" required />
+    <button type="submit">Cambiar</button>
+</form>
+
+<div id="captchaContainer" style="display:none; margin-top:20px;">
+    <div class="g-recaptcha" data-sitekey="TU_SITE_KEY_DE_RECAPTCHA"></div>
+</div>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<script>
+document.getElementById("formCambio").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    fetch("/Usuario/CambiarContrasena", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            contrasenaActual: document.getElementById("contrasenaActual").value,
+            contrasenaNueva: document.getElementById("contrasenaNueva").value
+        })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            alert("Contraseña cambiada correctamente");
+            document.getElementById("captchaContainer").style.display = "none";
+        } else if (data.captcha) {
+            document.getElementById("captchaContainer").style.display = "block";
+        } else {
+            alert("Contraseña incorrecta, intente nuevamente");
+        }
+    });
+});
+</script>
