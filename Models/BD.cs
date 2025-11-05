@@ -52,7 +52,7 @@ public static class BD
     }
 
 
-    public static List<MedicacionPaciente> ObtenerMedicacionesPorUsuario(int idUsuario)
+    public static List<MedicacionesPaciente> ObtenerMedicacionesPorUsuario(int idUsuario)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
@@ -65,7 +65,7 @@ public static class BD
     }
 
 
-    public static List<VacunaPaciente> ObtenerVacunasPorUsuario(int idUsuario)
+    public static List<VacunasXPaciente> ObtenerVacunasPorUsuario(int idUsuario)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
@@ -78,30 +78,7 @@ public static class BD
     }
 
 
-    public static List<Encuentro> ObtenerEncuentrosPorUsuario(int idUsuario)
-    {
-        using (SqlConnection db = new SqlConnection(_connectionString))
-        {
-            string sql = @"SELECT E.*, O.Nombre AS NombreOrganizacion, O.Tipo
-                           FROM Encuentros E
-                           LEFT JOIN Organizaciones O ON E.IdOrganizacion = O.Id
-                           WHERE E.IdUsuario = @idUsuario";
-            return db.Query<Encuentro>(sql, new { idUsuario }).ToList();
-        }
-    }
 
-
-    public static List<DocumentoClinico> ObtenerDocumentosPorEncuentro(int idEncuentro)
-    {
-        using (SqlConnection db = new SqlConnection(_connectionString))
-        {
-            string sql = @"SELECT DC.*, A.Capacidad, A.TipoArchivo, A.FechaCreacion
-                           FROM Documentos_Clinicos DC
-                           LEFT JOIN Archivos A ON DC.IdArchivo = A.Id
-                           WHERE DC.IdEncuentro = @idEncuentro";
-            return db.Query<DocumentoClinico>(sql, new { idEncuentro }).ToList();
-        }
-    }
 
 
     public static List<Organizacion> ObtenerOrganizaciones()
@@ -116,12 +93,4 @@ public static class BD
     }
 
 
-    public static List<ImagenEstudio> ObtenerImagenesPorEncuentro(int idEncuentro)
-    {
-        using (SqlConnection db = new SqlConnection(_connectionString))
-        {
-            string sql = "SELECT * FROM Imagenes_Estudios WHERE IdEncuentro = @idEncuentro";
-            return db.Query<ImagenEstudio>(sql, new { idEncuentro }).ToList();
-        }
-    }
 }

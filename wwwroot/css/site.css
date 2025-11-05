@@ -1,0 +1,227 @@
+/* ---- ESTILOS GENERALES ---- */
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(180deg, #004040, #00a0a0);
+    color: white;
+    text-align: center;
+}
+
+/* ---- BOTONES ---- */
+
+.btn-principal {
+    background-color: #00bfbf;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 25px;
+    font-size: 16px;
+}
+
+.btn-secundario {
+    background-color: transparent;
+    color: #00bfbf;
+    border: 2px solid #00bfbf;
+    border-radius: 30px;
+    padding: 10px 25px;
+    font-size: 16px;
+}
+
+.btn-principal:hover {
+    background-color: #00a0a0;
+}
+
+.btn-secundario:hover {
+    background-color: #00bfbf;
+    color: white;
+}
+
+/* ---- BANNER PRINCIPAL ---- */
+
+.Banner-Principal {
+    background-image: url("/img/banner.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ---- PRIMERA SECCIÓN (CTA-1) ---- */
+
+.CTA-1 {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px 10px;
+    background-color: rgba(0, 80, 80, 0.3);
+}
+
+.CTA-1 div {
+    width: 100px;
+}
+
+.CTA-1 img {
+    width: 50px;
+    margin-bottom: 10px;
+}
+
+/* ---- ARGUMENTO 1 ---- */
+
+.Argumento-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    padding: 60px 20px;
+}
+
+.Argumento-1 img {
+    width: 250px;
+    border-radius: 10px;
+}
+
+.Texto-Argumento-1 {
+    width: 250px;
+}
+
+/* ---- ARGUMENTO 2 ---- */
+
+.Argumento-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    padding: 60px 20px;
+}
+
+.Argumento-2 img {
+    width: 250px;
+    border-radius: 10px;
+}
+
+.Texto-Argumento-2 {
+    width: 250px;
+}
+
+/* ---- BENEFICIOS ---- */
+
+.Beneficios {
+    background-color: #006060;
+    padding: 60px 20px;
+}
+
+.Beneficios-Item {
+    margin-bottom: 30px;
+}
+
+.Beneficios img {
+    width: 60px;
+    margin-bottom: 10px;
+}
+
+/* ---- CTA 2 ---- */
+
+.CTA-2 {
+    background: linear-gradient(180deg, #007f7f, #00bfbf);
+    padding: 60px 20px;
+}
+
+.CTA-2 img {
+    width: 250px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+/* ---- SOBRE NOSOTROS ---- */
+
+.Sobre-Nosotros {
+    padding: 60px 20px;
+    background-color: rgba(0, 60, 60, 0.5);
+}
+
+.Valores-Contenedor {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.Valores-Contenedor div {
+    background-color: rgba(0, 150, 150, 0.2);
+    border-radius: 10px;
+    padding: 15px;
+    width: 220px;
+}
+
+/* ---- EQUIPO ---- */
+
+.Quienes-Somos {
+    background-color: #004040;
+    padding: 60px 20px;
+}
+
+.Equipo {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.Persona {
+    background-color: rgba(0, 150, 150, 0.25);
+    border-radius: 15px;
+    padding: 20px;
+    width: 180px;
+}
+
+.Persona img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+/* ---- VERSIÓN CELULAR ---- */
+/* Todo esto se aplica solo si la pantalla es de 768 píxeles o menos */
+
+@media (max-width: 768px) {
+
+    .CTA-1 {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .Argumento-1, .Argumento-2 {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .Texto-Argumento-1, .Texto-Argumento-2 {
+        width: 90%;
+    }
+
+    .Beneficios-Item {
+        width: 90%;
+        margin: auto;
+    }
+
+    .Valores-Contenedor {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .Persona {
+        width: 70%;
+    }
+
+    .Banner-Principal {
+        height: 60vh;
+    }
+}
