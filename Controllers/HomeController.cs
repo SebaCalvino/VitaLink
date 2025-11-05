@@ -163,19 +163,29 @@ public class HomeController : Controller
         return View("HistorialMedico");
     }
     [HttpPost]
-    public IActionResult CambiarContrasena(string contrasenaActual, string contrasenaNueva)
+    public IActionResult CambiarContrasena([FromBody] CambioContrasenaRequest request)
     {
+        int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
         Usuario usuario = BD.ObtenerUsuarioPorId(idUsuario);
-        bool resultado = usuario.CambiarContraseña(contrasenaActual, contrasenaNueva);
 
-        if (!resultado && usuario.Intentos >= 5)
+        if (usuario == null)
+            return Json(new { success = false, message = "Usuario no encontrado" });
+
+        bool resultado = usuario.CambiarContraseña(request.ContrasenaActual, request.ContrasenaNueva);
+
+        if (!resultado && usuario.IntentosFallidos >= 5)
         {
-            return Json(new { success = false, captcha = true });
+            return Json(new { success = false, bloqueado = true, message = "Se acabaron los intentos. Inténtelo más tarde." });
         }
 
-        return Json(new { success = resultado, captcha = false });
+        return Json(new { success = resultado, bloqueado = false });
     }
 
+    public class CambioContrasenaRequest
+    {
+        public string ContrasenaActual { get; set; }
+        public string ContrasenaNueva { get; set; }
+    }
 
 
 

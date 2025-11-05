@@ -39,3 +39,15 @@ C:\Users\48793668\Downloads\a\VitaLink\obj\Debug\net8.0\VitaLink.dll
 C:\Users\48793668\Downloads\a\VitaLink\obj\Debug\net8.0\refint\VitaLink.dll
 C:\Users\48793668\Downloads\a\VitaLink\obj\Debug\net8.0\VitaLink.pdb
 C:\Users\48793668\Downloads\a\VitaLink\obj\Debug\net8.0\VitaLink.csproj.AssemblyReference.cache
+C:\Users\48794823\VitaLink\obj\Debug\net8.0\VitaLink.csproj.AssemblyReference.cache
+C:\Users\48794823\VitaLink\obj\Debug\net8.0\VitaLink.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\48794823\VitaLink\obj\Debug\net8.0\VitaLink.AssemblyInfoInputs.cache
+C:\Users\48794823\VitaLink\obj\Debug\net8.0\VitaLink.AssemblyInfo.cs
+C:\Users\48794823\VitaLink\obj\Debug\net8.0\VitaLink.csproj.CoreCompileInputs.cache
+C:\Users\48794823\VitaLink\obj\Debug\net8.0\VitaLink.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\48794823\VitaLink\obj\Debug\net8.0\VitaLink.RazorAssemblyInfo.cache
+C:\Users\48794823\VitaLink\obj\Debug\net8.0\VitaLink.RazorAssemblyInfo.cs
+C:\Users\48794823\VitaLink\obj\Debug\net8.0\VitaLink.sourcelink.json
+C:\Users\48794823\VitaLink\obj\Debug\net8.0\VitaLink.dll
+C:\Users\48794823\VitaLink\obj\Debug\net8.0\refint\VitaLink.dll
+C:\Users\48794823\VitaLink\obj\Debug\net8.0\VitaLink.pdb

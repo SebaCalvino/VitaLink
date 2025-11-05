@@ -15,34 +15,31 @@ public class Usuario
     public double AlturaEnCm { get; set; }
     public int Telefono { get; set; }
     public string Email { get; set; }
-    [JsonProperty]
     private string Contrasena;
 
-    //Agregar cambiar contraseña con intentos y de forma segura
-     
+    public int IntentosFallidos { get; private set; } = 0;
+    private const int MaxIntentos = 5;
 
     public bool CambiarContraseña(string contrasenaActual, string contrasenaNueva)
-    { 
-         int IntentosActual = 0;
-         int MaxIntentos = 5;
-        if (IntentosActual >= MaxIntentos)
+    {
+        if (IntentosFallidos >= MaxIntentos)
             return false;
 
         if (contrasenaActual == Contrasena)
         {
             Contrasena = contrasenaNueva;
-            IntentosActual = 0; 
+            IntentosFallidos = 0; 
             return true;
         }
         else
         {
-           IntentosActual++;
+            IntentosFallidos++;
             return false;
         }
     }
 
     public void ResetearIntentos()
     {
-        _intentosFallidos = 0;
+        IntentosFallidos = 0;
     }
 }

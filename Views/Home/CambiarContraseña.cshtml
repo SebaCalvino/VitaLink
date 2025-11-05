@@ -1,37 +1,16 @@
-<form id="formCambio">
-    <input type="password" id="contrasenaActual" placeholder="Contraseña actual" required />
-    <input type="password" id="contrasenaNueva" placeholder="Nueva contraseña" required />
-    <button type="submit">Cambiar</button>
-</form>
+@{
+    ViewData["Title"] = "Cambiar-Contraseña-VitaLink";
+}
 
-<div id="captchaContainer" style="display:none; margin-top:20px;">
-    <div class="g-recaptcha" data-sitekey="TU_SITE_KEY_DE_RECAPTCHA"></div>
-</div>
+<main class="Cambio-Contrasena">
+    <h2>Cambiar Contraseña</h2>
 
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <form id="formCambio">
+        <input type="password" id="contrasenaActual" placeholder="Contraseña actual" required />
+        <input type="password" id="contrasenaNueva" placeholder="Nueva contraseña" required />
+        <button type="button" onclick="cambiarContrasena()">Cambiar</button>
+    </form>
 
-<script>
-document.getElementById("formCambio").addEventListener("submit", function (e) {
-    e.preventDefault();
+    <p id="mensaje" style="margin-top:15px; color:red;"></p>
+</main>
 
-    fetch("/Usuario/CambiarContrasena", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            contrasenaActual: document.getElementById("contrasenaActual").value,
-            contrasenaNueva: document.getElementById("contrasenaNueva").value
-        })
-    })
-    .then(r => r.json())
-    .then(data => {
-        if (data.success) {
-            alert("Contraseña cambiada correctamente");
-            document.getElementById("captchaContainer").style.display = "none";
-        } else if (data.captcha) {
-            document.getElementById("captchaContainer").style.display = "block";
-        } else {
-            alert("Contraseña incorrecta, intente nuevamente");
-        }
-    });
-});
-</script>
