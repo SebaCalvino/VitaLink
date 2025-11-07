@@ -57,6 +57,10 @@
               "target": "Package",
               "version": "[2.3.0, )"
             },
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[6.1.2, )"
+            },
             "NewtonSoft.Json": {
               "target": "Package",
               "version": "[13.0.4, )"

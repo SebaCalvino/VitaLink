@@ -8,27 +8,23 @@ public static class BD
 {
     private static string _connectionString = @"Server=localhost;Database=BDVitalink;Integrated Security=True;TrustServerCertificate=True;";
 
-
-    public static List<Usuario> ObtenerUsuarios()
+public static Usuario LoginUsuario(string email, string contrasena)
+{
+    using (SqlConnection db = new SqlConnection(_connectionString))
     {
-        using (SqlConnection db = new SqlConnection(_connectionString))
+        string sql = "SELECT * FROM Usuarios WHERE Email = @email AND Contrasena = @contrasena";
+        return db.QueryFirstOrDefault<Usuario>(sql, new { email, contrasena });
+    }
+}
+
+    public static Usuario ObtenerUsuario(int Id){
+        using(sqlConnection db = new sqlConnection(_connectionString))
         {
-            string sql = "SELECT * FROM Usuarios";
-            return db.Query<Usuario>(sql).ToList();
+            string query = @"SELECT * FROM Usuarios 
+                            WHERE Id = @pId";
+            return db.Query<Usuario>(query, new {pId = Id});
         }
     }
-
-
-    public static Usuario ObtenerUsuarioPorId(int id)
-    {
-        using (SqlConnection db = new SqlConnection(_connectionString))
-        {
-            string sql = "SELECT * FROM Usuarios WHERE Id = @pid";
-            return db.QueryFirstOrDefault<Usuario>(sql, new { pid = id });
-        }
-    }
-
-
     public static List<Diagnostico> ObtenerDiagnosticosPorUsuario(int idUsuario)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -91,6 +87,44 @@ public static class BD
             return db.Query<Organizacion>(sql).ToList();
         }
     }
+    /*
+    public static List<Encuentro> ObtenerEncuentrosPorUsuario(int idUsuario)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = @"SELECT E.*, O.Nombre AS NombreOrganizacion, O.Tipo
+                           FROM Encuentros E
+                           LEFT JOIN Organizaciones O ON E.IdOrganizacion = O.Id
+                           WHERE E.IdUsuario = @idUsuario";
+            return db.Query<Encuentro>(sql, new { idUsuario }).ToList();
+        }
+    }
 
 
+
+
+    public static List<DocumentoClinico> ObtenerDocumentosPorEncuentro(int idEncuentro)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = @"SELECT DC.*, A.Capacidad, A.TipoArchivo, A.FechaCreacion
+                           FROM Documentos_Clinicos DC
+                           LEFT JOIN Archivos A ON DC.IdArchivo = A.Id
+                           WHERE DC.IdEncuentro = @idEncuentro";
+            return db.Query<DocumentoClinico>(sql, new { idEncuentro }).ToList();
+        }
+    }
+
+
+    public static List<ImagenEstudio> ObtenerImagenesPorEncuentro(int idEncuentro)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = "SELECT * FROM Imagenes_Estudios WHERE IdEncuentro = @idEncuentro";
+            return db.Query<ImagenEstudio>(sql, new { idEncuentro }).ToList();
+        }
+    }
+
+
+*/
 }
