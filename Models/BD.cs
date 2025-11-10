@@ -17,12 +17,12 @@ public static Usuario LoginUsuario(string email, string contrasena)
     }
 }
 
-    public static Usuario ObtenerUsuario(int Id){
-        using(sqlConnection db = new sqlConnection(_connectionString))
+    public static Usuario ObtenerUsuarioPorId(int Id){
+        using(SqlConnection db = new SqlConnection(_connectionString))
         {
             string query = @"SELECT * FROM Usuarios 
                             WHERE Id = @pId";
-            return db.Query<Usuario>(query, new {pId = Id});
+            return db.QueryFirstOrDefault<Usuario>(query, new {pId = Id});
         }
     }
     public static List<Diagnostico> ObtenerDiagnosticosPorUsuario(int idUsuario)
@@ -56,7 +56,7 @@ public static Usuario LoginUsuario(string email, string contrasena)
                            FROM MedicacionesPaciente M
                            LEFT JOIN Recetas R ON M.IdReceta = R.Id
                            WHERE M.IdUsuario = @idUsuario";
-            return db.Query<MedicacionPaciente>(sql, new { idUsuario }).ToList();
+            return db.Query<MedicacionesPaciente>(sql, new { idUsuario }).ToList();
         }
     }
 
@@ -69,7 +69,7 @@ public static Usuario LoginUsuario(string email, string contrasena)
                            FROM VacunasXPaciente VXP
                            INNER JOIN Vacunas V ON VXP.IdVacuna = V.Id
                            WHERE VXP.IdUsuario = @idUsuario";
-            return db.Query<VacunaPaciente>(sql, new { idUsuario }).ToList();
+            return db.Query<VacunasXPaciente>(sql, new { idUsuario }).ToList();
         }
     }
 
@@ -87,7 +87,7 @@ public static Usuario LoginUsuario(string email, string contrasena)
             return db.Query<Organizacion>(sql).ToList();
         }
     }
-    /*
+    
     public static List<Encuentro> ObtenerEncuentrosPorUsuario(int idUsuario)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -116,15 +116,16 @@ public static Usuario LoginUsuario(string email, string contrasena)
     }
 
 
-    public static List<ImagenEstudio> ObtenerImagenesPorEncuentro(int idEncuentro)
+    public static List<Imagenes_Estudio> ObtenerImagenesPorEncuentro(int idEncuentro)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
             string sql = "SELECT * FROM Imagenes_Estudios WHERE IdEncuentro = @idEncuentro";
-            return db.Query<ImagenEstudio>(sql, new { idEncuentro }).ToList();
+            return db.Query<Imagenes_Estudio>(sql, new { idEncuentro }).ToList();
         }
     }
 
+     
 
-*/
+
 }

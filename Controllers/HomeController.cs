@@ -67,7 +67,7 @@ public class HomeController : Controller
             ViewBag.Usuario = usuario;
             ViewBag.Medicaciones = BD.ObtenerMedicacionesPorUsuario(idUsuario);
             ViewBag.Encuentros = BD.ObtenerEncuentrosPorUsuario(idUsuario);
-            ViewBag.Notificaciones = GenerarNotificaciones(idUsuario);
+            //ViewBag.Notificaciones = GenerarNotificaciones(idUsuario);
 
             return View("Home");
         }
@@ -132,7 +132,7 @@ public class HomeController : Controller
         }
 
 
-        private List<string> GenerarNotificaciones(int idUsuario)
+        /* private List<string> GenerarNotificaciones(int idUsuario)
         {
             var notificaciones = new List<string>();
             var medicaciones = BD.ObtenerMedicacionesPorUsuario(idUsuario);
@@ -200,9 +200,5 @@ public class HomeController : Controller
             }
 
             return notificaciones;
-        }
+        }*/
     }
-
-
-    
-    

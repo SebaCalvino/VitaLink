@@ -8,12 +8,9 @@
             <h1>Mis medicamentos</h1>
         </section>
         <section>
-        @foreach(Medicamento medicamento in ListaMedicamentos){
-            <h2>@medicamento.Nombre</h2>
+        @foreach(MedicacionesPaciente medicamento in ViewBag.ListaMedicamentos){
+            <h2>@medicamento.Nombre_Comercial</h2>
             <h3>@medicamento.Frecuencia</h3>
-            foreach(string toma in medicamento.Horario){
-                <p>@toma</p>
-            }
         }
         <button id = "Indicaciones">Indicaciones</button>
         </section>

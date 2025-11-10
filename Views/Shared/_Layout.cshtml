@@ -29,41 +29,41 @@
     <main role="main">
         @RenderBody()
     </main>
-    
-    @if(esLaLanding){
+   <!--
+     @if(esLaLanding){
 
-    <footer class = "footerLanding">
-        &copy; @DateTime.Now.Year - NombreProyecto
-        <div>
-            <img src = "" alt = "vitalink">
-        </div>
-        <div><!--Poner last:child en el style-->
+        <footer class = "footerLanding">
+            &copy; @DateTime.Now.Year - NombreProyecto
             <div>
-                <p><strong>La Salud es un derecho, no un privilegio</strong></p>
+                <img src = "" alt = "vitalink">
             </div>
-            <div><!--Poner last:child en el style-->
+            <div> 
                 <div>
-                    <img src = "" alt = "whatsapp">
-                    <p></p>
+                    <p><strong>La Salud es un derecho, no un privilegio</strong></p>
                 </div>
                 <div>
-                    <img src = "" alt = "?">
-                    <p></p>
-                </div>
-                <div>
-                    <img src = "" alt = "linkedin">
-                    <p></p>
-                </div><div>
-                    <img src = "" alt = "X">
-                    <p></p>
-                </div><div>
-                    <img src = "" alt = "?">
-                    <p></p>
+                    <div>
+                        <img src = "" alt = "whatsapp">
+                        <p></p>
+                    </div>
+                    <div>
+                        <img src = "" alt = "?">
+                        <p></p>
+                    </div>
+                    <div>
+                        <img src = "" alt = "linkedin">
+                        <p></p>
+                    </div><div>
+                        <img src = "" alt = "X">
+                        <p></p>
+                    </div><div>
+                        <img src = "" alt = "?">
+                        <p></p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
-
+        </footer>
+   
     }else{
         <footer class = "footerNoLanding">
             &copy; @DateTime.Now.Year - NombreProyecto
@@ -82,7 +82,7 @@
                 
             </div>
         </footer>
-    }
+    } -->
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
         @await RenderSectionAsync("Scripts", required: false)

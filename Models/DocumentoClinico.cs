@@ -1,4 +1,4 @@
-public class Documentos_Clinicos{
+public class DocumentoClinico{
     public int Id{get; set;}
     public int IdEncuentro{get; set;}
     public string Tipo{get; set;}

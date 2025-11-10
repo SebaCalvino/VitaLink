@@ -203,11 +203,16 @@ body {
     border-radius: 15px;
 }
 
+
+
+
 /* ---- VERSIÓN CELULAR ---- */
 
-@media (max-width: 768px) {
+@media (max-width:768px)
+{
 
-    .CTA-1 {
+    .CTA-1 
+    {
         flex-direction: column;
         align-items: center;
         gap: 5%;
