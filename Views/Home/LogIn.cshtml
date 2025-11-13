@@ -6,7 +6,7 @@
         <section>
             <div class="login-div">
                 <div class="login-logo-row">
-                    <img src="../../wwwroot/Img/LogIn/LogoVitaLink.png" alt="VitaLink" class="login-logo">
+                    <img src="/Img/LogIn/LogoVitaLink.png" alt="VitaLink" class="login-logo">
                 </div>
                 <h1 class="login-title">Iniciar Sesión</h1>
             </div>
@@ -37,8 +37,9 @@
 
     main {
         width: 100%;
-        min-height: 100vh;
-        background-image: url('../../wwwroot/Img/LogIn/FondoHospital.png') !important;
+        height: auto;
+        min-height: 150vh;
+        background-image: url('/Img/LogIn/FondoHospitalCompuadora.png');
         background-size: cover;
         background-position: center top;
         background-repeat: no-repeat;
@@ -50,9 +51,7 @@
     }
 
     section {
-        width: 90%;
-        max-width: 420px;
-
+        width: 30%;
         background-color: rgba(25, 136, 115, 0.6);
         border: 1px solid rgba(255, 255, 255, 0.15);
         border-radius: 14px;
@@ -80,8 +79,8 @@
     }
 
     .login-logo {
-        width: 72px;
-        height: 72px;
+        width: 30%;
+        height: auto;
         object-fit: contain;
         background: transparent;
         border: none;
@@ -100,6 +99,7 @@
     .login-form {
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
         align-items: center;
         gap: 0.9rem;
         color: #fff;
@@ -156,7 +156,7 @@
 
     .login-form button {
         width: 80%;
-        background: rgba(200,255,235,0.28);
+        background: rgba(13, 212, 162, 0.91);
         border: 1px solid rgba(255,255,255,0.4);
         border-radius: 999px;
         padding: 0.9rem 1.2rem;
@@ -178,13 +178,6 @@
         filter: brightness(1.08);
     }
 
-    @media (max-width: 360px) {
-        section {
-            padding: 2rem 1.5rem 2.5rem;
-        }
 
-        .login-title {
-            font-size: 1.6rem;
-        }
-    }
+    
 </style>

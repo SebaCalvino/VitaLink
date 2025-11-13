@@ -12,7 +12,7 @@
     <header>
       <nav class="navbar">
             <div class="logo">
-            <img src="/Img/">
+            <img src="/Img/LogIn/LogoVitaLink.png" alt="VitaLink Logo">
             </div>
             <ul class="nav-links">
                 <li><a href="/Home/Index">Inicio</a></li>
@@ -29,60 +29,7 @@
     <main role="main">
         @RenderBody()
     </main>
-   <!--
-     @if(esLaLanding){
-
-        <footer class = "footerLanding">
-            &copy; @DateTime.Now.Year - NombreProyecto
-            <div>
-                <img src = "" alt = "vitalink">
-            </div>
-            <div> 
-                <div>
-                    <p><strong>La Salud es un derecho, no un privilegio</strong></p>
-                </div>
-                <div>
-                    <div>
-                        <img src = "" alt = "whatsapp">
-                        <p></p>
-                    </div>
-                    <div>
-                        <img src = "" alt = "?">
-                        <p></p>
-                    </div>
-                    <div>
-                        <img src = "" alt = "linkedin">
-                        <p></p>
-                    </div><div>
-                        <img src = "" alt = "X">
-                        <p></p>
-                    </div><div>
-                        <img src = "" alt = "?">
-                        <p></p>
-                    </div>
-                </div>
-            </div>
-        </footer>
    
-    }else{
-        <footer class = "footerNoLanding">
-            &copy; @DateTime.Now.Year - NombreProyecto
-            <div>
-                <h4>Contáctanos</h4>
-                <p>Teléfono de contacto: <br>
-                    Correo electrónico: VitaLink@gmail.com<br>
-                    info@VitaLink.com
-                </p>
-            </div>
-            <div>
-                <h4>Sobre nosotros</h4>
-                <p>Vitalink busca garantizar que todas las personas, sin importar su condición socioeconómica, tengan acceso digital, seguro y universal a su información médica.</p>
-            </div>
-            <div>
-                
-            </div>
-        </footer>
-    } -->
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
         @await RenderSectionAsync("Scripts", required: false)
