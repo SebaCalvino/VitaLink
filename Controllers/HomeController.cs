@@ -15,7 +15,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View("LogIn");
+        return View("Index");
     }
     /*
     private void ActualizarSession(){
