@@ -10,15 +10,6 @@ body {
 
 /* ---- BOTONES ---- */
 
-.btn-principal {
-    background-color: #00bfbf;
-    color: white;
-    border: none;
-    border-radius: 30px;
-    padding: 2% 5%;
-    font-size: 1em;
-}
-
 .btn-secundario {
     background-color: transparent;
     color: #00bfbf;
@@ -40,7 +31,7 @@ body {
 /* ---- BANNER PRINCIPAL ---- */
 
 .Banner-Principal {
-    background-image: url("/img/banner.jpg");
+    background-image: url("/Img/LandingPage/Fondo1.png");
     background-size: cover;
     background-position: center;
     height: 80vh;
@@ -48,8 +39,56 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 1%;
 }
+.Banner-Principal div{
+    width: 45%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 7%;
+    margin-right: 21%;
+}
+.Banner-Principal div img{
+    width: 35%;
+    height: auto;
+}
+.Banner-Principal div h1{
+    font-size: 500%;
+    font-weight: 600;
+}
+.Banner-Principal p{
+    font-size: 300%;
+    font-weight: 500;
+    font-family: 'Courier New', Courier, monospace;
+    margin-right: 23%;
+    text-align: left;
+}
+.Banner-Principal button{
+    background-color: rgb(10, 207, 164);
+    color: white;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.6);
+    border-radius: 30px;
+    margin-right: 44%;
+    padding: 1.5% 3% 1.5% 3%;
+}
+.Banner-Principal button p{
+    color: white;
+    font-size: 300%;
+    font-weight: 500;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
 
+}
 /* ---- PRIMERA SECCIÓN (CTA-1) ---- */
 
 .CTA-1 {
