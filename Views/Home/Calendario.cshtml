@@ -1,0 +1,86 @@
+@{
+    ViewData["Title"] = "Calendario";
+}
+
+
+<main class="Calendario-App">
+    <section class="Calendario-Panel">
+        <header class="Calendario-Header">
+            <div class="Calendario-Titulo">
+                <h2>Calendario</h2>
+                <p class="Calendario-Mes">
+                    <span class="Calendario-MesActual">Octubre 2025</span>
+                    <button class="Calendario-BtnUbicacion" type="button">
+                        <span class="material-icons">location_on</span>
+                    </button>
+                </p>
+            </div>
+            <div class="Calendario-Navegacion">
+                <button class="Cal-BtnPrev" type="button" aria-label="Mes anterior">
+                    <span class="material-icons">chevron_left</span>
+                </button>
+                <button class="Cal-BtnNext" type="button" aria-label="Mes siguiente">
+                    <span class="material-icons">chevron_right</span>
+                </button>
+            </div>
+        </header>
+
+
+        <div class="Calendario-Card">
+            <div class="Calendario-Semanas">
+                <span>LUN</span>
+                <span>MAR</span>
+                <span>MIÉ</span>
+                <span>JUE</span>
+                <span>VIE</span>
+                <span>SÁB</span>
+                <span>DOM</span>
+            </div>
+            <div class="Calendario-Dias" data-calendario-dias>
+                <!-- Los días del mes se inyectarán con JavaScript -->
+            </div>
+        </div>
+
+
+        <div class="Calendario-Acciones">
+            <button class="btn-calendario" type="button" data-action="agregar-turno">
+                <span class="material-icons">event</span>
+                Agregar Turno
+            </button>
+            <button class="btn-calendario secundario" type="button" data-action="cargar-medicamento">
+                <span class="material-icons">medication</span>
+                Cargar Medicamento
+            </button>
+        </div>
+    </section>
+
+
+    <aside class="Calendario-Detalle" data-calendario-detalle hidden>
+        <div class="Detalle-Card">
+            <header class="Detalle-Header">
+                <div>
+                    <p class="Detalle-Fecha">9 Octubre 2025</p>
+                    <h3 class="Detalle-Titulo">Turno médico</h3>
+                </div>
+                <button class="Detalle-Cerrar" type="button" aria-label="Cerrar detalle">
+                    <span class="material-icons">close</span>
+                </button>
+            </header>
+
+
+            <div class="Detalle-Info">
+                <p><strong>Dirección:</strong> <span data-detalle-direccion>Domingo Perón 4190</span></p>
+                <p><strong>Hora:</strong> <span data-detalle-hora>14:45 hs</span></p>
+                <p><strong>Tipo:</strong> <span data-detalle-tipo>Turno médico</span></p>
+                <p><strong>Descripción:</strong></p>
+                <p data-detalle-descripcion>Llevar las pastillas y las radiografías</p>
+            </div>
+
+
+            <div class="Detalle-Acciones">
+                <button class="btn-calendario" type="button" data-action="editar-evento">Editar</button>
+                <button class="btn-calendario secundario" type="button" data-action="eliminar-evento">Eliminar</button>
+            </div>
+        </div>
+    </aside>
+</main>
