@@ -1,3 +1,5 @@
+sing System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using VitaLink.Models;
@@ -16,9 +18,126 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+    [HttpGet]
+    public IActionResult SignUp()
+    {
+        ViewBag.FormData = new Dictionary<string, string>();
+        return View("SignUp");
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult SignUp(
+        string nombre,
+        string apellido,
+        string email,
+        string contrasena,
+        string peso,
+        string altura,
+        string sexo,
+        string telefono,
+        string fechaNacimiento,
+        string numeroDocumento)
+    {
+        var errores = new List<string>();
+        var formData = new Dictionary<string, string>
+        {
+            ["Nombre"] = nombre,
+            ["Apellido"] = apellido,
+            ["Email"] = email,
+            ["Contrasena"] = contrasena,
+            ["Peso"] = peso,
+            ["Altura"] = altura,
+            ["Sexo"] = sexo,
+            ["Telefono"] = telefono,
+            ["FechaNacimiento"] = fechaNacimiento,
+            ["NumeroDocumento"] = numeroDocumento
+        };
+
+        if (string.IsNullOrWhiteSpace(nombre)) errores.Add("El nombre es obligatorio.");
+        if (string.IsNullOrWhiteSpace(apellido)) errores.Add("El apellido es obligatorio.");
+        if (string.IsNullOrWhiteSpace(email)) errores.Add("El email es obligatorio.");
+        if (string.IsNullOrWhiteSpace(contrasena)) errores.Add("La contraseña es obligatoria.");
+        if (string.IsNullOrWhiteSpace(sexo)) errores.Add("El sexo es obligatorio.");
+
+        if (!double.TryParse(peso, out double pesoEnKg) || pesoEnKg <= 0)
+            errores.Add("Ingrese un peso válido.");
+
+        if (!double.TryParse(altura, out double alturaEnCm) || alturaEnCm <= 0)
+            errores.Add("Ingrese una altura válida.");
+
+        if (!DateTime.TryParse(fechaNacimiento, out DateTime fechaNacValida))
+            errores.Add("Ingrese una fecha de nacimiento válida.");
+
+        if (!int.TryParse(numeroDocumento, out int docNro) || docNro <= 0)
+            errores.Add("Ingrese un número de documento válido.");
+
+        if (!long.TryParse(telefono, out long telefonoValido) || telefonoValido <= 0 || telefonoValido > int.MaxValue)
+            errores.Add("Ingrese un teléfono válido.");
+
+        char sexoFormateado = 'N';
+        if (!string.IsNullOrWhiteSpace(sexo))
+        {
+            sexoFormateado = char.ToUpperInvariant(sexo[0]);
+            if (sexoFormateado != 'M' && sexoFormateado != 'F' && sexoFormateado != 'O' && sexoFormateado != 'N')
+            {
+                errores.Add("Seleccione un sexo válido (M, F, O, N).");
+            }
+        }
+
+        if (errores.Count > 0)
+        {
+            ViewBag.Errors = errores;
+            ViewBag.FormData = formData;
+            return View("SignUp");
+        }
+
+        var nuevoUsuario = new Usuario
+        {
+            Estado = false,
+            FechaCreacionCuenta = DateTime.Now,
+            Nombre = nombre,
+            Apellido = apellido,
+            Doc_nro = docNro,
+            FechaNacimiento = fechaNacValida,
+            Sexo = sexoFormateado,
+            PesoEnKg = pesoEnKg,
+            AlturaEnCm = alturaEnCm,
+            Telefono = (int)telefonoValido,
+            Email = email
+        };
+
+        try
+        {
+            int nuevoId = BD.InsertarUsuario(nuevoUsuario, contrasena);
+            if (nuevoId > 0)
+            {
+                TempData["SignUpSuccess"] = "Cuenta creada con éxito. Ahora puedes iniciar sesión.";
+                return RedirectToAction("LogIn");
+            }
+
+            ViewBag.Errors = new List<string> { "No se pudo crear la cuenta. Inténtalo nuevamente." };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error al registrar un nuevo usuario");
+            ViewBag.Errors = new List<string> { "Ocurrió un error al crear la cuenta. Por favor, intenta más tarde." };
+        }
+
+        ViewBag.FormData = formData;
+        return View("SignUp");
+    }
+
 
     public IActionResult Index()
     {
+        return View("LogIn");
+    }
+
+    [HttpGet]
+    public IActionResult LogIn()
+    {
+        ViewBag.SignUpSuccess = TempData["SignUpSuccess"];
         return View("LogIn");
     }
     /*
