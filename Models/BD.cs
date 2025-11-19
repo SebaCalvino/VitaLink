@@ -1,12 +1,16 @@
+
 using Microsoft.Data.SqlClient;
 using Dapper;
 using System.Collections.Generic;
 using System.Linq;
 
 
+
+
 public static class BD
 {
     private static string _connectionString = @"Server=localhost;Database=BDVitalink;Integrated Security=True;TrustServerCertificate=True;";
+
 
 public static Usuario LoginUsuario(string email, string contrasena)
 {
@@ -17,10 +21,11 @@ public static Usuario LoginUsuario(string email, string contrasena)
     }
 }
 
+
     public static Usuario ObtenerUsuarioPorId(int Id){
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
-            string query = @"SELECT * FROM Usuarios 
+            string query = @"SELECT * FROM Usuarios
                             WHERE Id = @pId";
             return db.QueryFirstOrDefault<Usuario>(query, new {pId = Id});
         }
@@ -38,6 +43,8 @@ public static Usuario LoginUsuario(string email, string contrasena)
     }
 
 
+
+
     public static List<Alergia> ObtenerAlergiasPorUsuario(int idUsuario)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -46,6 +53,8 @@ public static Usuario LoginUsuario(string email, string contrasena)
             return db.Query<Alergia>(sql, new { idUsuario }).ToList();
         }
     }
+
+
 
 
     public static List<MedicacionesPaciente> ObtenerMedicacionesPorUsuario(int idUsuario)
@@ -59,6 +68,8 @@ public static Usuario LoginUsuario(string email, string contrasena)
             return db.Query<MedicacionesPaciente>(sql, new { idUsuario }).ToList();
         }
     }
+
+
 
 
     public static List<VacunasXPaciente> ObtenerVacunasPorUsuario(int idUsuario)
@@ -77,6 +88,11 @@ public static Usuario LoginUsuario(string email, string contrasena)
 
 
 
+
+
+
+
+
     public static List<Organizacion> ObtenerOrganizaciones()
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -87,7 +103,49 @@ public static Usuario LoginUsuario(string email, string contrasena)
             return db.Query<Organizacion>(sql).ToList();
         }
     }
-    
+
+
+    public static string ObtenerNombreOrganizacion(int idOrganizacion)
+    {
+        if (idOrganizacion <= 0)
+            return null;
+
+
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            const string sql = "SELECT Nombre FROM Organizaciones WHERE Id = @idOrganizacion";
+            return db.QueryFirstOrDefault<string>(sql, new { idOrganizacion });
+        }
+    }
+
+
+    public static string ObtenerNombreVacuna(int idVacuna)
+    {
+        if (idVacuna <= 0)
+            return null;
+
+
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            const string sql = "SELECT NombreVacuna FROM Vacunas WHERE Id = @idVacuna";
+            return db.QueryFirstOrDefault<string>(sql, new { idVacuna });
+        }
+    }
+
+
+    public static string ObtenerModalidadEstudio(int idModalidad)
+    {
+        if (idModalidad <= 0)
+            return null;
+
+
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            const string sql = "SELECT Nombre FROM Modalidad WHERE Id = @idModalidad";
+            return db.QueryFirstOrDefault<string>(sql, new { idModalidad });
+        }
+    }
+   
     public static List<Encuentro> ObtenerEncuentrosPorUsuario(int idUsuario)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -99,6 +157,10 @@ public static Usuario LoginUsuario(string email, string contrasena)
             return db.Query<Encuentro>(sql, new { idUsuario }).ToList();
         }
     }
+
+
+
+
 
 
 
@@ -116,6 +178,8 @@ public static Usuario LoginUsuario(string email, string contrasena)
     }
 
 
+
+
     public static List<Imagenes_Estudio> ObtenerImagenesPorEncuentro(int idEncuentro)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -125,7 +189,14 @@ public static Usuario LoginUsuario(string email, string contrasena)
         }
     }
 
+
      
 
 
+
+
 }
+
+
+
+
