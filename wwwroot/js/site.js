@@ -349,6 +349,8 @@ function cambiarContrasena() {
         renderizarCalendario();
         detallePanel.hidden = true;
     });
+    
+    
 
 
     normalizarEventosIniciales();

@@ -1,5 +1,7 @@
 /* ---- ESTILOS GENERALES ---- */
-
+*{
+    font-family: nunito;
+}
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
@@ -66,19 +68,24 @@ body {
     margin-right: 23%;
     text-align: left;
 }
-.Banner-Principal button{
+.Banner-Principal a{
     background-color: rgb(10, 207, 164);
     color: white;
     border: none;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-decoration: none;
     box-shadow: 0 5px 5px rgba(0,0,0,0.6);
     border-radius: 30px;
     margin-right: 44%;
     padding: 1.5% 3% 1.5% 3%;
 }
-.Banner-Principal button p{
+.Banner-Principal a:hover{
+    box-shadow: none;
+    background-color: rgb(12, 158, 126);
+}
+.Banner-Principal a p{
     color: white;
     font-size: 300%;
     font-weight: 500;
@@ -89,6 +96,7 @@ body {
     padding: 0;
 
 }
+
 /* ---- PRIMERA SECCIÓN (CTA-1) ---- */
 
 .CTA-1 {
@@ -96,7 +104,7 @@ body {
     justify-content: center;
     gap: 5%;
     padding: 5% 3%;
-    background-color: rgba(0, 80, 80, 0.3);
+    background-color: #3cc5a6;
 }
 
 .CTA-1 div {
@@ -249,21 +257,23 @@ body {
     padding-bottom: 1%;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
 }
 .navbar ul{
     width: 60%;
     height: auto;
+    margin-right: 2%;
 }
 .navbar div{
-    width: 30%;
+    width: 10%;
     height: auto;
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
+    margin-left: 2%;
 }
 .navbar div img{
-    width: 40%;
+    width: 45%;
     height: auto;
 }
 .navbar ul{

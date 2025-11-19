@@ -10,7 +10,9 @@
         <section>
         @foreach(MedicacionesPaciente medicamento in ViewBag.ListaMedicamentos){
             <h2>@medicamento.Nombre_Comercial</h2>
-            <h3>@medicamento.Frecuencia</h3>
+            <h3>@medicamento.HoraProgramada</h3>
+            <h3>@medicamentos.Dosis</h3>
+            <h3>@medicamentos.Regularidad</h3>
         }
         <button id = "Indicaciones">Indicaciones</button>
         </section>
