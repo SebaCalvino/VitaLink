@@ -1,5 +1,125 @@
 @{
     ViewData["Title"] = "SignUp - VitaLink";
+    var formData = ViewBag.FormData as IDictionary<string, string> ?? new Dictionary<string, string>();
+    var errores = ViewBag.Errors as List<string>;
+
+    Func<string, string> Valor = clave => formData.ContainsKey(clave) ? formData[clave] ?? string.Empty : string.Empty;
+    var sexoSeleccionado = Valor("Sexo");
 }
 
+<div>
+    <div>
+        <div>
+            <div>
+                <div class="card-body p-4">
+                    <h2 class="mb-4 text-center">Crear cuenta</h2>
 
+                    @if (errores is { Count: > 0 })
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            <ul class="mb-0">
+                                @foreach (var error in errores)
+                                {
+                                    <li>@error</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+
+                    <form asp-action=SignUp method="post" novalidate>
+                        @Html.AntiForgeryToken()
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input id="nombre" name="nombre" class="form-control" value="@Valor("Nombre")" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="apellido" class="form-label">Apellido</label>
+                                <input id="apellido" name="apellido" class="form-control" value="@Valor("Apellido")" required />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email</label>
+                                <input id="email" name="email" class="form-control" type="email" value="@Valor("Email")" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="contrasena" class="form-label">Contraseña</label>
+                                <input id="contrasena" name="contrasena" class="form-control" type="password" value="@Valor("Contrasena")" required />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="peso" class="form-label">Peso (kg)</label>
+                                <input id="peso" name="peso" class="form-control" type="number" step="0.1" value="@Valor("Peso")" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="altura" class="form-label">Altura (cm)</label>
+                                <input id="altura" name="altura" class="form-control" type="number" step="0.1" value="@Valor("Altura")" required />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="sexo" class="form-label">Sexo</label>
+                                <select id="sexo" name="sexo" class="form-select" required>
+                                    <option value="">Seleccionar...</option>
+                                    @if (sexoSeleccionado == "M")
+                                    {
+                                        <option value="M" selected>Masculino</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="M">Masculino</option>
+                                    }
+                                    @if (sexoSeleccionado == "F")
+                                    {
+                                        <option value="F" selected>Femenino</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="F">Femenino</option>
+                                    }
+                                    @if (sexoSeleccionado == "O")
+                                    {
+                                        <option value="O" selected>Otro</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="O">Otro</option>
+                                    }
+                                    @if (sexoSeleccionado == "N")
+                                    {
+                                        <option value="N" selected>Prefiero no decir</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="N">Prefiero no decir</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="telefono" class="form-label">Teléfono</label>
+                                <input id="telefono" name="telefono" class="form-control" type="tel" value="@Valor("Telefono")" required />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="fechaNacimiento" class="form-label">Fecha de nacimiento</label>
+                                <input id="fechaNacimiento" name="fechaNacimiento" class="form-control" type="date" value="@Valor("FechaNacimiento")" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="numeroDocumento" class="form-label">Número de documento</label>
+                                <input id="numeroDocumento" name="numeroDocumento" class="form-control" type="number" value="@Valor("NumeroDocumento")" required />
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 mt-4">Registrarme</button>
+                        <p class="text-center mt-3 mb-0">
+                            ¿Ya tienes cuenta? <a href="@Url.Action("LogIn", "Home")">Inicia sesión</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
