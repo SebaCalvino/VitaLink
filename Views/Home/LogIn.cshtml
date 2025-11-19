@@ -5,17 +5,14 @@
     <main>
         <section>
             <div class="login-div">
-                <div class="login-logo-row">
-                    <img src="/Img/LogIn/LogoVitaLink.png" alt="VitaLink" class="login-logo">
-                </div>
                 <h1 class="login-title">Iniciar Sesión</h1>
             </div>
-            <form class="login-form">
-                <input type="text" placeholder="Usuario" required />
-                <input type="password" placeholder="Contraseña" required />
+            <form action=LogIn class="login-form">
+                <input type="text" placeholder="Email" name="email"required />
+                <input type="password" placeholder="Contraseña" name="contrasena" required />
 
                 <p class="registro">¿No tienes una cuenta?
-                    <a href="#">Regístrate</a>
+                    <a href="@Url.Action("SignUp", "Home")">Regístrate</a>
                 </p>
                 <button type="submit">Ingresar</button>
             </form>
