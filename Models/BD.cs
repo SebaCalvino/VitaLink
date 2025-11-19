@@ -21,6 +21,33 @@ public static Usuario LoginUsuario(string email, string contrasena)
     }
 }
 
+    public static int InsertarUsuario(Usuario usuario, string contrasena)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            const string sql = @"INSERT INTO Usuarios
+                                (Estado, FechaCreacionCuenta, Nombre, Apellido, Doc_nro, FechaNacimiento, Sexo, PesoEnKg, AlturaEnCm, Telefono, Email, Contrasena)
+                                VALUES (@Estado, @FechaCreacionCuenta, @Nombre, @Apellido, @Doc_nro, @FechaNacimiento, @Sexo, @PesoEnKg, @AlturaEnCm, @Telefono, @Email, @Contrasena);
+                                SELECT CAST(SCOPE_IDENTITY() AS int);";
+
+            return db.ExecuteScalar<int>(sql, new
+            {
+                usuario.Estado,
+                usuario.FechaCreacionCuenta,
+                usuario.Nombre,
+                usuario.Apellido,
+                Doc_nro = usuario.Doc_nro,
+                usuario.FechaNacimiento,
+                usuario.Sexo,
+                usuario.PesoEnKg,
+                usuario.AlturaEnCm,
+                usuario.Telefono,
+                usuario.Email,
+                Contrasena = contrasena
+            });
+        }
+    }
+
 
     public static Usuario ObtenerUsuarioPorId(int Id){
         using(SqlConnection db = new SqlConnection(_connectionString))
