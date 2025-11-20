@@ -108,32 +108,56 @@ body {
 }
 
 .CTA-1 div {
-    width: 15%;
+    width: 25%;
     min-width: 100px;
 }
 
-.CTA-1 img {
-    width: 50%;
+.CTA-1 div img {
+    width: 70%;
     margin-bottom: 5%;
+}
+.CTA-1 div h3{
+    font-size: 190%;
+    font-weight: bold;
+}
+.CTA-1 div p{
+    font-size: 150%;
 }
 
 /* ---- ARGUMENTO 1 ---- */
 
 .Argumento-1 {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     gap: 5%;
     padding: 6% 3%;
 }
-
-.Argumento-1 img {
-    width: 30%;
-    border-radius: 2%;
+.Argumento-1 div{
+    width: 100%;
+    height: auto;
 }
 
-.Texto-Argumento-1 {
-    width: 30%;
+.Argumento-1 img {
+    width: 100%;
+    border-radius: 2%;
+}
+.Texto1-Argumento-1{
+    background-color: url("/Img/LandingPage/Fondo2.png");
+}
+.Texto1-Argumento-1 h3{
+    font-size: 500%;
+    font-weight: 700;
+}
+.Texto1-Argumento-1 p{
+    font-size: 300%;
+}
+.Texto2-Argumento-1{
+    background-color: url("/Img/LandingPage/Fondo1.png");
+}
+.Texto2-Argumento-1 p{
+    font-size: 400%;
 }
 
 /* ---- ARGUMENTO 2 ---- */
@@ -160,6 +184,9 @@ body {
 .Beneficios {
     background-color: #006060;
     padding: 6% 3%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .Beneficios-Item {
