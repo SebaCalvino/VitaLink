@@ -216,6 +216,59 @@ public static Usuario LoginUsuario(string email, string contrasena)
         }
     }
 
+    public static bool ActualizarCampoUsuario(int idUsuario, string campo, string valor)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            // Validar que el campo sea uno de los permitidos
+            var camposPermitidos = new[] { "Nombre", "Apellido", "Email", "Doc_nro", "FechaNacimiento", 
+                "Sexo", "PesoEnKg", "AlturaEnCm", "Telefono" };
+            
+            if (!camposPermitidos.Contains(campo))
+            {
+                return false;
+            }
+
+            // Construir la consulta SQL dinámicamente
+            string sql = $"UPDATE Usuarios SET {campo} = @valor WHERE Id = @idUsuario";
+            
+            // Convertir el valor según el tipo de campo
+            object valorConvertido = valor;
+            
+            if (campo == "Doc_nro" || campo == "Telefono")
+            {
+                if (int.TryParse(valor, out int valorInt))
+                    valorConvertido = valorInt;
+                else
+                    return false;
+            }
+            else if (campo == "PesoEnKg" || campo == "AlturaEnCm")
+            {
+                if (double.TryParse(valor, out double valorDouble))
+                    valorConvertido = valorDouble;
+                else
+                    return false;
+            }
+            else if (campo == "FechaNacimiento")
+            {
+                if (DateTime.TryParse(valor, out DateTime valorDateTime))
+                    valorConvertido = valorDateTime;
+                else
+                    return false;
+            }
+            else if (campo == "Sexo")
+            {
+                if (valor.Length > 0)
+                    valorConvertido = valor[0];
+                else
+                    return false;
+            }
+
+            int filasAfectadas = db.Execute(sql, new { valor = valorConvertido, idUsuario });
+            return filasAfectadas > 0;
+        }
+    }
+
 
      
 

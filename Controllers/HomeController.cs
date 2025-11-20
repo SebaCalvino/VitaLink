@@ -162,6 +162,10 @@ public class HomeController : Controller
 
     public IActionResult Medicamentos()
     {
+        int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+        if (idUsuario == 0) return RedirectToAction("LogIn");
+
+        ViewBag.Medicaciones = BD.ObtenerMedicacionesPorUsuario(idUsuario);
         return View("Medicamentos");
     }
 
@@ -279,7 +283,62 @@ public class HomeController : Controller
             public string ContrasenaNueva { get; set; }
         }
 
+        public IActionResult EditarPerfil()
+        {
+            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            if (idUsuario == 0) return RedirectToAction("LogIn");
 
+            ViewBag.Usuario = BD.ObtenerUsuarioPorId(idUsuario);
+            return View("EditarPerfil");
+        }
+
+        [HttpPost]
+        public IActionResult ActualizarCampoUsuario([FromBody] ActualizarCampoRequest request)
+        {
+            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            if (idUsuario == 0) 
+                return Json(new { success = false, message = "No hay sesión activa" });
+
+            try
+            {
+                bool resultado = BD.ActualizarCampoUsuario(idUsuario, request.Campo, request.Valor);
+                if (resultado)
+                {
+                    return Json(new { success = true, message = "Campo actualizado correctamente" });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Error al actualizar el campo" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al actualizar campo del usuario");
+                return Json(new { success = false, message = "Ocurrió un error al actualizar el campo" });
+            }
+        }
+
+        public class ActualizarCampoRequest
+        {
+            public string Campo { get; set; }
+            public string Valor { get; set; }
+        }
+
+        public IActionResult AgregarManualmente()
+        {
+            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            if (idUsuario == 0) return RedirectToAction("LogIn");
+
+            return View("AgregarManualmente");
+        }
+
+        public IActionResult AgregarAutomaticamente()
+        {
+            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            if (idUsuario == 0) return RedirectToAction("LogIn");
+
+            return View("AgregarAutomaticamente");
+        }
 
 
 }

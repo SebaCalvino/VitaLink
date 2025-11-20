@@ -357,3 +357,124 @@ function cambiarContrasena() {
     renderizarCalendario();
 })();
 
+// Funciones para editar perfil
+let campoActual = '';
+let valorActual = '';
+
+function abrirModal(campo, valor) {
+    campoActual = campo;
+    valorActual = valor;
+    
+    const modal = document.getElementById('modal-editar');
+    const campoNombre = document.getElementById('modal-campo-nombre');
+    const valorActualSpan = document.getElementById('modal-valor-actual');
+    const inputTexto = document.getElementById('modal-nuevo-valor');
+    const inputFecha = document.getElementById('modal-nuevo-valor-date');
+    
+    // Configurar nombres amigables
+    const nombresCampos = {
+        'Email': 'Email',
+        'Nombre': 'Nombre',
+        'Apellido': 'Apellido',
+        'Doc_nro': 'Número de Documento',
+        'FechaNacimiento': 'Fecha de Nacimiento',
+        'Sexo': 'Sexo',
+        'PesoEnKg': 'Peso',
+        'AlturaEnCm': 'Altura',
+        'Telefono': 'Teléfono'
+    };
+    
+    campoNombre.textContent = nombresCampos[campo] || campo;
+    valorActualSpan.textContent = valor;
+    
+    // Mostrar el input apropiado según el tipo de campo
+    if (campo === 'FechaNacimiento') {
+        inputTexto.style.display = 'none';
+        inputFecha.style.display = 'block';
+        inputFecha.value = valor;
+    } else {
+        inputTexto.style.display = 'block';
+        inputFecha.style.display = 'none';
+        inputTexto.value = valor;
+    }
+    
+    modal.style.display = 'flex';
+}
+
+function cerrarModal() {
+    document.getElementById('modal-editar').style.display = 'none';
+    campoActual = '';
+    valorActual = '';
+}
+
+function guardarCambio() {
+    const inputTexto = document.getElementById('modal-nuevo-valor');
+    const inputFecha = document.getElementById('modal-nuevo-valor-date');
+    const nuevoValor = campoActual === 'FechaNacimiento' ? inputFecha.value : inputTexto.value;
+    
+    if (!nuevoValor || nuevoValor.trim() === '') {
+        alert('Por favor, ingrese un valor válido.');
+        return;
+    }
+    
+    // Enviar la petición al servidor
+    fetch('/Home/ActualizarCampoUsuario', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            Campo: campoActual,
+            Valor: nuevoValor
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Actualizar el valor en la vista
+            const elementoValor = document.getElementById('valor-' + campoActual);
+            if (elementoValor) {
+                if (campoActual === 'FechaNacimiento') {
+                    const fecha = new Date(nuevoValor);
+                    elementoValor.textContent = fecha.toLocaleDateString('es-ES');
+                } else {
+                    elementoValor.textContent = nuevoValor;
+                }
+            }
+            cerrarModal();
+            alert('Campo actualizado correctamente.');
+            // Recargar la página para mostrar los cambios
+            location.reload();
+        } else {
+            alert('Error al actualizar el campo: ' + (data.message || 'Error desconocido'));
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Ocurrió un error al actualizar el campo.');
+    });
+}
+
+// Cerrar modal al hacer clic fuera de él
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById('modal-editar');
+    if (event.target === modal) {
+        cerrarModal();
+    }
+});
+
+// Funciones para medicamentos
+function toggleIndicaciones(elemento) {
+    const card = elemento.closest('.medicamento-card');
+    const detalle = card.querySelector('.medicamento-indicaciones-detalle');
+    const indicaciones = card.querySelector('.medicamento-indicaciones');
+    
+    if (detalle.style.display === 'none' || detalle.style.display === '') {
+        detalle.style.display = 'block';
+        indicaciones.classList.add('active');
+    } else {
+        detalle.style.display = 'none';
+        indicaciones.classList.remove('active');
+    }
+}
+

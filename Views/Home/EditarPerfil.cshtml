@@ -1,0 +1,184 @@
+ @{
+    ViewData["Title"] = "Editar Perfil - VitaLink";
+    var usuario = ViewBag.Usuario as Usuario;
+}
+
+<main class="Editar-Perfil">
+    <h1>Editar Perfil</h1>
+    
+    @if (usuario != null)
+    {
+        <div class="perfil-datos-container">
+            <!-- Email -->
+            <div class="campo-item">
+                <div class="campo-info">
+                    <label>Email:</label>
+                    <span class="campo-valor" id="valor-Email">@usuario.Email</span>
+                </div>
+                <button class="btn-editar-campo" onclick="abrirModal('Email', '@usuario.Email')" title="Editar Email">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Nombre -->
+            <div class="campo-item">
+                <div class="campo-info">
+                    <label>Nombre:</label>
+                    <span class="campo-valor" id="valor-Nombre">@usuario.Nombre</span>
+                </div>
+                <button class="btn-editar-campo" onclick="abrirModal('Nombre', '@usuario.Nombre')" title="Editar Nombre">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Apellido -->
+            <div class="campo-item">
+                <div class="campo-info">
+                    <label>Apellido:</label>
+                    <span class="campo-valor" id="valor-Apellido">@usuario.Apellido</span>
+                </div>
+                <button class="btn-editar-campo" onclick="abrirModal('Apellido', '@usuario.Apellido')" title="Editar Apellido">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Número de Documento -->
+            <div class="campo-item">
+                <div class="campo-info">
+                    <label>Número de Documento:</label>
+                    <span class="campo-valor" id="valor-Doc_nro">@usuario.Doc_nro</span>
+                </div>
+                <button class="btn-editar-campo" onclick="abrirModal('Doc_nro', '@usuario.Doc_nro')" title="Editar Número de Documento">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Fecha de Nacimiento -->
+            <div class="campo-item">
+                <div class="campo-info">
+                    <label>Fecha de Nacimiento:</label>
+                    <span class="campo-valor" id="valor-FechaNacimiento">@usuario.FechaNacimiento.ToString("dd/MM/yyyy")</span>
+                </div>
+                <button class="btn-editar-campo" onclick="abrirModal('FechaNacimiento', '@usuario.FechaNacimiento.ToString("yyyy-MM-dd")')" title="Editar Fecha de Nacimiento">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Edad (calculada) -->
+            <div class="campo-item">
+                <div class="campo-info">
+                    <label>Edad:</label>
+                    <span class="campo-valor">@(DateTime.Now.Year - usuario.FechaNacimiento.Year - (DateTime.Now.DayOfYear < usuario.FechaNacimiento.DayOfYear ? 1 : 0)) años</span>
+                </div>
+            </div>
+
+            <!-- Sexo -->
+            <div class="campo-item">
+                <div class="campo-info">
+                    <label>Sexo:</label>
+                    <span class="campo-valor" id="valor-Sexo">@usuario.Sexo</span>
+                </div>
+                <button class="btn-editar-campo" onclick="abrirModal('Sexo', '@usuario.Sexo')" title="Editar Sexo">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Peso -->
+            <div class="campo-item">
+                <div class="campo-info">
+                    <label>Peso (kg):</label>
+                    <span class="campo-valor" id="valor-PesoEnKg">@usuario.PesoEnKg</span>
+                </div>
+                <button class="btn-editar-campo" onclick="abrirModal('PesoEnKg', '@usuario.PesoEnKg')" title="Editar Peso">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Altura -->
+            <div class="campo-item">
+                <div class="campo-info">
+                    <label>Altura (cm):</label>
+                    <span class="campo-valor" id="valor-AlturaEnCm">@usuario.AlturaEnCm</span>
+                </div>
+                <button class="btn-editar-campo" onclick="abrirModal('AlturaEnCm', '@usuario.AlturaEnCm')" title="Editar Altura">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Teléfono -->
+            <div class="campo-item">
+                <div class="campo-info">
+                    <label>Teléfono:</label>
+                    <span class="campo-valor" id="valor-Telefono">@usuario.Telefono</span>
+                </div>
+                <button class="btn-editar-campo" onclick="abrirModal('Telefono', '@usuario.Telefono')" title="Editar Teléfono">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Fecha de Creación de Cuenta (solo lectura) -->
+            <div class="campo-item">
+                <div class="campo-info">
+                    <label>Fecha de Creación de Cuenta:</label>
+                    <span class="campo-valor">@usuario.FechaCreacionCuenta.ToString("dd/MM/yyyy")</span>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>No se pudo cargar la información del usuario.</p>
+    }
+</main>
+
+<!-- Modal para editar campo -->
+<div id="modal-editar" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Editar <span id="modal-campo-nombre"></span></h2>
+            <button class="modal-close" onclick="cerrarModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="campo-actual">
+                <label>Valor actual:</label>
+                <span id="modal-valor-actual"></span>
+            </div>
+            <div class="campo-nuevo">
+                <label for="modal-nuevo-valor">Nuevo valor:</label>
+                <input type="text" id="modal-nuevo-valor" class="input-nuevo-valor" />
+                <input type="date" id="modal-nuevo-valor-date" class="input-nuevo-valor" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+            <button class="btn-guardar" onclick="guardarCambio()">Guardar</button>
+        </div>
+    </div>
+</div>
