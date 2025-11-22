@@ -7,9 +7,15 @@
             <div class="login-div">
                 <h1 class="login-title">Iniciar Sesión</h1>
             </div>
-            <form action=LogIn class="login-form">
-                <input type="text" placeholder="Email" name="email"required />
+            <form method="post" action="@Url.Action("LogIn", "Home")" class="login-form">
+                @Html.AntiForgeryToken()
+                <input type="text" placeholder="Email" name="email" required />
                 <input type="password" placeholder="Contraseña" name="contrasena" required />
+                
+                @if (ViewBag.Error != null)
+                {
+                    <p style="color: #ff6b6b; font-weight: 600; margin: 0.5rem 0;">@ViewBag.Error</p>
+                }
 
                 <p class="registro">¿No tienes una cuenta?
                     <a href="@Url.Action("SignUp", "Home")">Regístrate</a>
@@ -178,3 +184,4 @@
 
     
 </style>
+
