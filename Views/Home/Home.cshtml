@@ -8,14 +8,18 @@
     <!-- PERFIL DEL USUARIO -->
     <section class="Usuario-Card">
         <div class="Usuario-Header">
-            <img src="~/img/default-profile.png" alt="Foto de perfil" class="Usuario-Foto" />
+            <svg class="Usuario-Foto" width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="50" fill="#E0E0E0"/>
+                <circle cx="50" cy="35" r="15" fill="#9E9E9E"/>
+                <path d="M25 75 C25 60, 35 50, 50 50 C65 50, 75 60, 75 75" fill="#9E9E9E"/>
+            </svg>
             <div class="Usuario-Info">
                 <h2>@ViewBag.Usuario.Nombre @ViewBag.Usuario.Apellido</h2>
 
                 @if (ViewBag.Medicaciones != null && ViewBag.Medicaciones.Count > 0)
                 {
-                    <p><strong>Medicamentos actuales:</strong></p>
-                    <ul>
+                    <p class="medicamentos-titulo"><strong>Medicamentos actuales:</strong></p>
+                    <ul class="medicamentos-lista">
                         @foreach (var med in ViewBag.Medicaciones)
                         {
                             <li>@med.Nombre_Comercial</li>
@@ -24,13 +28,13 @@
                 }
                 else
                 {
-                    <p>No hay medicamentos activos.</p>
+                    <p class="medicamentos-titulo">No hay medicamentos activos.</p>
                 }
             </div>
         </div>
 
         <button class="btn-principal"
-                onclick="location.href='@Url.Action("Perfil", "Usuario", new { id = ViewBag.Usuario.Id })'">
+                onclick="location.href='@Url.Action("Perfil", "Home")'">
             Ver Perfil
         </button>
     </section>
@@ -42,7 +46,9 @@
             foreach (var notif in ViewBag.Notificaciones)
             {
                 <div class="Notificacion">
-                    <p>@notif</p>
+                    <div class="Notificacion-Contenido">
+                        <p>@notif</p>
+                    </div>
                     <button class="btn-vermas">Ver más</button>
                 </div>
             }
@@ -58,29 +64,25 @@
     <!-- ACCESOS PRINCIPALES -->
     <section class="Accesos">
         <div class="Acceso-Boton">
-            <a asp-controller="Historial" asp-action="Index"
-               asp-route-idUsuario="@ViewBag.Usuario.Id">
+            <a href="@Url.Action("HistorialMedico", "Home")">
                 <h3>Historial Médico</h3>
             </a>
         </div>
 
         <div class="Acceso-Boton">
-            <a asp-controller="Calendario" asp-action="Index"
-               asp-route-idUsuario="@ViewBag.Usuario.Id">
+            <a href="@Url.Action("Calendario", "Home")">
                 <h3>Calendario</h3>
             </a>
         </div>
 
         <div class="Acceso-Boton">
-            <a asp-controller="Crianza" asp-action="Index"
-               asp-route-idUsuario="@ViewBag.Usuario.Id">
+            <a href="@Url.Action("Crianzas", "Home")">
                 <h3>Crianza</h3>
             </a>
         </div>
 
         <div class="Acceso-Boton">
-            <a asp-controller="Medicamentos" asp-action="Index"
-               asp-route-idUsuario="@ViewBag.Usuario.Id">
+            <a href="@Url.Action("Medicamentos", "Home")">
                 <h3>Medicamentos</h3>
             </a>
         </div>
