@@ -1,92 +1,624 @@
-@{
-    ViewData["Title"] = "Perfil - VitaLink";
+*{
+    font-family: nunito;
+}
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #ffffff;
+    color: #333;
+    text-align: center;
 }
 
-<main class="Perfil-Container">
+/* ---- BOTONES ---- */
 
-    <!-- PERFIL PRINCIPAL -->
-    <section class="Perfil-Tarjeta">
-        <div class="Perfil-Foto">
-            <svg width="150" height="150" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="50" fill="#E0E0E0"/>
-                <circle cx="50" cy="35" r="15" fill="#9E9E9E"/>
-                <path d="M25 75 C25 60, 35 50, 50 50 C65 50, 75 60, 75 75" fill="#9E9E9E"/>
-            </svg>
-            <button class="btn-editar"><a href="@Url.Action("EditarPerfil", "Home")">Editar Perfil</a></button>
-        </div>
+.btn-secundario {
+    background-color: transparent;
+    color: #00bfbf;
+    border: 0.3vh solid #00bfbf;
+    border-radius: 30px;
+    padding: 2% 5%;
+    font-size: 1em;
+}
 
-        <!-- INFORMACIÓN PRINCIPAL -->
-        <div class="Info-Principal">
-            <h4>Información Principal</h4>
-            <div class="Info-Datos">
-                <div class="dato">@ViewBag.Usuario.Peso kg</div>
-                <div class="dato">@ViewBag.Usuario.Altura m</div>
-                <div class="dato">@ViewBag.Usuario.FechaNacimiento?.ToString("dd/MM/yyyy")</div>
-            </div>
-        </div>
+.btn-principal:hover {
+    background-color: #00a0a0;
+}
 
-        <!-- ALERGIAS -->
-        <div class="Info-Alergias">
-            <h4>Alergias:</h4>
-            <div class="chips">
-                @if (ViewBag.Alergias != null && ViewBag.Alergias.Count > 0)
-                {
-                    foreach (var a in ViewBag.Alergias)
-                    {
-                        <span class="chip">@a.Nombre</span>
-                    }
-                }
-                else
-                {
-                    <span class="chip">Sin alergias</span>
-                }
-            </div>
-        </div>
+.btn-secundario:hover {
+    background-color: #00bfbf;
+    color: white;
+}
 
-        <!-- ENFERMEDAD ACTUAL -->
-        <div class="Info-Enfermedad">
-            <h4>Enfermedad:</h4>
-            @{
-                if (ViewBag.Diagnosticos != null && ViewBag.Diagnosticos.Count > 0)
-                {
-                    var enfermedadActual = ((IEnumerable<dynamic>)ViewBag.Diagnosticos)
-                        .OrderByDescending(d => d.FechaInicio)
-                        .FirstOrDefault();
+/* ---- BANNER PRINCIPAL ---- */
 
-                    <p>@enfermedadActual.NombrePatologia</p>;
-                }
-                else
-                {
-                    <p>Sin enfermedades registradas</p>;
-                }
-            }
-        </div>
-    </section>
+.Banner-Principal {
+    background-image: url("/Img/LandingPage/Fondo1.png");
+    background-size: cover;
+    background-position: center;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1%;
+}
+.Banner-Principal div{
+    width: 45%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 7%;
+    margin-right: 21%;
+}
+.Banner-Principal div img{
+    width: 35%;
+    height: auto;
+}
+.Banner-Principal div h1{
+    font-size: 500%;
+    font-weight: 600;
+}
+.Banner-Principal p{
+    font-size: 300%;
+    font-weight: 500;
+    font-family: 'Courier New', Courier, monospace;
+    margin-right: 23%;
+    text-align: left;
+}
+.Banner-Principal a{
+    background-color: rgb(10, 207, 164);
+    color: white;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.6);
+    border-radius: 30px;
+    margin-right: 44%;
+    padding: 1.5% 3% 1.5% 3%;
+}
+.Banner-Principal a:hover{
+    box-shadow: none;
+    background-color: rgb(12, 158, 126);
+}
+.Banner-Principal a p{
+    color: white;
+    font-size: 300%;
+    font-weight: 500;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
 
-    <!-- ENFERMEDADES RELEVANTES -->
-    <section class="Enfermedades-Relevantes">
-        <h3>Enfermedades Relevantes</h3>
+}
 
-        @if (ViewBag.Diagnosticos != null && ViewBag.Diagnosticos.Count > 0)
-        {
-            foreach (var enf in ((IEnumerable<dynamic>)ViewBag.Diagnosticos).OrderByDescending(e => e.FechaInicio))
-            {
-                <div class="Enfermedad-Item">
-                    <div class="Enfermedad-Info">
-                        <h4>@enf.NombrePatologia</h4>
-                        <p>@(string.IsNullOrEmpty(enf.Tipo) ? "Crónica" : enf.Tipo)</p>
-                    </div>
-                    <p class="fecha">@enf.FechaInicio?.ToString("dd/MM/yyyy")</p>
-                </div>
-            }
-        }
-        else
-        {
-            <p class="Historial-Vacio">No hay enfermedades relevantes registradas.</p>
-        }
-    </section>
-    <section>
-  
-    </section>
-</main>
+/* ---- PRIMERA SECCIÓN (CTA-1) ---- */
 
+.CTA-1 {
+    display: flex;
+    justify-content: center;
+    gap: 5%;
+    padding: 5% 3%;
+    background-color: #3cc5a6;
+}
+
+.CTA-1 div {
+    width: 25%;
+    min-width: 100px;
+}
+
+.CTA-1 div img {
+    width: 70%;
+    margin-bottom: 5%;
+}
+.CTA-1 div h3{
+    font-size: 190%;
+    font-weight: bold;
+}
+.CTA-1 div p{
+    font-size: 150%;
+}
+
+/* ---- ARGUMENTO 1 ---- */
+
+.Argumento-1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5%;
+    padding: 6% 3%;
+}
+.Argumento-1 div{
+    width: 100%;
+    height: auto;
+}
+
+.Argumento-1 img {
+    width: 100%;
+    border-radius: 2%;
+}
+.Texto1-Argumento-1{
+    background-color: url("/Img/LandingPage/Fondo2.png");
+}
+.Texto1-Argumento-1 h3{
+    font-size: 500%;
+    font-weight: 700;
+}
+.Texto1-Argumento-1 p{
+    font-size: 300%;
+}
+.Texto2-Argumento-1{
+    background-color: url("/Img/LandingPage/Fondo1.png");
+}
+.Texto2-Argumento-1 p{
+    font-size: 400%;
+}
+
+/* ---- ARGUMENTO 2 ---- */
+
+.Argumento-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+    padding: 6% 3%;
+}
+
+.Argumento-2 img {
+    width: 30%;
+    border-radius: 2%;
+}
+
+.Texto-Argumento-2 {
+    width: 30%;
+}
+
+/* ---- BENEFICIOS ---- */
+
+.Beneficios {
+    background-color: #006060;
+    padding: 6% 3%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.Beneficios-Item {
+    margin-bottom: 5%;
+}
+
+.Beneficios img {
+    width: 10%;
+    margin-bottom: 2%;
+}
+
+/* ---- CTA 2 ---- */
+
+.CTA-2 {
+    background: linear-gradient(180deg, #007f7f, #00bfbf);
+    padding: 6% 3%;
+}
+
+.CTA-2 img {
+    width: 30%;
+    border-radius: 2%;
+    margin-top: 3%;
+}
+
+/* ---- SOBRE NOSOTROS ---- */
+
+.Sobre-Nosotros {
+    padding: 6% 3%;
+    background-color: rgba(0, 60, 60, 0.5);
+}
+
+.Valores-Contenedor {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 3%;
+    margin-top: 3%;
+}
+
+.Valores-Contenedor div {
+    background-color: rgba(0, 150, 150, 0.2);
+    border-radius: 2%;
+    padding: 3%;
+    width: 25%;
+    min-width: 180px;
+}
+
+/* ---- EQUIPO ---- */
+
+.Quienes-Somos {
+    background-color: #004040;
+    padding: 6% 3%;
+}
+
+.Equipo {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 3%;
+    margin-top: 3%;
+}
+
+.Persona {
+    background-color: rgba(0, 150, 150, 0.25);
+    border-radius: 3%;
+    padding: 3%;
+    width: 20%;
+    min-width: 160px;
+}
+
+.Persona img {
+    width: 50%;
+    border-radius: 50%;
+    margin-bottom: 5%;
+}
+
+.Perfil-Container {
+    background-color: #43A38D;
+    border-radius: 15px;
+    text-align: center;
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+.Perfil-Container section div button
+{
+    background-color: 23A98D;
+    border-radius: 15px;
+}
+
+header {
+    background: linear-gradient(180deg, #004040, #00a0a0);
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar{
+    width: 100%;
+    height: auto;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+    margin: 0 auto;
+}
+.navbar ul{
+    width: 60%;
+    height: auto;
+    margin-right: 2%;
+}
+.navbar div{
+    width: 10%;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 2%;
+}
+.navbar div img{
+    width: 45%;
+    height: auto;
+}
+.navbar ul{
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+}
+.navbar ul li a{
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    font-size: 120%;
+}
+.navbar ul li a:hover{
+    color: #00bfbf;
+    font-weight: bold;
+}
+
+
+/* ---- VERSIÓN CELULAR ---- */
+
+@media (max-width:768px)
+{
+
+    .CTA-1 
+    {
+        flex-direction: column;
+        align-items: center;
+        gap: 5%;
+    }
+
+    .Argumento-1, .Argumento-2 {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .Texto-Argumento-1, .Texto-Argumento-2 {
+        width: 90%;
+    }
+
+    .Beneficios-Item {
+        width: 90%;
+        margin: auto;
+    }
+
+    .Valores-Contenedor {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .Valores-Contenedor div {
+        width: 80%;
+    }
+
+    .Persona {
+        width: 70%;
+    }
+
+    .Banner-Principal {
+        height: 60vh;
+    }
+
+    .CTA-2 img {
+        width: 80%;
+    }
+
+    .Argumento-1 img, .Argumento-2 img {
+        width: 80%;
+    }
+}
+
+/* ---- ESTILOS PÁGINA INICIO (HOME) ---- */
+
+main {
+    background-color: #ffffff;
+    min-height: calc(100vh - 80px);
+}
+
+.Inicio-App {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    min-height: auto;
+}
+
+/* Usuario Card */
+.Usuario-Card {
+    background: linear-gradient(135deg, #7ED4A8 0%, #5AB88A 100%);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.Usuario-Header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.Usuario-Foto {
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    padding: 0.5rem;
+}
+
+.Usuario-Info {
+    color: white;
+    text-align: left;
+    flex: 1;
+}
+
+.Usuario-Info h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0 0 1.5rem 0;
+    color: white;
+}
+
+.medicamentos-titulo {
+    font-size: 1.1rem;
+    margin: 1rem 0 0.5rem 0;
+    color: white;
+}
+
+.medicamentos-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0;
+}
+
+.medicamentos-lista li {
+    font-size: 1rem;
+    margin: 0.3rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+    color: white;
+}
+
+.medicamentos-lista li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-principal {
+    background-color: #5AB88A;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: auto;
+    display: inline-block;
+}
+
+.btn-principal:hover {
+    background-color: #4A9A7A;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Notificaciones */
+.Notificaciones {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.Notificacion {
+    background: linear-gradient(135deg, #A8E6CF 0%, #7ED4A8 100%);
+    border-radius: 15px;
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.Notificacion:hover {
+    transform: translateX(5px);
+}
+
+.Notificacion-Contenido {
+    flex: 1;
+    text-align: left;
+}
+
+.Notificacion p {
+    margin: 0;
+    color: #2d5a47;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.Notificacion.vacia {
+    background: #f0f0f0;
+    color: #666;
+    justify-content: center;
+}
+
+.Notificacion.vacia p {
+    color: #666;
+}
+
+.btn-vermas {
+    background-color: transparent;
+    border: 2px solid #5AB88A;
+    color: #2d5a47;
+    border-radius: 20px;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 1rem;
+}
+
+.btn-vermas:hover {
+    background-color: #5AB88A;
+    color: white;
+}
+
+/* Accesos Principales */
+.Accesos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #E0E0E0;
+}
+
+.Acceso-Boton {
+    background: linear-gradient(135deg, #7ED4A8 0%, #5AB88A 100%);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.Acceso-Boton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border-color: #4A9A7A;
+}
+
+.Acceso-Boton a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.Acceso-Boton h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+}
+
+/* Responsive para computadora */
+@media (min-width: 769px) {
+    .Inicio-App {
+        padding: 3rem;
+    }
+    
+    .Usuario-Card {
+        padding: 3rem;
+    }
+    
+    .Accesos {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* Responsive para móvil */
+@media (max-width: 768px) {
+    .Inicio-App {
+        padding: 1rem;
+    }
+    
+    .Usuario-Card {
+        padding: 1.5rem;
+    }
+    
+    .Usuario-Info h2 {
+        font-size: 1.5rem;
+    }
+    
+    .Accesos {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
