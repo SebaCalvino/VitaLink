@@ -9,15 +9,16 @@ using System.Linq;
 
 public static class BD
 {
-    private static string _connectionString = @"Server=localhost;Database=BDVitalink;Integrated Security=True;TrustServerCertificate=True;";
+    private static string _connectionString = @"Server=MSI\SQLEXPRESS03;Database=BDVitalink;Integrated Security=True;TrustServerCertificate=True;";
 
 
 public static Usuario LoginUsuario(string email, string contrasena)
 {
     using (SqlConnection db = new SqlConnection(_connectionString))
     {
-        string sql = "SELECT * FROM Usuarios WHERE Email = @email AND Contrasena = @contrasena";
-        return db.QueryFirstOrDefault<Usuario>(sql, new { email, contrasena });
+        string sql = "SELECT * FROM Usuarios WHERE Email = @email AND Contraseña = @contrasena";
+        Usuario usuario = db.QueryFirstOrDefault<Usuario>(sql, new { email, contrasena });
+        return usuario;
     }
 }
 
@@ -26,11 +27,11 @@ public static Usuario LoginUsuario(string email, string contrasena)
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
             const string sql = @"INSERT INTO Usuarios
-                                (Estado, FechaCreacionCuenta, Nombre, Apellido, Doc_nro, FechaNacimiento, Sexo, PesoEnKg, AlturaEnCm, Telefono, Email, Contrasena)
+                                (Estado, FechaCreacionCuenta, Nombre, Apellido, Doc_nro, FechaNacimiento, Sexo, PesoEnKg, AlturaEnCm, Telefono, Email, Contraseña)
                                 VALUES (@Estado, @FechaCreacionCuenta, @Nombre, @Apellido, @Doc_nro, @FechaNacimiento, @Sexo, @PesoEnKg, @AlturaEnCm, @Telefono, @Email, @Contrasena);
                                 SELECT CAST(SCOPE_IDENTITY() AS int);";
 
-            return db.ExecuteScalar<int>(sql, new
+            int nuevoId = db.ExecuteScalar<int>(sql, new
             {
                 usuario.Estado,
                 usuario.FechaCreacionCuenta,
@@ -45,6 +46,7 @@ public static Usuario LoginUsuario(string email, string contrasena)
                 usuario.Email,
                 Contrasena = contrasena
             });
+            return nuevoId;
         }
     }
 
@@ -54,18 +56,19 @@ public static Usuario LoginUsuario(string email, string contrasena)
         {
             string query = @"SELECT * FROM Usuarios
                             WHERE Id = @pId";
-            return db.QueryFirstOrDefault<Usuario>(query, new {pId = Id});
+            Usuario usuario = db.QueryFirstOrDefault<Usuario>(query, new {pId = Id});
+            return usuario;
         }
     }
     public static List<Diagnostico> ObtenerDiagnosticosPorUsuario(int idUsuario)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
-            string sql = @"SELECT D.*, P.Nombre AS NombrePatologia, P.Descripcion
-                           FROM Diagnosticos D
-                           INNER JOIN Patologias P ON D.IdPatologia = P.Id
-                           WHERE D.IdUsuario = @idUsuario";
-            return db.Query<Diagnostico>(sql, new { idUsuario }).ToList();
+            string sql = @"SELECT Id, IdUsuario, IdPatologia, Descripcion, FechaInicio, FechaFin, Estado, NombrePatologia
+                           FROM Diagnosticos
+                           WHERE IdUsuario = @idUsuario";
+            List<Diagnostico> listaDiagnosticos = db.Query<Diagnostico>(sql, new { idUsuario }).ToList();
+            return listaDiagnosticos;
         }
     }
 
@@ -77,7 +80,8 @@ public static Usuario LoginUsuario(string email, string contrasena)
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
             string sql = "SELECT * FROM Alergias WHERE IdUsuario = @idUsuario";
-            return db.Query<Alergia>(sql, new { idUsuario }).ToList();
+            List<Alergia> listaAlergias = db.Query<Alergia>(sql, new { idUsuario }).ToList();
+            return listaAlergias;
         }
     }
 
@@ -92,7 +96,8 @@ public static Usuario LoginUsuario(string email, string contrasena)
                            FROM MedicacionesPaciente M
                            LEFT JOIN Recetas R ON M.IdReceta = R.Id
                            WHERE M.IdUsuario = @idUsuario";
-            return db.Query<MedicacionesPaciente>(sql, new { idUsuario }).ToList();
+            List<MedicacionesPaciente> listaMedicaciones = db.Query<MedicacionesPaciente>(sql, new { idUsuario }).ToList();
+            return listaMedicaciones;
         }
     }
 
@@ -107,7 +112,8 @@ public static Usuario LoginUsuario(string email, string contrasena)
                            FROM VacunasXPaciente VXP
                            INNER JOIN Vacunas V ON VXP.IdVacuna = V.Id
                            WHERE VXP.IdUsuario = @idUsuario";
-            return db.Query<VacunasXPaciente>(sql, new { idUsuario }).ToList();
+            List<VacunasXPaciente> listaVacunas = db.Query<VacunasXPaciente>(sql, new { idUsuario }).ToList();
+            return listaVacunas;
         }
     }
 
@@ -127,7 +133,8 @@ public static Usuario LoginUsuario(string email, string contrasena)
             string sql = @"SELECT O.*, D.Calle, D.Altura
                            FROM Organizaciones O
                            LEFT JOIN Direcciones D ON O.IdDireccion = D.Id";
-            return db.Query<Organizacion>(sql).ToList();
+            List<Organizacion> listaOrganizaciones = db.Query<Organizacion>(sql).ToList();
+            return listaOrganizaciones;
         }
     }
 
@@ -137,11 +144,11 @@ public static Usuario LoginUsuario(string email, string contrasena)
         if (idOrganizacion <= 0)
             return null;
 
-
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
             const string sql = "SELECT Nombre FROM Organizaciones WHERE Id = @idOrganizacion";
-            return db.QueryFirstOrDefault<string>(sql, new { idOrganizacion });
+            string nombre = db.QueryFirstOrDefault<string>(sql, new { idOrganizacion });
+            return nombre;
         }
     }
 
@@ -151,11 +158,11 @@ public static Usuario LoginUsuario(string email, string contrasena)
         if (idVacuna <= 0)
             return null;
 
-
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
             const string sql = "SELECT NombreVacuna FROM Vacunas WHERE Id = @idVacuna";
-            return db.QueryFirstOrDefault<string>(sql, new { idVacuna });
+            string nombre = db.QueryFirstOrDefault<string>(sql, new { idVacuna });
+            return nombre;
         }
     }
 
@@ -165,11 +172,11 @@ public static Usuario LoginUsuario(string email, string contrasena)
         if (idModalidad <= 0)
             return null;
 
-
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
-            const string sql = "SELECT Nombre FROM Modalidad WHERE Id = @idModalidad";
-            return db.QueryFirstOrDefault<string>(sql, new { idModalidad });
+            const string sql = "SELECT Tipo_ImagenEstudio FROM Modalidad WHERE Id = @idModalidad";
+            string modalidad = db.QueryFirstOrDefault<string>(sql, new { idModalidad });
+            return modalidad;
         }
     }
    
@@ -177,11 +184,13 @@ public static Usuario LoginUsuario(string email, string contrasena)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
-            string sql = @"SELECT E.*, O.Nombre AS NombreOrganizacion, O.Tipo
+            string sql = @"SELECT E.*, O.Nombre AS NombreOrganizacion, TipoOrg.TipoOrganizacion AS Tipo
                            FROM Encuentros E
                            LEFT JOIN Organizaciones O ON E.IdOrganizacion = O.Id
+                           LEFT JOIN Tipo_Organizacion TipoOrg ON O.Id_Tipo_Organizacion = TipoOrg.Id
                            WHERE E.IdUsuario = @idUsuario";
-            return db.Query<Encuentro>(sql, new { idUsuario }).ToList();
+            List<Encuentro> listaEncuentros = db.Query<Encuentro>(sql, new { idUsuario }).ToList();
+            return listaEncuentros;
         }
     }
 
@@ -196,11 +205,12 @@ public static Usuario LoginUsuario(string email, string contrasena)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
-            string sql = @"SELECT DC.*, A.Capacidad, A.TipoArchivo, A.FechaCreacion
+            string sql = @"SELECT DC.*, A.Capacidad, A.FechaCreacion
                            FROM Documentos_Clinicos DC
                            LEFT JOIN Archivos A ON DC.IdArchivo = A.Id
                            WHERE DC.IdEncuentro = @idEncuentro";
-            return db.Query<DocumentoClinico>(sql, new { idEncuentro }).ToList();
+            List<DocumentoClinico> listaDocumentos = db.Query<DocumentoClinico>(sql, new { idEncuentro }).ToList();
+            return listaDocumentos;
         }
     }
 
@@ -212,7 +222,8 @@ public static Usuario LoginUsuario(string email, string contrasena)
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
             string sql = "SELECT * FROM Imagenes_Estudios WHERE IdEncuentro = @idEncuentro";
-            return db.Query<Imagenes_Estudio>(sql, new { idEncuentro }).ToList();
+            List<Imagenes_Estudio> listaImagenes = db.Query<Imagenes_Estudio>(sql, new { idEncuentro }).ToList();
+            return listaImagenes;
         }
     }
 
@@ -264,8 +275,8 @@ public static Usuario LoginUsuario(string email, string contrasena)
                     return false;
             }
 
-            int filasAfectadas = db.Execute(sql, new { valor = valorConvertido, idUsuario });
-            return filasAfectadas > 0;
+            int registrosAfectados = db.Execute(sql, new { valor = valorConvertido, idUsuario });
+            return registrosAfectados > 0;
         }
     }
 
@@ -276,7 +287,4 @@ public static Usuario LoginUsuario(string email, string contrasena)
 
 
 }
-
-
-
 
