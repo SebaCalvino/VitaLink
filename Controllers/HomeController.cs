@@ -140,16 +140,29 @@ public class HomeController : Controller
         ViewBag.SignUpSuccess = TempData["SignUpSuccess"];
         return View("LogIn");
     }
-    /*
-    private void ActualizarSession(){
-        HttpContext.Session.SetString("User", Objeto.ObjectToString());
+    private void ActualizarSession(Usuario usuario){
+        HttpContext.Session.SetString("User", Objeto.ObjectToString(usuario));
+        HttpContext.Session.SetInt32("IdUsuario", usuario.Id);
     }
+    
     private Usuario ObtenerUsuario(){
-        return Objeto.StringToObject(Http.Context.Session.GetString("User"));
+        string usuarioJson = HttpContext.Session.GetString("User");
+        if (string.IsNullOrEmpty(usuarioJson))
+        {
+            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            if (idUsuario > 0)
+            {
+                Usuario usuario = BD.ObtenerUsuarioPorId(idUsuario);
+                if (usuario != null)
+                {
+                    ActualizarSession(usuario);
+                    return usuario;
+                }
+            }
+            return null;
+        }
+        return Objeto.StringToObject<Usuario>(usuarioJson);
     }
-
-
-*/
     public IActionResult Calendario()
     {
         return View("Calendario");
@@ -162,15 +175,16 @@ public class HomeController : Controller
 
     public IActionResult Medicamentos()
     {
-        int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
-        if (idUsuario == 0) return RedirectToAction("LogIn");
+        Usuario usuario = ObtenerUsuario();
+        if (usuario == null) return RedirectToAction("LogIn");
 
-        ViewBag.Medicaciones = BD.ObtenerMedicacionesPorUsuario(idUsuario);
+        ViewBag.Medicaciones = BD.ObtenerMedicacionesPorUsuario(usuario.Id);
         return View("Medicamentos");
     }
 
 
  [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult LogIn(string email, string contrasena)
         {
             Usuario usuario = BD.LoginUsuario(email, contrasena);
@@ -182,9 +196,7 @@ public class HomeController : Controller
                 return View("LogIn");
             }
 
-
-            HttpContext.Session.SetInt32("IdUsuario", usuario.Id);
-
+            ActualizarSession(usuario);
 
             return RedirectToAction("Home");
         }
@@ -194,17 +206,12 @@ public class HomeController : Controller
 
         public IActionResult Home()
         {
-            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
-            if (idUsuario == 0) return RedirectToAction("LogIn");
-
-
-            Usuario usuario = BD.ObtenerUsuarioPorId(idUsuario);
-
+            Usuario usuario = ObtenerUsuario();
+            if (usuario == null) return RedirectToAction("LogIn");
 
             ViewBag.Usuario = usuario;
-            ViewBag.Medicaciones = BD.ObtenerMedicacionesPorUsuario(idUsuario);
-            ViewBag.Encuentros = BD.ObtenerEncuentrosPorUsuario(idUsuario);
-
+            ViewBag.Medicaciones = BD.ObtenerMedicacionesPorUsuario(usuario.Id);
+            ViewBag.Encuentros = BD.ObtenerEncuentrosPorUsuario(usuario.Id);
 
             return View("Home");
         }
@@ -214,14 +221,12 @@ public class HomeController : Controller
 
         public IActionResult Perfil()
         {
-            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
-            if (idUsuario == 0) return RedirectToAction("LogIn");
+            Usuario usuario = ObtenerUsuario();
+            if (usuario == null) return RedirectToAction("LogIn");
 
-
-            ViewBag.Usuario = BD.ObtenerUsuarioPorId(idUsuario);
-            ViewBag.Alergias = BD.ObtenerAlergiasPorUsuario(idUsuario);
-            ViewBag.Diagnosticos = BD.ObtenerDiagnosticosPorUsuario(idUsuario);
-
+            ViewBag.Usuario = usuario;
+            ViewBag.Alergias = BD.ObtenerAlergiasPorUsuario(usuario.Id);
+            ViewBag.Diagnosticos = BD.ObtenerDiagnosticosPorUsuario(usuario.Id);
 
             return View("Perfil");
         }
@@ -230,20 +235,17 @@ public class HomeController : Controller
    
         public IActionResult HistorialMedico()
         {
-            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
-            if (idUsuario == 0) return RedirectToAction("LogIn");
+            Usuario usuario = ObtenerUsuario();
+            if (usuario == null) return RedirectToAction("LogIn");
 
+            ViewBag.Usuario = usuario;
+            ViewBag.Diagnosticos = BD.ObtenerDiagnosticosPorUsuario(usuario.Id);
+            ViewBag.Vacunas = BD.ObtenerVacunasPorUsuario(usuario.Id);
 
-            ViewBag.Usuario = BD.ObtenerUsuarioPorId(idUsuario);
-            ViewBag.Diagnosticos = BD.ObtenerDiagnosticosPorUsuario(idUsuario);
-            ViewBag.Vacunas = BD.ObtenerVacunasPorUsuario(idUsuario);
-
-
-            var encuentros = BD.ObtenerEncuentrosPorUsuario(idUsuario);
+            var encuentros = BD.ObtenerEncuentrosPorUsuario(usuario.Id);
             ViewBag.Documentos = encuentros
                 .SelectMany(e => BD.ObtenerDocumentosPorEncuentro(e.Id))
                 .ToList();
-
 
             ViewBag.AntecedentesFamiliares = new List<object>(); // placeholder
             return View("HistorialMedico");
@@ -255,23 +257,21 @@ public class HomeController : Controller
         [HttpPost]
         public IActionResult CambiarContrasena([FromBody] CambioContrasenaRequest request)
         {
-            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
-            if (idUsuario == 0) return Json(new { success = false, message = "No hay sesión activa" });
-
-
-            Usuario usuario = BD.ObtenerUsuarioPorId(idUsuario);
-            if (usuario == null)
-                return Json(new { success = false, message = "Usuario no encontrado" });
-
+            Usuario usuario = ObtenerUsuario();
+            if (usuario == null) 
+                return Json(new { success = false, message = "No hay sesión activa" });
 
             bool resultado = usuario.CambiarContraseña(request.ContrasenaActual, request.ContrasenaNueva);
 
+            if (resultado)
+            {
+                ActualizarSession(usuario);
+            }
 
             if (!resultado && usuario.IntentosFallidos >= 5)
             {
                 return Json(new { success = false, bloqueado = true, message = "Se acabaron los intentos. Inténtelo más tarde." });
             }
-
 
             return Json(new { success = resultado, bloqueado = false });
         }
@@ -285,25 +285,31 @@ public class HomeController : Controller
 
         public IActionResult EditarPerfil()
         {
-            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
-            if (idUsuario == 0) return RedirectToAction("LogIn");
+            Usuario usuario = ObtenerUsuario();
+            if (usuario == null) return RedirectToAction("LogIn");
 
-            ViewBag.Usuario = BD.ObtenerUsuarioPorId(idUsuario);
+            ViewBag.Usuario = usuario;
             return View("EditarPerfil");
         }
 
         [HttpPost]
         public IActionResult ActualizarCampoUsuario([FromBody] ActualizarCampoRequest request)
         {
-            int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
-            if (idUsuario == 0) 
+            Usuario usuario = ObtenerUsuario();
+            if (usuario == null) 
                 return Json(new { success = false, message = "No hay sesión activa" });
 
             try
             {
-                bool resultado = BD.ActualizarCampoUsuario(idUsuario, request.Campo, request.Valor);
+                bool resultado = BD.ActualizarCampoUsuario(usuario.Id, request.Campo, request.Valor);
                 if (resultado)
                 {
+                    // Actualizar el usuario en la sesión después de modificar
+                    Usuario usuarioActualizado = BD.ObtenerUsuarioPorId(usuario.Id);
+                    if (usuarioActualizado != null)
+                    {
+                        ActualizarSession(usuarioActualizado);
+                    }
                     return Json(new { success = true, message = "Campo actualizado correctamente" });
                 }
                 else
