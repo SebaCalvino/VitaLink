@@ -486,4 +486,101 @@ function toggleIndicaciones(elemento) {
         indicaciones.classList.remove('active');
     }
 }
+// Modal editar medicamento
+function abrirModalMedicamento(id, nombre, dosis, frecuencia, hora, indicacion) {
+    const modal = document.getElementById('modal-medicamento');
+    if (!modal) {
+        console.error('Modal de medicamento no encontrado');
+        return;
+    }
+    
+    document.getElementById('med-id').value = id;
+    document.getElementById('med-nombre').value = nombre || '';
+    document.getElementById('med-dosis').value = dosis || '';
+    document.getElementById('med-frecuencia').value = frecuencia || '';
+    document.getElementById('med-hora').value = hora || '';
+    document.getElementById('med-indicacion').value = indicacion || '';
+    
+    modal.style.display = 'flex';
+}
+
+function cerrarModalMedicamento() {
+    const modal = document.getElementById('modal-medicamento');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+function guardarMedicamento() {
+    const id = document.getElementById('med-id').value;
+    const datos = {
+        Id: parseInt(id),
+        Nombre_Comercial: document.getElementById('med-nombre').value,
+        Dosis: document.getElementById('med-dosis').value,
+        Frecuencia: document.getElementById('med-frecuencia').value,
+        HoraProgramada: document.getElementById('med-hora').value,
+        Indicacion: document.getElementById('med-indicacion').value
+    };
+    
+    if (!datos.Nombre_Comercial || !datos.Dosis) {
+        alert('Por favor complete los campos obligatorios (Nombre y Dosis).');
+        return;
+    }
+    
+    fetch('/Home/ActualizarMedicamento', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(datos)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            cerrarModalMedicamento();
+            alert('Medicamento actualizado correctamente.');
+            location.reload();
+        } else {
+            alert('Error al actualizar: ' + (data.message || 'Error desconocido'));
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Ocurrió un error al actualizar el medicamento.');
+    });
+}
+
+function confirmarEliminarMedicamento(id) {
+    if (confirm('¿Está seguro que desea eliminar este medicamento?')) {
+        fetch('/Home/EliminarMedicamento', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ Id: id })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Medicamento eliminado correctamente.');
+                location.reload();
+            } else {
+                alert('Error al eliminar: ' + (data.message || 'Error desconocido'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Ocurrió un error al eliminar el medicamento.');
+        });
+    }
+}
+
+// Cerrar modal de medicamento al hacer clic fuera
+window.addEventListener('click', function(event) {
+    const modalMed = document.getElementById('modal-medicamento');
+    if (event.target === modalMed) {
+        cerrarModalMedicamento();
+    }
+});
+
 
