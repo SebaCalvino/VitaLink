@@ -1,0 +1,99 @@
+@{
+    ViewData["Title"] = "Perfil";
+    var usuario = ViewBag.Usuario as Usuario;
+    var alergias = ViewBag.Alergias as List<Alergia> ?? new List<Alergia>();
+    var diagnosticos = ViewBag.Diagnosticos as List<Diagnostico> ?? new List<Diagnostico>();
+    
+    var enfermedadesActuales = diagnosticos.Where(d => d.Estado == true).ToList();
+    var enfermedadesRelevantes = diagnosticos.ToList();
+}
+
+<main class="Perfil-App">
+    
+    <section class="Perfil-Foto">
+        <figure>
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-width="1" fill="none"/>
+                <path d="M12 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 1c-2 0-6 1-6 3v2h12v-2c0-2-4-3-6-3z"/>
+            </svg>
+        </figure>
+        <a href="@Url.Action("EditarPerfil", "Home")">Editar Perfil</a>
+    </section>
+
+    <section class="Perfil-InfoPrincipal">
+        <h2>Informacion Principal</h2>
+        
+        <div class="Info-Basica">
+            <span>Peso: @(usuario?.PesoEnKg > 0 ? $"{usuario.PesoEnKg}kg" : "Sin dato")</span>
+            <span>Altura: @(usuario?.AlturaEnCm > 0 ? $"{usuario.AlturaEnCm}cm" : "Sin dato")</span>
+            <span>Fecha de Nacimiento: @(usuario?.FechaNacimiento != default ? usuario.FechaNacimiento.ToString("dd/MM/yyyy") : "Sin dato")</span>
+        </div>
+
+        <article>
+            <h3>Alergias:</h3>
+            @if (alergias.Any())
+            {
+                <ul>
+                    @foreach (var alergia in alergias)
+                    {
+                        <li>@alergia.Reaccion</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>No hay información sobre: alergias</p>
+            }
+        </article>
+
+        <article>
+            <h3>Enfermedad:</h3>
+            @if (enfermedadesActuales.Any())
+            {
+                <ul>
+                    @foreach (var enfermedad in enfermedadesActuales)
+                    {
+                        <li>@(enfermedad.NombrePatologia ?? enfermedad.Descripcion)</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>Te encuentras en perfecta salud</p>
+            }
+        </article>
+    </section>
+
+    <section class="Perfil-EnfermedadesRelevantes">
+        <h2>Enfermedades Relevantes</h2>
+        
+        @if (enfermedadesRelevantes.Any())
+        {
+            <ul>
+                @foreach (var enfermedad in enfermedadesRelevantes)
+                {
+                    <li>
+                        <div>
+                            <h4>@(enfermedad.NombrePatologia ?? enfermedad.Descripcion)</h4>
+                            @if (enfermedad.FechaFin == default || enfermedad.FechaFin > DateTime.Now)
+                            {
+                                <span>Cronica</span>
+                            }
+                            else
+                            {
+                                <time datetime="@enfermedad.FechaInicio.ToString("yyyy-MM-dd")">
+                                    @enfermedad.FechaInicio.ToString("dd/MM/yyyy")
+                                </time>
+                            }
+                        </div>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>No hay información sobre: enfermedades relevantes</p>
+        }
+    </section>
+
+</main>
