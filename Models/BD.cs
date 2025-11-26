@@ -278,6 +278,39 @@ public static Usuario LoginUsuario(string email, string contrasena)
             int registrosAfectados = db.Execute(sql, new { valor = valorConvertido, idUsuario });
             return registrosAfectados > 0;
         }
+        public static bool ActualizarMedicamento(int id, int idUsuario, string nombreComercial, string dosis, string frecuencia, string horaProgramada, string indicacion)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = @"UPDATE MedicacionesPaciente 
+                           SET Nombre_Comercial = @nombreComercial,
+                               Dosis = @dosis,
+                               Frecuencia = @frecuencia,
+                               HoraProgramada = @horaProgramada,
+                               Indicacion = @indicacion
+                           WHERE Id = @id AND IdUsuario = @idUsuario";
+            
+            DateTime hora = DateTime.Today;
+            if (TimeSpan.TryParse(horaProgramada, out TimeSpan time))
+            {
+                hora = DateTime.Today.Add(time);
+            }
+            
+            int filasAfectadas = db.Execute(sql, new { id, idUsuario, nombreComercial, dosis, frecuencia, horaProgramada = hora, indicacion });
+            return filasAfectadas > 0;
+        }
+    }
+
+    public static bool EliminarMedicamento(int id, int idUsuario)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = @"DELETE FROM MedicacionesPaciente WHERE Id = @id AND IdUsuario = @idUsuario";
+            int filasAfectadas = db.Execute(sql, new { id, idUsuario });
+            return filasAfectadas > 0;
+        }
+    }
+
     }
 
 
