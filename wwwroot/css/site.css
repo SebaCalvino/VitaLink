@@ -184,18 +184,34 @@ body {
 .Beneficios {
     background-color: #006060;
     padding: 6% 3%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
 }
 
 .Beneficios-Item {
     margin-bottom: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+.Beneficios-Item div{
+    width: 25%;
+    height: auto;
+    background-color: #007f7f;
+    padding: 3%;
+    border-radius: 20px;
 }
 
 .Beneficios img {
-    width: 10%;
-    margin-bottom: 2%;
+    width: 50%;
+}
+
+.Beneficios-Item div h3{
+    font-size: 200%;
+    color: white;
+}
+.Beneficios-Item div p{
+    font-size: 150%;
+    color: white;
 }
 
 /* ---- CTA 2 ---- */
