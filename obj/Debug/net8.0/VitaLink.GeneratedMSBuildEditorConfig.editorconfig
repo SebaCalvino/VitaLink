@@ -18,6 +18,14 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\48794823\VitaLink
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/48794823/VitaLink/Views/Home/AgregarAutomaticamente.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZ3JlZ2FyQXV0b21hdGljYW1lbnRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/48794823/VitaLink/Views/Home/AgregarManualmente.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZ3JlZ2FyTWFudWFsbWVudGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/48794823/VitaLink/Views/Home/Calendario.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDYWxlbmRhcmlvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

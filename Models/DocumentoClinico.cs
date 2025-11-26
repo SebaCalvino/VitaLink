@@ -5,4 +5,5 @@ public class DocumentoClinico{
     public string Titulo{get; set;}
     public DateTime Fecha{get; set;}
     public int IdArchivo{get; set;}
+    public string NombreArchivo {get;set;}
 }
