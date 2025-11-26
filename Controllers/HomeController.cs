@@ -345,7 +345,67 @@ public class HomeController : Controller
 
             return View("AgregarAutomaticamente");
         }
+        [HttpPost]
+    public IActionResult ActualizarMedicamento([FromBody] ActualizarMedicamentoRequest request)
+    {
+        Usuario usuario = ObtenerUsuario();
+        if (usuario == null)
+            return Json(new { success = false, message = "No hay sesión activa" });
 
+        try
+        {
+            bool resultado = BD.ActualizarMedicamento(request.Id, usuario.Id, request.Nombre_Comercial, 
+                request.Dosis, request.Frecuencia, request.HoraProgramada, request.Indicacion);
+            
+            if (resultado)
+                return Json(new { success = true, message = "Medicamento actualizado correctamente" });
+            else
+                return Json(new { success = false, message = "No se pudo actualizar el medicamento" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error al actualizar medicamento");
+            return Json(new { success = false, message = "Error al actualizar el medicamento" });
+        }
+    }
+
+    [HttpPost]
+    public IActionResult EliminarMedicamento([FromBody] EliminarMedicamentoRequest request)
+    {
+        Usuario usuario = ObtenerUsuario();
+        if (usuario == null)
+            return Json(new { success = false, message = "No hay sesión activa" });
+
+        try
+        {
+            bool resultado = BD.EliminarMedicamento(request.Id, usuario.Id);
+            
+            if (resultado)
+                return Json(new { success = true, message = "Medicamento eliminado correctamente" });
+            else
+                return Json(new { success = false, message = "No se pudo eliminar el medicamento" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error al eliminar medicamento");
+            return Json(new { success = false, message = "Error al eliminar el medicamento" });
+        }
+    }
+
+    public class ActualizarMedicamentoRequest
+    {
+        public int Id { get; set; }
+        public string Nombre_Comercial { get; set; }
+        public string Dosis { get; set; }
+        public string Frecuencia { get; set; }
+        public string HoraProgramada { get; set; }
+        public string Indicacion { get; set; }
+    }
+
+    public class EliminarMedicamentoRequest
+    {
+        public int Id { get; set; }
+    }
 
 }
      
