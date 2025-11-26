@@ -366,6 +366,11 @@ function abrirModal(campo, valor) {
     valorActual = valor;
     
     const modal = document.getElementById('modal-editar');
+    if (!modal) {
+        console.error('Modal no encontrado');
+        return;
+    }
+    
     const campoNombre = document.getElementById('modal-campo-nombre');
     const valorActualSpan = document.getElementById('modal-valor-actual');
     const inputTexto = document.getElementById('modal-nuevo-valor');
@@ -384,18 +389,22 @@ function abrirModal(campo, valor) {
         'Telefono': 'Teléfono'
     };
     
-    campoNombre.textContent = nombresCampos[campo] || campo;
-    valorActualSpan.textContent = valor;
+    if (campoNombre) campoNombre.textContent = nombresCampos[campo] || campo;
+    if (valorActualSpan) valorActualSpan.textContent = valor;
     
     // Mostrar el input apropiado según el tipo de campo
     if (campo === 'FechaNacimiento') {
-        inputTexto.style.display = 'none';
-        inputFecha.style.display = 'block';
-        inputFecha.value = valor;
+        if (inputTexto) inputTexto.style.display = 'none';
+        if (inputFecha) {
+            inputFecha.style.display = 'block';
+            inputFecha.value = valor;
+        }
     } else {
-        inputTexto.style.display = 'block';
-        inputFecha.style.display = 'none';
-        inputTexto.value = valor;
+        if (inputTexto) {
+            inputTexto.style.display = 'block';
+            inputTexto.value = valor;
+        }
+        if (inputFecha) inputFecha.style.display = 'none';
     }
     
     modal.style.display = 'flex';
