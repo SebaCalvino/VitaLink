@@ -278,6 +278,7 @@ public static Usuario LoginUsuario(string email, string contrasena)
             int registrosAfectados = db.Execute(sql, new { valor = valorConvertido, idUsuario });
             return registrosAfectados > 0;
         }
+    }
         public static bool ActualizarMedicamento(int id, int idUsuario, string nombreComercial, string dosis, string frecuencia, string horaProgramada, string indicacion)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -311,13 +312,4 @@ public static Usuario LoginUsuario(string email, string contrasena)
         }
     }
 
-    }
-
-
-     
-
-
-
-
 }
-
