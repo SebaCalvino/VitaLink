@@ -511,6 +511,30 @@ function cerrarModalMedicamento() {
     }
 }
 
+function cambiarFormulario() {
+    const valor = document.getElementById("tipoDato").value;
+
+    document.querySelectorAll(".formulario-manual").forEach(form => {
+        form.classList.add("oculto");
+    });
+
+    if (valor === "vacunacion") {
+        document.getElementById("formVacunacion").classList.remove("oculto");
+    }
+    if (valor === "estudio") {
+        document.getElementById("formEstudio").classList.remove("oculto");
+    }
+    if (valor === "enfermedad") {
+        document.getElementById("formEnfermedad").classList.remove("oculto");
+    }
+    if (valor === "antecedente") {
+        document.getElementById("formAntecedente").classList.remove("oculto");
+    }
+    if (valor === "consulta") {
+        document.getElementById("formConsulta").classList.remove("oculto");
+    }
+}
+
 function guardarMedicamento() {
     const id = document.getElementById('med-id').value;
     const datos = {
