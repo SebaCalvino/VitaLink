@@ -2455,23 +2455,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\48793668\\.nuget\\packages\\": {},
+    "C:\\Users\\48795975\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\48793668\\Downloads\\faasdf\\VitaLink\\VitaLink.csproj",
+      "projectUniqueName": "C:\\Users\\48795975\\VitaLink\\VitaLink.csproj",
       "projectName": "VitaLink",
-      "projectPath": "C:\\Users\\48793668\\Downloads\\faasdf\\VitaLink\\VitaLink.csproj",
-      "packagesPath": "C:\\Users\\48793668\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\48793668\\Downloads\\faasdf\\VitaLink\\obj\\",
+      "projectPath": "C:\\Users\\48795975\\VitaLink\\VitaLink.csproj",
+      "packagesPath": "C:\\Users\\48795975\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\48795975\\VitaLink\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\48793668\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\48795975\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
