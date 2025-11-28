@@ -104,7 +104,7 @@ public static Usuario LoginUsuario(string email, string contrasena)
 
 
 
-    public static List<VacunasXPaciente> ObtenerVacunasPorUsuario(int idUsuario)
+    public static List<dynamic> ObtenerVacunasPorUsuario(int idUsuario)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
@@ -112,7 +112,7 @@ public static Usuario LoginUsuario(string email, string contrasena)
                            FROM VacunasXPaciente VXP
                            INNER JOIN Vacunas V ON VXP.IdVacuna = V.Id
                            WHERE VXP.IdUsuario = @idUsuario";
-            List<VacunasXPaciente> listaVacunas = db.Query<VacunasXPaciente>(sql, new { idUsuario }).ToList();
+            List<dynamic> listaVacunas = db.Query<dynamic>(sql, new { idUsuario }).ToList();
             return listaVacunas;
         }
     }
