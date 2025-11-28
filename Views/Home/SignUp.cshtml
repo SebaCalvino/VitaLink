@@ -12,7 +12,7 @@
         <div>
             <div>
                 <div class="card-body p-4">
-                    <h2 class="mb-4 text-center">Crear cuenta</h2>
+                    <h2 class="mb-4 text-center">Registrarse</h2>
 
                     @if (errores is { Count: > 0 })
                     {
@@ -31,29 +31,29 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="nombre" class="form-label">Nombre</label>
-                                <input id="nombre" name="nombre" class="form-control" value="@Valor("Nombre")" required />
+                                <input id="nombre" placeholder="Uriel" name="nombre" class="form-control" value="@Valor("Nombre")" required />
                             </div>
                             <div class="col-md-6">
                                 <label for="apellido" class="form-label">Apellido</label>
-                                <input id="apellido" name="apellido" class="form-control" value="@Valor("Apellido")" required />
+                                <input id="apellido" placeholder="Grinfeld" name="apellido" class="form-control" value="@Valor("Apellido")" required />
                             </div>
 
                             <div class="col-md-6">
                                 <label for="email" class="form-label">Email</label>
-                                <input id="email" name="email" class="form-control" type="email" value="@Valor("Email")" required />
+                                <input id="email" placeholder="UrielGrinfeld@gmail.com" name="email" class="form-control" type="email" value="@Valor("Email")" required />
                             </div>
                             <div class="col-md-6">
                                 <label for="contrasena" class="form-label">Contraseña</label>
-                                <input id="contrasena" name="contrasena" class="form-control" type="password" value="@Valor("Contrasena")" required />
+                                <input id="contrasena" placeholder="*********" name="contrasena" class="form-control" type="password" value="@Valor("Contrasena")" required />
                             </div>
 
                             <div class="col-md-6">
                                 <label for="peso" class="form-label">Peso (kg)</label>
-                                <input id="peso" name="peso" class="form-control" type="number" step="0.1" value="@Valor("Peso")" required />
+                                <input id="peso" placeholder="71,3" name="peso" class="form-control" type="number" step="0.1" value="@Valor("Peso")" required />
                             </div>
                             <div class="col-md-6">
                                 <label for="altura" class="form-label">Altura (cm)</label>
-                                <input id="altura" name="altura" class="form-control" type="number" step="0.1" value="@Valor("Altura")" required />
+                                <input id="altura" placeholder="182" name="altura" class="form-control" type="number" step="0.1" value="@Valor("Altura")" required />
                             </div>
 
                             <div class="col-md-6">
@@ -96,7 +96,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="telefono" class="form-label">Teléfono</label>
-                                <input id="telefono" name="telefono" class="form-control" type="tel" value="@Valor("Telefono")" required />
+                                <input id="telefono" placeholder="1166034802" name="telefono" class="form-control" type="tel" value="@Valor("Telefono")" required />
                             </div>
 
                             <div class="col-md-6">
@@ -105,7 +105,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="numeroDocumento" class="form-label">Número de documento</label>
-                                <input id="numeroDocumento" name="numeroDocumento" class="form-control" type="number" value="@Valor("NumeroDocumento")" required />
+                                <input id="numeroDocumento" placeholder="48793661" name="numeroDocumento" class="form-control" type="number" value="@Valor("NumeroDocumento")" required />
                             </div>
                         </div>
 
