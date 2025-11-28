@@ -2,7 +2,144 @@
     ViewData["Title"] = "Agregar Manualmente - VitaLink";
 }
 
-<main>
-    <h1>Agregar Manualmente</h1>
-</main>
+<main class="agregar-main">
 
+    <!-- HEADER -->
+    <header class="agregar-header">
+        <a href="/Home" class="btn-volver">
+            ←
+        </a>
+        <h1>Agregar Manualmente</h1>
+    </header>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <section class="agregar-card">
+
+        <!-- SELECT TIPO DE DATO -->
+        <div class="campo-grupo">
+            <select id="tipoDato" class="select-tipo" onchange="cambiarFormulario()">
+                <option value="">Tipo de dato</option>
+                <option value="vacunacion">Vacunación</option>
+                <option value="estudio">Estudio</option>
+                <option value="enfermedad">Enfermedad</option>
+                <option value="antecedente">Antecedente</option>
+                <option value="consulta">Consulta</option>
+            </select>
+        </div>
+
+        <!-- ================= FORMULARIO VACUNACIÓN ================= -->
+        <form id="formVacunacion" class="formulario-manual oculto">
+
+            <div class="campo-grupo">
+                <input type="text" placeholder="Dosis (ml)">
+            </div>
+
+            <div class="campo-grupo">
+                <input type="text" placeholder="Número de lote">
+            </div>
+
+            <div class="campo-grupo">
+                <input type="text" placeholder="Nombre de la vacuna">
+            </div>
+
+            <div class="campo-grupo">
+                <textarea rows="3" placeholder="Datos de interés"></textarea>
+            </div>
+
+            <div class="campo-grupo">
+                <input type="date">
+            </div>
+
+            <button type="submit" class="btn-agregar-form">
+                Agregar
+            </button>
+
+        </form>
+
+        <!-- ================= FORMULARIO ESTUDIO ================= -->
+        <form id="formEstudio" class="formulario-manual oculto">
+
+            <div class="campo-grupo">
+                <input type="text" placeholder="Nombre del estudio">
+            </div>
+
+            <div class="campo-grupo">
+                <textarea rows="3" placeholder="Resultado / Observación"></textarea>
+            </div>
+
+            <div class="campo-grupo">
+                <input type="date">
+            </div>
+
+            <button type="submit" class="btn-agregar-form">
+                Agregar
+            </button>
+
+        </form>
+
+        <!-- ================= FORMULARIO ENFERMEDAD ================= -->
+        <form id="formEnfermedad" class="formulario-manual oculto">
+
+            <div class="campo-grupo">
+                <input type="text" placeholder="Nombre de la enfermedad">
+            </div>
+
+            <div class="campo-grupo">
+                <textarea rows="3" placeholder="Descripción"></textarea>
+            </div>
+
+            <div class="campo-grupo">
+                <input type="date">
+            </div>
+
+            <button type="submit" class="btn-agregar-form">
+                Agregar
+            </button>
+
+        </form>
+
+        <!-- ================= FORMULARIO ANTECEDENTE ================= -->
+        <form id="formAntecedente" class="formulario-manual oculto">
+
+            <div class="campo-grupo">
+                <input type="text" placeholder="Antecedente médico">
+            </div>
+
+            <div class="campo-grupo">
+                <textarea rows="3" placeholder="Detalle"></textarea>
+            </div>
+
+            <div class="campo-grupo">
+                <input type="date">
+            </div>
+
+            <button type="submit" class="btn-agregar-form">
+                Agregar
+            </button>
+
+        </form>
+
+        <!-- ================= FORMULARIO CONSULTA ================= -->
+        <form id="formConsulta" class="formulario-manual oculto">
+
+            <div class="campo-grupo">
+                <input type="text" placeholder="Motivo de la consulta">
+            </div>
+
+            <div class="campo-grupo">
+                <textarea rows="3" placeholder="Observaciones"></textarea>
+            </div>
+
+            <div class="campo-grupo">
+                <input type="date">
+            </div>
+
+            <button type="submit" class="btn-agregar-form">
+                Agregar
+            </button>
+
+        </form>
+
+    </section>
+
+</main>
