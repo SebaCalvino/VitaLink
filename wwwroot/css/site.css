@@ -1,7 +1,8 @@
 /* ---- ESTILOS GENERALES ---- */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 *{
-    font-family: nunito;
-}
+    font-family: 'Nunito Sans', sans-serif;
+ }
 
 /* ---- BOTONES ---- */
 
@@ -35,6 +36,11 @@
     justify-content: center;
     align-items: center;
     gap: 1%;
+}
+
+.Banner-Principal *
+{
+    color :white;
 }
 .Banner-Principal div{
     width: 45%;
@@ -94,6 +100,7 @@
 
 .CTA-1 {
     display: flex;
+    color:white;
     justify-content: center;
     gap: 5%;
     padding: 5% 3%;
@@ -121,6 +128,8 @@
 
 .Argumento-1 {
     display: flex;
+    color:white;
+    background-color: #007f7f;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
@@ -157,6 +166,7 @@
 
 .Argumento-2 {
     display: flex;
+    color:white;
     justify-content: center;
     align-items: center;
     gap: 5%;
@@ -176,6 +186,7 @@
 
 .Beneficios {
     background-color: #006060;
+    color:white;
     padding: 6% 3%;
 }
 
@@ -211,6 +222,7 @@
 
 .CTA-2 {
     background: linear-gradient(180deg, #007f7f, #00bfbf);
+    color:white;
     padding: 6% 3%;
 }
 
@@ -224,6 +236,11 @@
 
 .Sobre-Nosotros h2{
     font-size: 230%;
+}
+
+.Sobre-Nosotros *
+{
+    color:white;
 }
 
 .Valores-Contenedor {
@@ -255,6 +272,7 @@
 .Quienes-Somos {
     background-color: #004040;
     padding: 6% 3%;
+    color:white;
 }
 
 .Equipo {
@@ -450,32 +468,251 @@ main {
     color: white;
 }
 
-.medicamentos-titulo {
-    font-size: 1.1rem;
-    margin: 1rem 0 0.5rem 0;
-    color: white;
-}
+/* Medicamentos */
 
-.medicamentos-lista {
-    list-style: none;
+body {
+    background: #f4f9f7;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
     padding: 0;
-    margin: 0.5rem 0;
 }
 
-.medicamentos-lista li {
-    font-size: 1rem;
-    margin: 0.3rem 0;
-    padding-left: 1.2rem;
-    position: relative;
+.medicamentos-main {
+    padding: 20px 15px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+
+.medicamentos-header h1 {
+    font-size: 22px;
+    color: #1e8c7f;
+    margin-bottom: 20px;
+}
+
+
+.medicamento-card {
+    background: linear-gradient(145deg, #e5faf4, #d3f3ec);
+    border-radius: 22px;
+    padding: 18px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: 0.2s;
+}
+
+.medicamento-card:hover {
+    transform: scale(1.01);
+}
+
+
+.medicamento-contenido {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.medicamento-info h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #12796e;
+    font-weight: 600;
+}
+
+.medicamento-detalles p {
+    margin: 2px 0;
+    font-size: 14px;
+}
+
+.dato-label {
+    font-weight: 600;
+    color: #1e8c7f;
+}
+
+.indicaciones-label {
+    font-size: 14px;
+    color: #1e8c7f;
+    font-weight: 600;
+}
+
+.medicamento-indicaciones {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.indicaciones-icon {
+    transition: 0.2s;
+}
+
+.medicamento-indicaciones-detalle {
+    display: none;
+    padding: 10px;
+    font-size: 14px;
+    color: #444;
+    background: rgba(255,255,255,0.8);
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+
+.medicamento-icono svg {
+    width: 70px;
+    height: 70px;
+}
+
+
+.medicamento-acciones {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.medicamento-botones-izq {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-icono {
+    width: 32px;
+    height: 32px;
+    background: #ffffffd9;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-icono:hover {
+    background: white;
+}
+
+.btn-recordatorio {
+    background: #1e8c7f;
     color: white;
+    padding: 7px 15px;
+    border-radius: 15px;
+    border: none;
+    font-size: 13px;
+    box-shadow: inset 0 0 5px rgba(255,255,255,0.5);
 }
 
-.medicamentos-lista li::before {
-    content: "•";
-    position: absolute;
+
+.medicamentos-vacio {
+    text-align: center;
+    padding: 30px;
+    color: #808080;
+    font-size: 16px;
+}
+
+
+.medicamentos-acciones-bottom {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-agregar {
+    background: #1e8c7f;
+    color: white;
+    padding: 12px 40px;
+    border-radius: 20px;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.btn-editar-bottom {
+    background: white;
+    color: #1e8c7f;
+    padding: 10px 35px;
+    border-radius: 18px;
+    border: 2px solid #1e8c7f;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* ===== MODAL ===== */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 380px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.25);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    color: #1e8c7f;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+.campo-grupo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.campo-grupo input,
+.campo-grupo textarea {
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.modal-footer {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-cancelar {
+    background: #ccc;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 12px;
+}
+
+.btn-guardar {
+    background: #1e8c7f;
     color: white;
-    font-weight: bold;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 12px;
 }
 
 .btn-principal {
@@ -567,6 +804,10 @@ main {
     gap: 0.9rem;
     color: #fff;
     width: 100%;
+}
+
+.login-form *{
+    color:white;
 }
 
 .login-form input {
@@ -970,119 +1211,271 @@ main {
         min-width: 90%;
     }
 }
- /* ===========================
-    SIGN UP
-    =========================== */
+/* ===========================
+   SIGN UP
+   =========================== */
 
-    .bodySignUp-Contenedor {
-        width: 100%;
-        height: auto;
-        min-height: 150vh;
-        background-image: url('/Img/LogIn/FondoHospitalCompuadora.png');
-        background-size: cover;
-        background-position: center top;
-        background-repeat: no-repeat;
-        /* para que los labels no queden centrados por el body */
-        text-align: left; 
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1.5rem 0;
-    }
+   .bodySignUp-Contenedor {
+    width: 100%;
+    height: auto;
+    min-height: 150vh;
+    background-image: url('/Img/LogIn/FondoHospitalCompuadora.png');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 0;
+}
 
-    /* Card principal del formulario */
+/* Card principal del formulario */
+.bodySignUp-Contenedor .card-body {
+    width: 380px;
+    padding: 2.5rem 2rem 3rem !important;
+    background-color: rgba(25, 136, 115, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 14px;
+    box-shadow: 0 30px 40px rgba(0,0,0,0.6);
+    text-align: center;
+    position: relative;
+    color: #fff;
+    margin: auto;
+}
+
+/* Título */
+.bodySignUp-Contenedor .card-body h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+/* Select */
+.bodySignUp-Contenedor .form-select{
+    width: 80%;
+}
+/* Inputs y selects */
+.bodySignUp-Contenedor .form-control,
+.bodySignUp-Contenedor .form-select {
+    width: 80% !important;
+    height: 30px !important; /* mismo alto para TODOS */
+    background: rgba(200,255,235,0.28);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 999px;
+    padding: 0.9rem 1.2rem;
+
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.2;
+
+    outline: none;
+    box-shadow:
+        inset 0 2px 4px rgba(0,0,0,0.4),
+        0 2px 3px rgba(0,0,0,0.4);
+
+    display: block;
+    margin: 0.5rem auto; /* centrado, como todos */
+}
+
+/* Select exactamente igual al input */
+.bodySignUp-Contenedor .form-select {
+    padding-right: 2.5rem !important;        /* espacio para la flecha */
+    background-position: right 1.2rem center;
+    background-repeat: no-repeat;
+}
+
+/* Placeholder blanco */
+.bodySignUp-Contenedor .form-control::placeholder,
+.bodySignUp-Contenedor .form-select::placeholder {
+    color: #ffffff !important;
+    opacity: 1;
+    font-weight: 500;
+}
+
+/* Focus */
+.bodySignUp-Contenedor .form-control:focus,
+.bodySignUp-Contenedor .form-select:focus {
+    background: rgba(200,255,235,0.4);
+    box-shadow: 0 0 4px rgba(91,195,164,0.4);
+}
+
+/* Labels ALINEADOS al borde de los inputs */
+.bodySignUp-Contenedor .form-label {
+    font-size: 14px;
+    font-weight: 500;
+
+    display: block;
+    width: 80% !important;         /* mismo ancho */
+    margin: 0 auto 4px !important; /* centrado como los inputs */
+    text-align: left;
+    /* sin padding-left: se alinea con el borde del input */
+}
+
+/* Botón principal */
+.bodySignUp-Contenedor .btn-primary {
+    width: 80%;
+    background: rgba(13, 212, 162, 0.91);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 999px;
+    padding: 0.9rem 1.2rem;
+
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+    cursor: pointer;
+
+    text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+    box-shadow:
+        inset 0 2px 4px rgba(0,0,0,0.4),
+        0 2px 3px rgba(0,0,0,0.4);
+    margin-top: 5%;
+    margin-bottom: 2rem;
+}
+
+.bodySignUp-Contenedor .btn-primary p a {
+    color: white;
+}
+
+.bodySignUp-Contenedor .btn-primary:hover {
+    background-color: #4daf92 !important;
+}
+
+/* Texto inferior y enlaces */
+.bodySignUp-Contenedor p {
+    font-size: 14px;
+    margin-top: 14px;
+}
+
+.bodySignUp-Contenedor p a {
+    color: #5bc3a4;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.bodySignUp-Contenedor p a:hover {
+    text-decoration: underline;
+}
+
+/* Alertas de error */
+.bodySignUp-Contenedor .alert {
+    font-size: 14px;
+    padding: 10px 14px;
+}
+
+/* Responsive: que la card no desborde en pantallas chicas */
+@media (max-width: 480px) {
     .bodySignUp-Contenedor .card-body {
-        width: 380px;
-        padding: 35px 30px !important;
-        background-color: rgba(25, 136, 115, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 14px;
+        width: 90%;
+        padding: 25px 20px !important;
+    }
+}
+
+    /*Agregar manualmente*/
+    .agregar-main {
+    min-height: 100vh;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ===== HEADER ===== */
+.agregar-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.agregar-header h1 {
+    font-size: 18px;
+    color: white;
+    font-weight: 600;
+}
+
+.btn-volver {
+    color: white;
+    font-size: 22px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* ===== CARD CONTENEDORA ===== */
+.agregar-card {
+    width: 100%;
+    max-width: 340px;
+    background: #9adcca;
+    padding: 22px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* ===== CAMPOS ===== */
+.campo-grupo {
+    margin-bottom: 12px;
+}
+
+.select-tipo {
+    width: 100%;
+    padding: 10px;
+    border-radius: 14px;
+    border: none;
+    font-size: 14px;
+    outline: none;
+    color: #2a7f6a;
+    font-weight: 600;
+}
+
+/* INPUTS Y TEXTAREA */
+.campo-grupo input,
+.campo-grupo textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 14px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    resize: none;
+}
+
+.campo-grupo input::placeholder,
+.campo-grupo textarea::placeholder {
+    color: #3a8e79;
+    font-weight: 500;
+}
+
+/* ===== FORMULARIOS ===== */
+.formulario-manual {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* ===== BOTÓN AGREGAR ===== */
+.btn-agregar-form {
+    margin-top: 10px;
+    background: #1e8c7f;
+    color: white;
+    padding: 10px;
+    border-radius: 16px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.btn-agregar-form:hover {
+    background: #157065;
+}
+
+/* ===== OCULTAR ===== */
+.oculto {
+    display: none;
+}
+
     
-        padding: 2.5rem 2rem 3rem;
-        box-shadow: 0 30px 40px rgba(0,0,0,0.6);
-        text-align: center;
-        position: relative;
-        color: #fff;
-        margin: auto;
-    }
-
-    /* Título */
-    .bodySignUp-Contenedor .card-body h2 {
-        font-size: 28px;
-        font-weight: 600;
-        margin-bottom: 12px;
-    }
-
-    /* Inputs y selects */
-    .bodySignUp-Contenedor .form-control,
-    .bodySignUp-Contenedor .form-select {
-        width: 100%;
-        height: 40px;
-        border-radius: 5px;
-        border: 1px solid #c7c7c7;
-        padding-left: 10px;
-        font-size: 15px;
-        transition: 0.2s ease;
-    }
-
-    .bodySignUp-Contenedor .form-control:focus,
-    .bodySignUp-Contenedor .form-select:focus {
-        border-color: #5bc3a4;
-        box-shadow: 0 0 4px rgba(91,195,164,0.4);
-    }
-
-    /* Labels */
-    .bodySignUp-Contenedor .form-label {
-        font-size: 14px;
-        font-weight: 500;
-        margin-bottom: 4px;
-    }
-
-    /* Botón principal */
-    .bodySignUp-Contenedor .btn-primary {
-        background-color: #5bc3a4 !important;
-        border: none !important;
-        height: 42px;
-        font-size: 16px;
-        font-weight: 600;
-        border-radius: 6px;
-        transition: 0.25s ease;
-    }
-
-    .bodySignUp-Contenedor .btn-primary p a {
-        color: white;
-    }
-
-    .bodySignUp-Contenedor .btn-primary:hover {
-        background-color: #4daf92 !important;
-    }
-
-    /* Texto inferior y enlaces */
-    .bodySignUp-Contenedor p {
-        font-size: 14px;
-        margin-top: 14px;
-    }
-
-    .bodySignUp-Contenedor p a {
-        color: #5bc3a4;
-        font-weight: 600;
-        text-decoration: none;
-    }
-
-    .bodySignUp-Contenedor p a:hover {
-        text-decoration: underline;
-    }
-
-    /* Alertas de error */
-    .bodySignUp-Contenedor .alert {
-        font-size: 14px;
-        padding: 10px 14px;
-    }
-
-    /* Responsive: que la card no desborde en pantallas chicas */
-    @media (max-width: 480px) {
-        .bodySignUp-Contenedor .card-body {
-            width: 90%;
-            padding: 25px 20px !important;
-        }
-    }
