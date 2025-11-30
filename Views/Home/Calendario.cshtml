@@ -1,14 +1,14 @@
 @{
     ViewData["Title"] = "Calendario";
+    var encuentros = ViewBag.Encuentros as List<dynamic> ?? new List<dynamic>();
 }
-
 
 <main class="Calendario-App">
     <section class="Calendario-Panel">
         <header class="Calendario-Header">
             <div class="Calendario-Titulo">
                 <h2>Calendario</h2>
-               
+                <div class="Calendario-MesActual"></div>
             </div>
             <div class="Calendario-Navegacion">
                 <button class="Cal-BtnPrev" type="button" aria-label="Mes anterior">
@@ -46,4 +46,39 @@
             </button>
         </div>
     </section>
+
+    <!-- Modal/Pestaña para mostrar eventos del día -->
+    <div class="Detalle-Evento" data-calendario-detalle hidden>
+        <div class="Detalle-Contenido">
+            <button class="Detalle-Cerrar" type="button" aria-label="Cerrar">×</button>
+            <div class="Detalle-Fecha"></div>
+            <div class="Detalle-Titulo">Turno medico</div>
+            <div class="Detalle-Info">
+                <div class="Detalle-Item">
+                    <strong>Dirección:</strong>
+                    <span data-detalle-direccion></span>
+                </div>
+                <div class="Detalle-Item">
+                    <strong>Hora:</strong>
+                    <span data-detalle-hora></span>
+                </div>
+                <div class="Detalle-Item">
+                    <strong>Descripción:</strong>
+                    <span data-detalle-descripcion></span>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
+
+<script>
+    window.calendarioEventos = @Html.Raw(Json.Serialize(encuentros.Select(e => new {
+        id = (int)e.Id,
+        fecha = ((DateTime)e.FechaInicio).ToString("yyyy-MM-ddTHH:mm:ss"),
+        nombreMedico = (string)(e.NombreMedico ?? ""),
+        apellidoMedico = (string)(e.ApellidoMedico ?? ""),
+        nombreOrganizacion = (string)(e.NombreOrganizacion ?? ""),
+        direccion = (string)(e.Direccion ?? ""),
+        descripcion = (string)(e.EstadoMotivo ?? "")
+    })));
+</script>
