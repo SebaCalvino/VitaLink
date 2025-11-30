@@ -220,7 +220,6 @@ function cambiarContrasena() {
     const detalleTitulo = document.querySelector(".Detalle-Titulo");
     const detalleDireccion = document.querySelector("[data-detalle-direccion]");
     const detalleHora = document.querySelector("[data-detalle-hora]");
-    const detalleTipo = document.querySelector("[data-detalle-tipo]");
     const detalleDescripcion = document.querySelector("[data-detalle-descripcion]");
     const detalleCerrar = document.querySelector(".Detalle-Cerrar");
     const mesActual = document.querySelector(".Calendario-MesActual");
@@ -230,21 +229,34 @@ function cambiarContrasena() {
 
 
     const estadoCalendario = {
-        fecha: new Date(2025, 9, 1),
+        fecha: new Date(),
         eventos: []
     };
 
 
     function normalizarEventosIniciales() {
-        if (!Array.isArray(window.calendarioEventos)) return;
-
+        if (!Array.isArray(window.calendarioEventos)) {
+            estadoCalendario.eventos = [];
+            return;
+        }
 
         estadoCalendario.eventos = window.calendarioEventos
-            .map(ev => ({
-                ...ev,
-                fecha: ev.fecha ? new Date(ev.fecha) : null
-            }))
-            .filter(ev => ev.fecha instanceof Date && !Number.isNaN(ev.fecha.getTime()));
+            .map(ev => {
+                if (!ev.fecha) return null;
+                const fechaEvento = new Date(ev.fecha);
+                if (Number.isNaN(fechaEvento.getTime())) return null;
+                
+                return {
+                    id: ev.id,
+                    fecha: fechaEvento,
+                    nombreMedico: ev.nombreMedico || "",
+                    apellidoMedico: ev.apellidoMedico || "",
+                    nombreOrganizacion: ev.nombreOrganizacion || "",
+                    direccion: ev.direccion || "",
+                    descripcion: ev.descripcion || ""
+                };
+            })
+            .filter(ev => ev !== null);
     }
 
 
@@ -294,41 +306,89 @@ function cambiarContrasena() {
 
 
         const hoy = new Date();
+        hoy.setHours(0, 0, 0, 0);
+        
         for (let dia = 1; dia <= diasMes; dia++) {
             const fechaDia = new Date(fecha.getFullYear(), fecha.getMonth(), dia);
-            const tieneEvento = estadoCalendario.eventos.some(ev =>
-                ev.fecha.getFullYear() === fechaDia.getFullYear() &&
-                ev.fecha.getMonth() === fechaDia.getMonth() &&
-                ev.fecha.getDate() === fechaDia.getDate());
-            const esActual = fechaDia.toDateString() === hoy.toDateString();
+            fechaDia.setHours(0, 0, 0, 0);
+            
+            const tieneEvento = estadoCalendario.eventos.some(ev => {
+                const fechaEvento = new Date(ev.fecha);
+                fechaEvento.setHours(0, 0, 0, 0);
+                return fechaEvento.getTime() === fechaDia.getTime();
+            });
+            
+            const esActual = fechaDia.getTime() === hoy.getTime();
             diasContainer.appendChild(crearDiaElemento(dia, esActual, tieneEvento, fechaDia));
         }
     }
 
 
     function mostrarDetalle(fecha) {
-        const eventosDia = estadoCalendario.eventos.filter(ev =>
-            ev.fecha.getFullYear() === fecha.getFullYear() &&
-            ev.fecha.getMonth() === fecha.getMonth() &&
-            ev.fecha.getDate() === fecha.getDate());
-
+        const fechaComparar = new Date(fecha);
+        fechaComparar.setHours(0, 0, 0, 0);
+        
+        const eventosDia = estadoCalendario.eventos.filter(ev => {
+            const fechaEvento = new Date(ev.fecha);
+            fechaEvento.setHours(0, 0, 0, 0);
+            return fechaEvento.getTime() === fechaComparar.getTime();
+        });
 
         if (!eventosDia.length) {
-            detallePanel.hidden = true;
+            if (detallePanel) {
+                detallePanel.hidden = false;
+                if (detalleFecha) {
+                    detalleFecha.textContent = fecha.toLocaleDateString("es-AR", { 
+                        day: "numeric", 
+                        month: "long", 
+                        year: "numeric" 
+                    });
+                }
+                if (detalleTitulo) {
+                    detalleTitulo.textContent = "No hay eventos programados para este día";
+                }
+                if (detalleDireccion) {
+                    detalleDireccion.textContent = "";
+                }
+                if (detalleHora) {
+                    detalleHora.textContent = "";
+                }
+                if (detalleDescripcion) {
+                    detalleDescripcion.textContent = "";
+                }
+            }
             return;
         }
 
-
         const evento = eventosDia[0];
-        detalleFecha.textContent = fecha.toLocaleDateString("es-AR", { day: "numeric", month: "long", year: "numeric" });
-        detalleTitulo.textContent = evento.titulo;
-        detalleDireccion.textContent = evento.direccion;
-        detalleHora.textContent = evento.fecha.toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" }) + " hs";
-        detalleTipo.textContent = evento.tipo === "vacuna" ? "Vacunación" : "Turno médico";
-        detalleDescripcion.textContent = evento.descripcion || "Sin descripción";
+        const fechaEvento = new Date(evento.fecha);
+        
+        if (detalleFecha) {
+            detalleFecha.textContent = fecha.toLocaleDateString("es-AR", { 
+                day: "numeric", 
+                month: "long", 
+                year: "numeric" 
+            });
+        }
+        if (detalleTitulo) {
+            detalleTitulo.textContent = "Turno medico";
+        }
+        if (detalleDireccion) {
+            detalleDireccion.textContent = evento.direccion || "No especificada";
+        }
+        if (detalleHora) {
+            detalleHora.textContent = fechaEvento.toLocaleTimeString("es-AR", { 
+                hour: "2-digit", 
+                minute: "2-digit" 
+            }) + "hs";
+        }
+        if (detalleDescripcion) {
+            detalleDescripcion.textContent = evento.descripcion || "Sin descripción";
+        }
 
-
-        detallePanel.hidden = false;
+        if (detallePanel) {
+            detallePanel.hidden = false;
+        }
     }
 
 
@@ -606,207 +666,5 @@ window.addEventListener('click', function(event) {
         cerrarModalMedicamento();
     }
 });
-(function () {
-    const diasContainer = document.querySelector("[data-calendario-dias]");
-    const detallePanel = document.querySelector("[data-calendario-detalle]");
-    const detalleFecha = document.querySelector(".Detalle-Fecha");
-    const detalleTitulo = document.querySelector(".Detalle-Titulo");
-    const detalleDireccion = document.querySelector("[data-detalle-direccion]");
-    const detalleHora = document.querySelector("[data-detalle-hora]");
-    const detalleDescripcion = document.querySelector("[data-detalle-descripcion]");
-    const detalleCerrar = document.querySelector(".Detalle-Cerrar");
-    const mesActual = document.querySelector(".Calendario-MesActual");
 
-
-    if (!diasContainer || !mesActual) return;
-
-
-    const estadoCalendario = {
-        fecha: new Date(),
-        eventos: []
-    };
-
-
-    function normalizarEventosIniciales() {
-        if (!Array.isArray(window.calendarioEventos)) {
-            estadoCalendario.eventos = [];
-            return;
-        }
-
-        estadoCalendario.eventos = window.calendarioEventos
-            .map(ev => {
-                if (!ev.fecha) return null;
-                const fechaEvento = new Date(ev.fecha);
-                if (Number.isNaN(fechaEvento.getTime())) return null;
-                
-                return {
-                    id: ev.id,
-                    fecha: fechaEvento,
-                    nombreMedico: ev.nombreMedico || "",
-                    apellidoMedico: ev.apellidoMedico || "",
-                    nombreOrganizacion: ev.nombreOrganizacion || "",
-                    direccion: ev.direccion || "",
-                    descripcion: ev.descripcion || ""
-                };
-            })
-            .filter(ev => ev !== null);
-    }
-
-
-    function formatearMes(fecha) {
-        return fecha.toLocaleDateString("es-AR", { month: "long", year: "numeric" });
-    }
-
-
-    function crearDiaElemento(diaNumero, esActual, tieneEvento, fecha) {
-        const btn = document.createElement("button");
-        btn.className = "Calendario-Dia";
-        btn.type = "button";
-        btn.textContent = diaNumero;
-        btn.dataset.fecha = fecha.toISOString();
-
-
-        if (esActual) btn.classList.add("activo");
-        if (tieneEvento) {
-            btn.classList.add("con-evento");
-            const indicador = document.createElement("span");
-            indicador.className = "Indicador-Evento";
-            btn.appendChild(indicador);
-        }
-
-
-        btn.addEventListener("click", () => mostrarDetalle(fecha));
-        return btn;
-    }
-
-
-    function renderizarCalendario() {
-        diasContainer.innerHTML = "";
-        const fecha = estadoCalendario.fecha;
-        const primerDiaSemana = (new Date(fecha.getFullYear(), fecha.getMonth(), 1).getDay() + 6) % 7; // ajuste para lunes
-        const diasMes = new Date(fecha.getFullYear(), fecha.getMonth() + 1, 0).getDate();
-
-
-        mesActual.textContent = formatearMes(fecha).replace(/^\w/, c => c.toUpperCase());
-
-
-        // Dias vacíos previos
-        for (let i = 0; i < primerDiaSemana; i++) {
-            const placeholder = document.createElement("div");
-            placeholder.className = "Calendario-Dia placeholder";
-            diasContainer.appendChild(placeholder);
-        }
-
-
-        const hoy = new Date();
-        hoy.setHours(0, 0, 0, 0);
-        
-        for (let dia = 1; dia <= diasMes; dia++) {
-            const fechaDia = new Date(fecha.getFullYear(), fecha.getMonth(), dia);
-            fechaDia.setHours(0, 0, 0, 0);
-            
-            const tieneEvento = estadoCalendario.eventos.some(ev => {
-                const fechaEvento = new Date(ev.fecha);
-                fechaEvento.setHours(0, 0, 0, 0);
-                return fechaEvento.getTime() === fechaDia.getTime();
-            });
-            
-            const esActual = fechaDia.getTime() === hoy.getTime();
-            diasContainer.appendChild(crearDiaElemento(dia, esActual, tieneEvento, fechaDia));
-        }
-    }
-
-
-    function mostrarDetalle(fecha) {
-        const fechaComparar = new Date(fecha);
-        fechaComparar.setHours(0, 0, 0, 0);
-        
-        const eventosDia = estadoCalendario.eventos.filter(ev => {
-            const fechaEvento = new Date(ev.fecha);
-            fechaEvento.setHours(0, 0, 0, 0);
-            return fechaEvento.getTime() === fechaComparar.getTime();
-        });
-
-        if (!eventosDia.length) {
-            if (detallePanel) {
-                detallePanel.hidden = false;
-                if (detalleFecha) {
-                    detalleFecha.textContent = fecha.toLocaleDateString("es-AR", { 
-                        day: "numeric", 
-                        month: "long", 
-                        year: "numeric" 
-                    });
-                }
-                if (detalleTitulo) {
-                    detalleTitulo.textContent = "No hay eventos programados para este día";
-                }
-                if (detalleDireccion) {
-                    detalleDireccion.textContent = "";
-                }
-                if (detalleHora) {
-                    detalleHora.textContent = "";
-                }
-                if (detalleDescripcion) {
-                    detalleDescripcion.textContent = "";
-                }
-            }
-            return;
-        }
-
-        const evento = eventosDia[0];
-        const fechaEvento = new Date(evento.fecha);
-        
-        if (detalleFecha) {
-            detalleFecha.textContent = fecha.toLocaleDateString("es-AR", { 
-                day: "numeric", 
-                month: "long", 
-                year: "numeric" 
-            });
-        }
-        if (detalleTitulo) {
-            detalleTitulo.textContent = "Turno medico";
-        }
-        if (detalleDireccion) {
-            detalleDireccion.textContent = evento.direccion || "No especificada";
-        }
-        if (detalleHora) {
-            detalleHora.textContent = fechaEvento.toLocaleTimeString("es-AR", { 
-                hour: "2-digit", 
-                minute: "2-digit" 
-            }) + "hs";
-        }
-        if (detalleDescripcion) {
-            detalleDescripcion.textContent = evento.descripcion || "Sin descripción";
-        }
-
-        if (detallePanel) {
-            detallePanel.hidden = false;
-        }
-    }
-
-
-    detalleCerrar?.addEventListener("click", () => {
-        detallePanel.hidden = true;
-    });
-
-
-    document.querySelector(".Cal-BtnPrev")?.addEventListener("click", () => {
-        estadoCalendario.fecha.setMonth(estadoCalendario.fecha.getMonth() - 1);
-        renderizarCalendario();
-        detallePanel.hidden = true;
-    });
-
-
-    document.querySelector(".Cal-BtnNext")?.addEventListener("click", () => {
-        estadoCalendario.fecha.setMonth(estadoCalendario.fecha.getMonth() + 1);
-        renderizarCalendario();
-        detallePanel.hidden = true;
-    });
-    
-    
-
-
-    normalizarEventosIniciales();
-    renderizarCalendario();
-})();
 
