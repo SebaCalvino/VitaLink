@@ -313,3 +313,18 @@ public static Usuario LoginUsuario(string email, string contrasena)
     }
 
 }
+    public static List<dynamic> ObtenerEncuentrosConDireccionPorUsuario(int idUsuario)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = @"SELECT E.*, O.Nombre AS NombreOrganizacion, TipoOrg.TipoOrganizacion AS Tipo,
+                           CONCAT(D.Calle, ' ', D.Altura) AS Direccion
+                           FROM Encuentros E
+                           LEFT JOIN Organizaciones O ON E.IdOrganizacion = O.Id
+                           LEFT JOIN Tipo_Organizacion TipoOrg ON O.Id_Tipo_Organizacion = TipoOrg.Id
+                           LEFT JOIN Direcciones D ON O.IdDireccion = D.Id
+                           WHERE E.IdUsuario = @idUsuario";
+            List<dynamic> listaEncuentros = db.Query<dynamic>(sql, new { idUsuario }).ToList();
+            return listaEncuentros;
+        }
+    }
