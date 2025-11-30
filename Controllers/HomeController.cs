@@ -165,6 +165,10 @@ public class HomeController : Controller
     }
     public IActionResult Calendario()
     {
+        Usuario usuario = ObtenerUsuario();
+        if (usuario == null) return RedirectToAction("LogIn");
+
+        ViewBag.Encuentros = BD.ObtenerEncuentrosConDireccionPorUsuario(usuario.Id);
         return View("Calendario");
     }
     public IActionResult Crianzas()
