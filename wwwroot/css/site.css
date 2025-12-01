@@ -1491,4 +1491,389 @@ body {
     display: none;
 }
 
+
+/* ======================= CALENDARIO ========================*/
+
+/* Body de esta vista */
+body.body-calendario {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f3f4f6; /* fondo gris clarito como en la referencia */
+    color: #0f172a;
+}
+
+/* ---------------------- VARIABLES ---------------------- */
+:root {
+    --vl-primary: #10b981;        /* verde principal */
+    --vl-primary-dark: #059669;   /* verde más oscuro */
+    --vl-secondary: #0f766e;      /* verde tirando a teal */
+    --vl-bg-soft: #f1f5f9;        /* gris muy claro */
+    --vl-border: #e2e8f0;
+    --vl-text-main: #0f172a;
+    --vl-text-muted: #64748b;
+    --vl-danger: #ef4444;         /* por si lo necesitás */
+    --vl-radius-lg: 16px;
+    --vl-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+}
+
+/* ---------------------- CONTENEDOR PRINCIPAL ---------------------- */
+.Calendario-App {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+}
+
+/* ---------------------- PANEL PRINCIPAL ---------------------- */
+.Calendario-Panel {
+    background: #ffffff;
+    border-radius: 30px;
+    box-shadow: var(--vl-shadow);
+    padding: 24px 32px 24px;
+    max-width: 1100px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* ---------------------- HEADER (barra con degradé) ---------------------- */
+.Calendario-Header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    /* que se pegue a los bordes del panel y forme la barra superior */
+    margin: -24px -32px 0 -32px;
+    padding: 18px 32px;
+
+    background: linear-gradient(90deg, #0f766e, #06b6d4);
+    border-radius: 30px 30px 0 0;
+    color: #ffffff;
+}
+
+.Calendario-Titulo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.Calendario-Titulo h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.Calendario-MesActual {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Navegación de meses (círculos blancos a la derecha) */
+.Calendario-Navegacion {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.Cal-BtnPrev,
+.Cal-BtnNext {
+    border: none;
+    border-radius: 999px;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    color: var(--vl-secondary);
+    cursor: pointer;
+    transition: transform 0.08s ease, box-shadow 0.18s ease, background 0.18s ease;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2);
+}
+
+.Cal-BtnPrev:hover,
+.Cal-BtnNext:hover {
+    background: #f9fafb;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.25);
+}
+
+.Cal-BtnPrev:active,
+.Cal-BtnNext:active {
+    transform: translateY(0px) scale(0.96);
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.25);
+}
+
+.material-icons {
+    font-size: 20px;
+}
+
+/* ---------------------- CARD DEL CALENDARIO ---------------------- */
+.Calendario-Card {
+    background: var(--vl-bg-soft);
+    border-radius: 22px;
+    padding: 20px 24px 18px;
+    border: 1px solid var(--vl-border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Días de la semana */
+.Calendario-Semanas {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--vl-text-muted);
+}
+
+/* Contenedor de días */
+.Calendario-Dias {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 10px;
+}
+
+/* Cada día */
+.Calendario-Dias > * {
+    position: relative;
+    border-radius: 18px;
+    background: #ffffff;
+    min-height: 72px;
+    padding: 8px 10px 6px;
+    border: 1px solid #e5e7eb;
+    font-size: 0.9rem;
+    color: var(--vl-text-main);
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    transition: background 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease, transform 0.06s ease;
+}
+
+.Calendario-Dias > * span,
+.Calendario-Dias > * .dia-numero {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Hover suave */
+.Calendario-Dias > *:hover {
+    background: #f8fafc;
+    border-color: #dbeafe;
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.12);
+    transform: translateY(-1px);
+}
+
+/* Día actual */
+.Calendario-Dias > *.hoy {
+    border-color: var(--vl-primary);
+}
+
+/* Días de otro mes */
+.Calendario-Dias > *.fuera-de-mes {
+    background: #f8fafc;
+    color: #cbd5f5;
+    opacity: 0.7;
+}
+
+/* Indicador de evento */
+.Calendario-Dias > *.con-evento::after {
+    content: "";
+    position: absolute;
+    bottom: 7px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--vl-primary);
+}
+
+/* Día seleccionado */
+.Calendario-Dias > *.seleccionado {
+    background: var(--vl-primary);
+    color: #ecfdf5;
+    border-color: var(--vl-primary-dark);
+    box-shadow: 0 12px 26px rgba(5, 150, 105, 0.4);
+}
+
+.Calendario-Dias > *.seleccionado::after {
+    background: #ecfdf5;
+}
+
+/* ---------------------- BOTONES DE ACCIÓN ---------------------- */
+.Calendario-Acciones {
+    margin-top: 18px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.btn-calendario {
+    border-radius: 999px;
+    border: none;
+    padding: 10px 26px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: background 0.16s ease, transform 0.08s ease, box-shadow 0.18s ease;
+}
+
+/* Botón verde con degradé (Agregar Turno) */
+.btn-calendario:not(.secundario) {
+    background: linear-gradient(90deg, #10b981, #06b6d4);
+    color: #ffffff;
+    box-shadow: 0 10px 22px rgba(16, 185, 129, 0.35);
+}
+
+.btn-calendario:not(.secundario):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 30px rgba(5, 150, 105, 0.45);
+}
+
+.btn-calendario:not(.secundario):active {
+    transform: translateY(0) scale(0.97);
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.25);
+}
+
+/* Botón blanco/azulado (Cargar Medicamento) */
+.btn-calendario.secundario {
+    background: #f1f5f9;
+    color: var(--vl-secondary);
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
+}
+
+.btn-calendario.secundario:hover {
+    background: #e2e8f0;
+}
+
+/* ---------------------- MODAL DETALLE DE EVENTO ---------------------- */
+.Detalle-Evento {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 40;
+}
+
+.Detalle-Evento[hidden] {
+    display: none !important;
+}
+
+.Detalle-Contenido {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 20px 22px 18px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 24px 55px rgba(15, 23, 42, 0.45);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.Detalle-Cerrar {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: none;
+    background: transparent;
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--vl-text-muted);
+    transition: color 0.15s ease, transform 0.1s ease;
+}
+
+.Detalle-Cerrar:hover {
+    color: var(--vl-danger);
+    transform: scale(1.05);
+}
+
+.Detalle-Fecha {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--vl-text-muted);
+}
+
+.Detalle-Titulo {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--vl-text-main);
+}
+
+.Detalle-Info {
+    margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.9rem;
+    color: var(--vl-text-main);
+}
+
+.Detalle-Item {
+    display: flex;
+    gap: 4px;
+}
+
+.Detalle-Item strong {
+    font-weight: 600;
+    color: var(--vl-text-muted);
+}
+
+/* ---------------------- RESPONSIVE ---------------------- */
+@media (max-width: 768px) {
+    .Calendario-Panel {
+        padding: 20px 16px 18px;
+        border-radius: 22px;
+    }
+
+    .Calendario-Header {
+        margin: -20px -16px 0 -16px;
+        padding: 16px 18px;
+        border-radius: 22px 22px 0 0;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .Calendario-Acciones {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-calendario,
+    .btn-calendario.secundario {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .Calendario-Card {
+        padding: 14px 10px 10px;
+    }
+
+    .Calendario-Dias > * {
+        min-height: 60px;
+        border-radius: 14px;
+    }
+}
+
+
     
