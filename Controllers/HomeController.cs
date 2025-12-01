@@ -411,6 +411,165 @@ public class HomeController : Controller
         public int Id { get; set; }
     }
 
+    // ==================== ENDPOINTS PARA AGREGAR MANUALMENTE ====================
+
+    [HttpPost]
+    public IActionResult InsertarVacunacion([FromBody] VacunacionRequest request)
+    {
+        Usuario usuario = ObtenerUsuario();
+        if (usuario == null)
+            return Json(new { success = false, message = "No hay sesión activa" });
+
+        try
+        {
+            if (string.IsNullOrWhiteSpace(request.NombreVacuna))
+                return Json(new { success = false, message = "El nombre de la vacuna es obligatorio" });
+
+            if (string.IsNullOrWhiteSpace(request.NombreOrganizacion))
+                return Json(new { success = false, message = "El nombre de la organización es obligatorio" });
+
+            int idVacunaPaciente = BD.InsertarVacunacionManual(
+                usuario.Id,
+                request.Dosis,
+                request.NombreVacuna,
+                request.DatosInteres,
+                request.FechaAplicacion,
+                request.NombreOrganizacion
+            );
+
+            return Json(new { success = true, message = "Vacunación agregada correctamente", id = idVacunaPaciente });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error al insertar vacunación");
+            return Json(new { success = false, message = "Error al agregar la vacunación" });
+        }
+    }
+
+    [HttpPost]
+    public IActionResult InsertarEstudio([FromBody] EstudioRequest request)
+    {
+        Usuario usuario = ObtenerUsuario();
+        if (usuario == null)
+            return Json(new { success = false, message = "No hay sesión activa" });
+
+        try
+        {
+            if (string.IsNullOrWhiteSpace(request.NombreEstudio))
+                return Json(new { success = false, message = "El nombre del estudio es obligatorio" });
+
+            int idEstudio = BD.InsertarEstudioManual(
+                usuario.Id,
+                request.NombreEstudio,
+                request.Observacion,
+                request.Fecha,
+                request.Capacidad,
+                request.FechaCreacionArchivo,
+                request.NombreArchivo,
+                request.TipoArchivo
+            );
+
+            return Json(new { success = true, message = "Estudio agregado correctamente", id = idEstudio });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error al insertar estudio");
+            return Json(new { success = false, message = "Error al agregar el estudio" });
+        }
+    }
+
+    [HttpPost]
+    public IActionResult InsertarEnfermedad([FromBody] EnfermedadRequest request)
+    {
+        Usuario usuario = ObtenerUsuario();
+        if (usuario == null)
+            return Json(new { success = false, message = "No hay sesión activa" });
+
+        try
+        {
+            if (string.IsNullOrWhiteSpace(request.NombreEnfermedad))
+                return Json(new { success = false, message = "El nombre de la enfermedad es obligatorio" });
+
+            int idDiagnostico = BD.InsertarEnfermedadManual(
+                usuario.Id,
+                request.NombreEnfermedad,
+                request.Descripcion,
+                request.Fecha
+            );
+
+            return Json(new { success = true, message = "Enfermedad agregada correctamente", id = idDiagnostico });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error al insertar enfermedad");
+            return Json(new { success = false, message = "Error al agregar la enfermedad" });
+        }
+    }
+
+    [HttpPost]
+    public IActionResult InsertarConsulta([FromBody] ConsultaRequest request)
+    {
+        Usuario usuario = ObtenerUsuario();
+        if (usuario == null)
+            return Json(new { success = false, message = "No hay sesión activa" });
+
+        try
+        {
+            if (string.IsNullOrWhiteSpace(request.Motivo))
+                return Json(new { success = false, message = "El motivo de la consulta es obligatorio" });
+
+            int idConsulta = BD.InsertarConsultaManual(
+                usuario.Id,
+                request.Motivo,
+                request.Observaciones,
+                request.Fecha
+            );
+
+            return Json(new { success = true, message = "Consulta agregada correctamente", id = idConsulta });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error al insertar consulta");
+            return Json(new { success = false, message = "Error al agregar la consulta" });
+        }
+    }
+
+    // ==================== REQUEST CLASSES ====================
+
+    public class VacunacionRequest
+    {
+        public string Dosis { get; set; }
+        public string NombreVacuna { get; set; }
+        public string DatosInteres { get; set; }
+        public DateTime FechaAplicacion { get; set; }
+        public string NombreOrganizacion { get; set; }
+    }
+
+    public class EstudioRequest
+    {
+        public string NombreEstudio { get; set; }
+        public string Observacion { get; set; }
+        public DateTime Fecha { get; set; }
+        public string Capacidad { get; set; }
+        public DateTime? FechaCreacionArchivo { get; set; }
+        public string NombreArchivo { get; set; }
+        public string TipoArchivo { get; set; }
+    }
+
+    public class EnfermedadRequest
+    {
+        public string NombreEnfermedad { get; set; }
+        public string Descripcion { get; set; }
+        public DateTime Fecha { get; set; }
+    }
+
+    public class ConsultaRequest
+    {
+        public string Motivo { get; set; }
+        public string Observaciones { get; set; }
+        public DateTime Fecha { get; set; }
+    }
+
 }
      
 

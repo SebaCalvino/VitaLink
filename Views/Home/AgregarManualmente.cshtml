@@ -27,27 +27,30 @@
             </select>
         </div>
 
+        <!-- Mensaje de éxito/error -->
+        <div id="mensajeResultado" class="mensaje-resultado oculto"></div>
+
         <!-- ================= FORMULARIO VACUNACIÓN ================= -->
         <form id="formVacunacion" class="formulario-manual oculto">
 
             <div class="campo-grupo">
-                <input type="text" placeholder="Dosis (ml)">
+                <input type="text" name="dosis" placeholder="Dosis (ml)" required>
             </div>
 
             <div class="campo-grupo">
-                <input type="text" placeholder="Número de lote">
+                <input type="text" name="nombreOrganizacion" placeholder="Nombre de la organización" required>
             </div>
 
             <div class="campo-grupo">
-                <input type="text" placeholder="Nombre de la vacuna">
+                <input type="text" name="nombreVacuna" placeholder="Nombre de la vacuna" required>
             </div>
 
             <div class="campo-grupo">
-                <textarea rows="3" placeholder="Datos de interés"></textarea>
+                <textarea name="datosInteres" rows="3" placeholder="Datos de interés"></textarea>
             </div>
 
             <div class="campo-grupo">
-                <input type="date">
+                <input type="date" name="fechaAplicacion" required>
             </div>
 
             <button type="submit" class="btn-agregar-form">
@@ -57,18 +60,23 @@
         </form>
 
         <!-- ================= FORMULARIO ESTUDIO ================= -->
-        <form id="formEstudio" class="formulario-manual oculto">
+        <form id="formEstudio" class="formulario-manual oculto" enctype="multipart/form-data">
 
             <div class="campo-grupo">
-                <input type="text" placeholder="Nombre del estudio">
+                <input type="text" name="nombreEstudio" placeholder="Nombre del estudio" required>
             </div>
 
             <div class="campo-grupo">
-                <textarea rows="3" placeholder="Resultado / Observación"></textarea>
+                <textarea name="observacion" rows="3" placeholder="Resultado / Observación"></textarea>
             </div>
 
             <div class="campo-grupo">
-                <input type="date">
+                <input type="date" name="fecha" required>
+            </div>
+
+            <div class="campo-grupo">
+                <label class="label-archivo">Adjuntar archivo (opcional)</label>
+                <input type="file" name="archivo" id="archivoEstudio" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
             </div>
 
             <button type="submit" class="btn-agregar-form">
@@ -81,15 +89,15 @@
         <form id="formEnfermedad" class="formulario-manual oculto">
 
             <div class="campo-grupo">
-                <input type="text" placeholder="Nombre de la enfermedad">
+                <input type="text" name="nombreEnfermedad" placeholder="Nombre de la enfermedad" required>
             </div>
 
             <div class="campo-grupo">
-                <textarea rows="3" placeholder="Descripción"></textarea>
+                <textarea name="descripcion" rows="3" placeholder="Descripción"></textarea>
             </div>
 
             <div class="campo-grupo">
-                <input type="date">
+                <input type="date" name="fecha" required>
             </div>
 
             <button type="submit" class="btn-agregar-form">
@@ -102,15 +110,15 @@
         <form id="formAntecedente" class="formulario-manual oculto">
 
             <div class="campo-grupo">
-                <input type="text" placeholder="Antecedente médico">
+                <input type="text" name="antecedente" placeholder="Antecedente médico" required>
             </div>
 
             <div class="campo-grupo">
-                <textarea rows="3" placeholder="Detalle"></textarea>
+                <textarea name="detalle" rows="3" placeholder="Detalle"></textarea>
             </div>
 
             <div class="campo-grupo">
-                <input type="date">
+                <input type="date" name="fecha" required>
             </div>
 
             <button type="submit" class="btn-agregar-form">
@@ -123,15 +131,15 @@
         <form id="formConsulta" class="formulario-manual oculto">
 
             <div class="campo-grupo">
-                <input type="text" placeholder="Motivo de la consulta">
+                <input type="text" name="motivo" placeholder="Motivo de la consulta" required>
             </div>
 
             <div class="campo-grupo">
-                <textarea rows="3" placeholder="Observaciones"></textarea>
+                <textarea name="observaciones" rows="3" placeholder="Observaciones"></textarea>
             </div>
 
             <div class="campo-grupo">
-                <input type="date">
+                <input type="date" name="fecha" required>
             </div>
 
             <button type="submit" class="btn-agregar-form">
@@ -143,3 +151,201 @@
     </section>
 
 </main>
+
+<script>
+// Función para cambiar entre formularios
+function cambiarFormulario() {
+    const tipo = document.getElementById('tipoDato').value;
+    const formularios = document.querySelectorAll('.formulario-manual');
+    
+    // Ocultar todos los formularios
+    formularios.forEach(form => form.classList.add('oculto'));
+    
+    // Ocultar mensaje
+    document.getElementById('mensajeResultado').classList.add('oculto');
+    
+    // Mostrar el formulario seleccionado
+    if (tipo) {
+        const formId = 'form' + tipo.charAt(0).toUpperCase() + tipo.slice(1);
+        const formSeleccionado = document.getElementById(formId);
+        if (formSeleccionado) {
+            formSeleccionado.classList.remove('oculto');
+        }
+    }
+}
+
+// Función para mostrar mensaje
+function mostrarMensaje(mensaje, esExito) {
+    const div = document.getElementById('mensajeResultado');
+    div.textContent = mensaje;
+    div.className = 'mensaje-resultado ' + (esExito ? 'exito' : 'error');
+    div.classList.remove('oculto');
+    
+    // Ocultar después de 5 segundos
+    setTimeout(() => {
+        div.classList.add('oculto');
+    }, 5000);
+}
+
+// Función para limpiar formulario
+function limpiarFormulario(form) {
+    form.reset();
+}
+
+// ==================== SUBMIT VACUNACIÓN ====================
+document.getElementById('formVacunacion').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const data = {
+        dosis: form.querySelector('[name="dosis"]').value,
+        nombreOrganizacion: form.querySelector('[name="nombreOrganizacion"]').value,
+        nombreVacuna: form.querySelector('[name="nombreVacuna"]').value,
+        datosInteres: form.querySelector('[name="datosInteres"]').value,
+        fechaAplicacion: form.querySelector('[name="fechaAplicacion"]').value
+    };
+
+    try {
+        const response = await fetch('/Home/InsertarVacunacion', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        mostrarMensaje(result.message, result.success);
+        
+        if (result.success) {
+            limpiarFormulario(form);
+        }
+    } catch (error) {
+        mostrarMensaje('Error de conexión', false);
+    }
+});
+
+// ==================== SUBMIT ESTUDIO ====================
+document.getElementById('formEstudio').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const archivoInput = form.querySelector('[name="archivo"]');
+    const archivo = archivoInput.files[0];
+    
+    const data = {
+        nombreEstudio: form.querySelector('[name="nombreEstudio"]').value,
+        observacion: form.querySelector('[name="observacion"]').value,
+        fecha: form.querySelector('[name="fecha"]').value,
+        capacidad: archivo ? (archivo.size / 1024).toFixed(2) + ' KB' : null,
+        fechaCreacionArchivo: archivo ? new Date().toISOString().split('T')[0] : null,
+        nombreArchivo: archivo ? archivo.name : null,
+        tipoArchivo: archivo ? archivo.type : null
+    };
+
+    try {
+        const response = await fetch('/Home/InsertarEstudio', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        mostrarMensaje(result.message, result.success);
+        
+        if (result.success) {
+            limpiarFormulario(form);
+        }
+    } catch (error) {
+        mostrarMensaje('Error de conexión', false);
+    }
+});
+
+// ==================== SUBMIT ENFERMEDAD ====================
+document.getElementById('formEnfermedad').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const data = {
+        nombreEnfermedad: form.querySelector('[name="nombreEnfermedad"]').value,
+        descripcion: form.querySelector('[name="descripcion"]').value,
+        fecha: form.querySelector('[name="fecha"]').value
+    };
+
+    try {
+        const response = await fetch('/Home/InsertarEnfermedad', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        mostrarMensaje(result.message, result.success);
+        
+        if (result.success) {
+            limpiarFormulario(form);
+        }
+    } catch (error) {
+        mostrarMensaje('Error de conexión', false);
+    }
+});
+
+// ==================== SUBMIT ANTECEDENTE ====================
+document.getElementById('formAntecedente').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    mostrarMensaje('Funcionalidad de antecedentes próximamente disponible', false);
+});
+
+// ==================== SUBMIT CONSULTA ====================
+document.getElementById('formConsulta').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const data = {
+        motivo: form.querySelector('[name="motivo"]').value,
+        observaciones: form.querySelector('[name="observaciones"]').value,
+        fecha: form.querySelector('[name="fecha"]').value
+    };
+
+    try {
+        const response = await fetch('/Home/InsertarConsulta', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        mostrarMensaje(result.message, result.success);
+        
+        if (result.success) {
+            limpiarFormulario(form);
+        }
+    } catch (error) {
+        mostrarMensaje('Error de conexión', false);
+    }
+});
+</script>
+
+<style>
+.mensaje-resultado {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.mensaje-resultado.exito {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.mensaje-resultado.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.mensaje-resultado.oculto {
+    display: none;
+}
+</style>

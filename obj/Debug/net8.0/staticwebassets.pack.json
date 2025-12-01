@@ -1,131 +1,131 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\Img\\LandingPage\\AccesoSeguro.png",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\Img\\LandingPage\\AccesoSeguro.png",
       "PackagePath": "staticwebassets\\Img\\LandingPage\\AccesoSeguro.png"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\Img\\LandingPage\\Ciudad.png",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\Img\\LandingPage\\Ciudad.png",
       "PackagePath": "staticwebassets\\Img\\LandingPage\\Ciudad.png"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\Img\\LandingPage\\Fondo1.png",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\Img\\LandingPage\\Fondo1.png",
       "PackagePath": "staticwebassets\\Img\\LandingPage\\Fondo1.png"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\Img\\LandingPage\\Fondo2.png",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\Img\\LandingPage\\Fondo2.png",
       "PackagePath": "staticwebassets\\Img\\LandingPage\\Fondo2.png"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\Img\\LandingPage\\HistorialMedico.png",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\Img\\LandingPage\\HistorialMedico.png",
       "PackagePath": "staticwebassets\\Img\\LandingPage\\HistorialMedico.png"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\Img\\LandingPage\\Hospital2.png",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\Img\\LandingPage\\Hospital2.png",
       "PackagePath": "staticwebassets\\Img\\LandingPage\\Hospital2.png"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\Img\\LandingPage\\Medicos1.png",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\Img\\LandingPage\\Medicos1.png",
       "PackagePath": "staticwebassets\\Img\\LandingPage\\Medicos1.png"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\Img\\LandingPage\\Mision.png",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\Img\\LandingPage\\Mision.png",
       "PackagePath": "staticwebassets\\Img\\LandingPage\\Mision.png"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\Img\\LandingPage\\Recordatorios.png",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\Img\\LandingPage\\Recordatorios.png",
       "PackagePath": "staticwebassets\\Img\\LandingPage\\Recordatorios.png"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\Img\\LandingPage\\RedSocial.png",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\Img\\LandingPage\\RedSocial.png",
       "PackagePath": "staticwebassets\\Img\\LandingPage\\RedSocial.png"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\Img\\LandingPage\\RegistroMedico.png",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\Img\\LandingPage\\RegistroMedico.png",
       "PackagePath": "staticwebassets\\Img\\LandingPage\\RegistroMedico.png"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\Img\\LandingPage\\Seguridad.png",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\Img\\LandingPage\\Seguridad.png",
       "PackagePath": "staticwebassets\\Img\\LandingPage\\Seguridad.png"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\Img\\LandingPage\\Valores.png",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\Img\\LandingPage\\Valores.png",
       "PackagePath": "staticwebassets\\Img\\LandingPage\\Valores.png"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\Img\\LandingPage\\Vision.png",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\Img\\LandingPage\\Vision.png",
       "PackagePath": "staticwebassets\\Img\\LandingPage\\Vision.png"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\Img\\LogIn\\FondoHospitalCelular.png",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\Img\\LogIn\\FondoHospitalCelular.png",
       "PackagePath": "staticwebassets\\Img\\LogIn\\FondoHospitalCelular.png"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\Img\\LogIn\\FondoHospitalCompuadora.png",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\Img\\LogIn\\FondoHospitalCompuadora.png",
       "PackagePath": "staticwebassets\\Img\\LogIn\\FondoHospitalCompuadora.png"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\Img\\LogIn\\LogoVitaLink.png",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\Img\\LogIn\\LogoVitaLink.png",
       "PackagePath": "staticwebassets\\Img\\LogIn\\LogoVitaLink.png"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\css\\site.css",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\favicon.ico",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\js\\site.js",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Id": "C:\\Users\\48795975\\VitaLink\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "Id": "C:\\Users\\48794823\\VitaLink\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {

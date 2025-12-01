@@ -312,7 +312,6 @@ public static Usuario LoginUsuario(string email, string contrasena)
         }
     }
 
-}
     public static List<dynamic> ObtenerEncuentrosConDireccionPorUsuario(int idUsuario)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -328,3 +327,97 @@ public static Usuario LoginUsuario(string email, string contrasena)
             return listaEncuentros;
         }
     }
+
+    // ==================== FUNCIONES PARA AGREGAR MANUALMENTE ====================
+
+    /// <summary>
+    /// Inserta una vacunación manual usando el SP sp_InsertVacunacionManual
+    /// </summary>
+    public static int InsertarVacunacionManual(int idUsuario, string dosis, string nombreVacuna, 
+        string datosInteres, DateTime fechaAplicacion, string nombreOrganizacion)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@IdUsuario", idUsuario);
+            parameters.Add("@Dosis", dosis);
+            parameters.Add("@NombreVacuna", nombreVacuna);
+            parameters.Add("@DatosInteres", datosInteres);
+            parameters.Add("@FechaAplicacion", fechaAplicacion);
+            parameters.Add("@NombreOrganizacion", nombreOrganizacion);
+            parameters.Add("@IdVacunaPaciente", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
+
+            db.Execute("sp_InsertVacunacionManual", parameters, commandType: System.Data.CommandType.StoredProcedure);
+            
+            return parameters.Get<int>("@IdVacunaPaciente");
+        }
+    }
+
+    /// <summary>
+    /// Inserta un estudio manual usando el SP sp_InsertEstudioManual
+    /// </summary>
+    public static int InsertarEstudioManual(int idUsuario, string nombreEstudio, string observacion, 
+        DateTime fecha, string capacidad = null, DateTime? fechaCreacionArchivo = null, 
+        string nombreArchivo = null, string tipoArchivo = null)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@IdUsuario", idUsuario);
+            parameters.Add("@NombreEstudio", nombreEstudio);
+            parameters.Add("@Observacion", observacion);
+            parameters.Add("@Fecha", fecha);
+            parameters.Add("@Capacidad", capacidad);
+            parameters.Add("@FechaCreacionArchivo", fechaCreacionArchivo);
+            parameters.Add("@NombreArchivo", nombreArchivo);
+            parameters.Add("@TipoArchivo", tipoArchivo);
+            parameters.Add("@IdEstudio", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
+
+            db.Execute("sp_InsertEstudioManual", parameters, commandType: System.Data.CommandType.StoredProcedure);
+            
+            return parameters.Get<int>("@IdEstudio");
+        }
+    }
+
+    /// <summary>
+    /// Inserta una enfermedad manual usando el SP sp_InsertEnfermedadManual
+    /// </summary>
+    public static int InsertarEnfermedadManual(int idUsuario, string nombreEnfermedad, 
+        string descripcion, DateTime fecha)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@IdUsuario", idUsuario);
+            parameters.Add("@NombreEnfermedad", nombreEnfermedad);
+            parameters.Add("@Descripcion", descripcion);
+            parameters.Add("@Fecha", fecha);
+            parameters.Add("@IdDiagnostico", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
+
+            db.Execute("sp_InsertEnfermedadManual", parameters, commandType: System.Data.CommandType.StoredProcedure);
+            
+            return parameters.Get<int>("@IdDiagnostico");
+        }
+    }
+
+    /// <summary>
+    /// Inserta una consulta manual usando el SP sp_InsertConsultaManual
+    /// </summary>
+    public static int InsertarConsultaManual(int idUsuario, string motivo, 
+        string observaciones, DateTime fecha)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@IdUsuario", idUsuario);
+            parameters.Add("@Motivo", motivo);
+            parameters.Add("@Observaciones", observaciones);
+            parameters.Add("@Fecha", fecha);
+            parameters.Add("@IdConsulta", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
+
+            db.Execute("sp_InsertConsultaManual", parameters, commandType: System.Data.CommandType.StoredProcedure);
+            
+            return parameters.Get<int>("@IdConsulta");
+        }
+    }
+}
