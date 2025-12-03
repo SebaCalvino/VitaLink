@@ -2376,4 +2376,255 @@ body:has(.Historial-Medico) {
         margin-right: 0;
     }
 }
+
+/* ======================= PERFIL ======================= */
+
+.Perfil-App {
+    max-width: 95%;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    min-height: 100vh;
+}
+
+/* Sección de Foto/Header del Perfil */
+.Perfil-Foto {
+    background-color: #A8D5BA;
+    border-radius: 25px;
+    padding: 50px 25px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+.perfil-icon-container {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.perfil-icon {
+    width: 160px;
+    height: 160px;
+}
+
+.perfil-icon circle {
+    fill: white;
+    stroke: white;
+}
+
+.perfil-icon path {
+    fill: #4A9B8C;
+}
+
+.btn-editar-perfil {
+    background-color: #4A9B8C;
+    color: white;
+    padding: 16px 40px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 18px;
+    transition: background-color 0.2s;
+    display: inline-block;
+}
+
+.btn-editar-perfil:hover {
+    background-color: #3d8b7a;
+    color: white;
+    text-decoration: none;
+}
+
+/* Sección de Información Principal */
+.Perfil-InfoPrincipal {
+    padding: 25px 20px;
+    margin-bottom: 10px;
+}
+
+.Perfil-InfoPrincipal h2 {
+    color: #2D7A6B;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.Perfil-InfoPrincipal h3 {
+    color: #2D7A6B;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    margin-top: 25px;
+}
+
+.Perfil-InfoPrincipal article:first-of-type h3 {
+    margin-top: 0;
+}
+
+/* Tags de información */
+.Info-Basica {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.info-tag {
+    background-color: #A8D5BA;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 17px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.sin-info {
+    color: #666;
+    font-size: 16px;
+    font-style: italic;
+    margin: 12px 0;
+}
+
+/* Sección de Enfermedades Relevantes */
+.Perfil-EnfermedadesRelevantes {
+    background-color: #2D7A6B;
+    border-radius: 25px;
+    padding: 30px 25px;
+    margin-top: 10px;
+}
+
+.Perfil-EnfermedadesRelevantes h2 {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.enfermedades-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.enfermedades-lista li {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.enfermedades-lista li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.enfermedad-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.enfermedad-nombre {
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    flex: 1;
+}
+
+.enfermedad-fecha {
+    color: white;
+    font-size: 17px;
+    font-weight: 400;
+}
+
+.Perfil-EnfermedadesRelevantes .sin-info {
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    padding: 25px 0;
+    font-size: 16px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .Perfil-App {
+        padding: 12px;
+    }
+    
+    .Perfil-Foto {
+        padding: 40px 20px;
+        margin-bottom: 8px;
+        gap: 20px;
+    }
+    
+    .perfil-icon {
+        width: 140px;
+        height: 140px;
+    }
+    
+    .btn-editar-perfil {
+        padding: 14px 35px;
+        font-size: 17px;
+    }
+    
+    .Perfil-InfoPrincipal {
+        padding: 20px 15px;
+        margin-bottom: 8px;
+    }
+    
+    .Perfil-InfoPrincipal h2 {
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+    
+    .Perfil-InfoPrincipal h3 {
+        font-size: 20px;
+        margin-bottom: 12px;
+        margin-top: 20px;
+    }
+    
+    .info-tag {
+        padding: 11px 22px;
+        font-size: 16px;
+    }
+    
+    .Perfil-EnfermedadesRelevantes {
+        padding: 25px 20px;
+        margin-top: 8px;
+    }
+    
+    .Perfil-EnfermedadesRelevantes h2 {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+    
+    .enfermedades-lista li {
+        margin-bottom: 18px;
+        padding-bottom: 18px;
+    }
+    
+    .enfermedad-nombre {
+        font-size: 17px;
+    }
+    
+    .enfermedad-fecha {
+        font-size: 16px;
+    }
+    
+    .enfermedad-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
     

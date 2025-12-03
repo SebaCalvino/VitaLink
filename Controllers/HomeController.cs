@@ -684,7 +684,6 @@ public class HomeController : Controller
         }
 
         // Por ahora, retornamos un mensaje ya que no tenemos el sistema de archivos implementado
-        // En producción, aquí se leería el archivo físico y se retornaría como FileResult
         return Json(new { message = "Funcionalidad de descarga en desarrollo. El archivo se descargará cuando se implemente el almacenamiento de archivos." });
     }
 

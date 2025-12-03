@@ -11,55 +11,64 @@
 <main class="Perfil-App">
     
     <section class="Perfil-Foto">
-        <figure>
-            <svg viewBox="0 0 24 24" fill="currentColor">
-                <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-width="1" fill="none"/>
-                <path d="M12 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 1c-2 0-6 1-6 3v2h12v-2c0-2-4-3-6-3z"/>
+        <figure class="perfil-icon-container">
+            <svg class="perfil-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="11" stroke="white" stroke-width="1" fill="white"/>
+                <path d="M12 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 1c-2 0-6 1-6 3v2h12v-2c0-2-4-3-6-3z" fill="#4A9B8C"/>
             </svg>
         </figure>
-        <a href="@Url.Action("EditarPerfil", "Home")">Editar Perfil</a>
+        <a href="@Url.Action("EditarPerfil", "Home")" class="btn-editar-perfil">Editar Perfil</a>
     </section>
 
     <section class="Perfil-InfoPrincipal">
         <h2>Informacion Principal</h2>
         
         <div class="Info-Basica">
-            <span>Peso: @(usuario?.PesoEnKg > 0 ? $"{usuario.PesoEnKg}kg" : "Sin dato")</span>
-            <span>Altura: @(usuario?.AlturaEnCm > 0 ? $"{usuario.AlturaEnCm}cm" : "Sin dato")</span>
-            <span>Fecha de Nacimiento: @(usuario?.FechaNacimiento != default ? usuario.FechaNacimiento.ToString("dd/MM/yyyy") : "Sin dato")</span>
+            @if (usuario?.PesoEnKg > 0)
+            {
+                <span class="info-tag">@($"{usuario.PesoEnKg}kg")</span>
+            }
+            @if (usuario?.AlturaEnCm > 0)
+            {
+                <span class="info-tag">@($"{usuario.AlturaEnCm}cm")</span>
+            }
+            @if (usuario?.FechaNacimiento != default)
+            {
+                <span class="info-tag">@usuario.FechaNacimiento.ToString("dd/MM/yyyy")</span>
+            }
         </div>
 
-        <article>
+        <article class="Perfil-Alergias">
             <h3>Alergias:</h3>
             @if (alergias.Any())
             {
-                <ul>
+                <div class="tags-container">
                     @foreach (var alergia in alergias)
                     {
-                        <li>@alergia.Reaccion</li>
+                        <span class="info-tag">@alergia.Reaccion</span>
                     }
-                </ul>
+                </div>
             }
             else
             {
-                <p>No hay información sobre: alergias</p>
+                <p class="sin-info">No hay información sobre: alergias</p>
             }
         </article>
 
-        <article>
+        <article class="Perfil-Enfermedad">
             <h3>Enfermedad:</h3>
             @if (enfermedadesActuales.Any())
             {
-                <ul>
+                <div class="tags-container">
                     @foreach (var enfermedad in enfermedadesActuales)
                     {
-                        <li>@(enfermedad.NombrePatologia ?? enfermedad.Descripcion)</li>
+                        <span class="info-tag">@(enfermedad.NombrePatologia ?? enfermedad.Descripcion)</span>
                     }
-                </ul>
+                </div>
             }
             else
             {
-                <p>Te encuentras en perfecta salud</p>
+                <p class="sin-info">Te encuentras en perfecta salud</p>
             }
         </article>
     </section>
@@ -69,19 +78,19 @@
         
         @if (enfermedadesRelevantes.Any())
         {
-            <ul>
+            <ul class="enfermedades-lista">
                 @foreach (var enfermedad in enfermedadesRelevantes)
                 {
                     <li>
-                        <div>
-                            <h4>@(enfermedad.NombrePatologia ?? enfermedad.Descripcion)</h4>
+                        <div class="enfermedad-item">
+                            <span class="enfermedad-nombre">@(enfermedad.NombrePatologia ?? enfermedad.Descripcion)</span>
                             @if (enfermedad.FechaFin == default || enfermedad.FechaFin > DateTime.Now)
                             {
-                                <span>Cronica</span>
+                                <span class="enfermedad-fecha">Cronica</span>
                             }
                             else
                             {
-                                <time datetime="@enfermedad.FechaInicio.ToString("yyyy-MM-dd")">
+                                <time class="enfermedad-fecha" datetime="@enfermedad.FechaInicio.ToString("yyyy-MM-dd")">
                                     @enfermedad.FechaInicio.ToString("dd/MM/yyyy")
                                 </time>
                             }
@@ -92,7 +101,7 @@
         }
         else
         {
-            <p>No hay información sobre: enfermedades relevantes</p>
+            <p class="sin-info">No hay información sobre: enfermedades relevantes</p>
         }
     </section>
 
