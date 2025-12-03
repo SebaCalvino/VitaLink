@@ -434,6 +434,12 @@ main {
     min-height: calc(100vh - 80px);
 }
 
+/* Fondo uniforme para Historial Médico */
+.Historial-Medico,
+body:has(.Historial-Medico) main {
+    background-color: #f5f5f5;
+}
+
 .Inicio-App {
     max-width: 1200px;
     margin: 0 auto;
@@ -1988,5 +1994,228 @@ body.body-calendario {
 
 .agregar-medicamento-main .btn-secondary:hover {
     background-color: #b5b5b5;
+}
+
+/* ======================= HISTORIAL MÉDICO ======================= */
+
+.Historial-Medico {
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 20px 10px;
+    background: #f5f5f5;
+    min-height: 100vh;
+}
+
+/* Asegurar que el body tenga el mismo fondo */
+body:has(.Historial-Medico) {
+    background: #f5f5f5;
+}
+
+/* --- HEADER --- */
+.Historial-Header {
+    margin-bottom: 25px;
+    padding: 10px 20px;
+}
+
+.Historial-Header h2 {
+    font-size: 24px;
+    color: #1e8c7f;
+    font-weight: 700;
+    margin: 0;
+    text-align: left;
+}
+
+.Historial-Header p {
+    display: none; /* Ocultar descripción según prototipo */
+}
+
+/* --- SECCIONES --- */
+.Historial-Seccion {
+    background: #9adcca;
+    border-radius: 20px;
+    padding: 22px 25px;
+    margin-bottom: 22px;
+    margin-left: 10px;
+    margin-right: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: calc(100% - 20px);
+    box-sizing: border-box;
+}
+
+.Historial-Seccion h3 {
+    font-size: 18px;
+    color: #1e8c7f;
+    font-weight: 700;
+    margin: 0 0 15px 0;
+    text-align: left;
+}
+
+/* --- GRID DE ITEMS --- */
+.Historial-Grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* --- ITEMS INDIVIDUALES --- */
+.Historial-Item {
+    background: #1e8c7f;
+    border-radius: 15px;
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    min-height: 75px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.Historial-Item-Content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}
+
+.Historial-Item-Texto {
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.Historial-Item-Fecha {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 13px;
+    font-weight: 400;
+}
+
+/* --- BOTÓN VER MAS --- */
+.btn-vermas {
+    background: #9adcca;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    white-space: nowrap;
+    margin-left: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.btn-vermas:hover {
+    background: #7bc4b0;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+}
+
+/* --- MENSAJE VACÍO --- */
+.Historial-Vacio {
+    color: #666;
+    font-size: 14px;
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+}
+
+/* --- BOTONES DE AGREGAR --- */
+.botones-agregar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 25px;
+    padding: 0 10px 20px 10px;
+    max-width: 100%;
+}
+
+.btn-agregar-manual {
+    background: #1e8c7f;
+    color: white;
+    padding: 14px 20px;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    transition: 0.2s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    border: none;
+    cursor: pointer;
+    display: block;
+}
+
+.btn-agregar-manual:hover {
+    background: #157065;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+.btn-agregar-auto {
+    background: white;
+    color: #1e8c7f;
+    padding: 14px 20px;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    transition: 0.2s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 2px solid #1e8c7f;
+    cursor: pointer;
+    display: block;
+}
+
+.btn-agregar-auto:hover {
+    background: #f0f0f0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .Historial-Medico {
+        padding: 15px 10px;
+    }
+    
+    .Historial-Seccion {
+        margin-left: 10px;
+        margin-right: 10px;
+        padding: 18px 15px;
+    }
+    
+    .Historial-Item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 15px 18px;
+    }
+    
+    .btn-vermas {
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .botones-agregar {
+        padding: 0 10px 15px 10px;
+    }
+}
+
+@media (min-width: 769px) {
+    .Historial-Medico {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    .Historial-Seccion {
+        margin-left: 0;
+        margin-right: 0;
+    }
 }
     
