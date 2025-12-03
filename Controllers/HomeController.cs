@@ -187,58 +187,26 @@ public class HomeController : Controller
     }
 
     [HttpGet]
-    [HttpPost]
-    public IActionResult Agregar(//FALTAN LOS PARÁMETROS DEL MEDICAMENTO QUE SE PASAN MEDIANTE EL FORMULARIO
-                                string NombreMedico,
-                                string ApellidoMedico,
-                                DateTime FechaEmision,
-                                DateTime FechaCaducacion,
-                                string Observaciones)
-    {
-        
-        Usuario usuario = ObtenerUsuario();
-
-        // 2) Insertar receta y obtener Id
-        int idReceta = BD.AgregarRecetaYDevolverId(NombreMedico, ApellidoMedico, FechaEmision, FechaCaducacion, Observaciones);  // que devuelva el ID identity
-
-        // 3) crear medicamento
-        MedicacionesPaciente medicacion = new MedicacionesPaciente
-        {
-            IdReceta = idReceta, // -1 como valor por defecto que indica que no tiene ninguna receta asociada al medicamento
-            IdUsuario = usuario.Id,
-            Nombre_Comercial = string.Empty,
-            Dosis = string.Empty,
-            Via = string.Empty,
-            Frecuencia = string.Empty,
-            Indicacion = string.Empty,
-            HoraProgramada = DateTime.Now,
-            FechaFabricacion = DateTime.Today,
-            FechaVencimiento = DateTime.Today,
-            Estado = false
-        };
-
-        // 4) Guardar medicación
-        BD.AgregarMedicacionPaciente(medicacion);
-
-        return RedirectToAction("Medicamentos");
-    }
-
     public IActionResult Agregar()
     {
         Usuario usuario = ObtenerUsuario();
         if (usuario == null) return RedirectToAction("LogIn");
 
         // Inicializar un objeto MedicacionesPaciente con valores por defecto
+        // HoraProgramada solo con horas y minutos (sin segundos ni milisegundos)
+        DateTime horaActual = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 
+                                            DateTime.Now.Hour, DateTime.Now.Minute, 0);
+        
         var model = new MedicacionesPaciente
         {
-            IdReceta = -1, // -1 como valor por defecto que indica que no tiene ninguna receta asociada al medicamento
-            IdUsuario = usuario.Id,
+            IdReceta = 0, // Se asignará cuando se cree la receta
+            IdUsuario = usuario.Id, // Se obtiene de sesión
             Nombre_Comercial = string.Empty,
             Dosis = string.Empty,
             Via = string.Empty,
             Frecuencia = string.Empty,
             Indicacion = string.Empty,
-            HoraProgramada = DateTime.Now,
+            HoraProgramada = horaActual,
             FechaFabricacion = DateTime.Today,
             FechaVencimiento = DateTime.Today,
             Estado = false
@@ -248,12 +216,57 @@ public class HomeController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Agregar(MedicacionesPaciente item)
+    public IActionResult Agregar(
+        MedicacionesPaciente item,
+        string NombreMedico,
+        string ApellidoMedico,
+        DateTime? FechaEmision,
+        DateTime? FechaCaducacion,
+        string Observaciones,
+        bool AgregarReceta = false)
     {
         Usuario usuario = ObtenerUsuario();
         if (usuario == null) return RedirectToAction("LogIn");
 
-        item.IdUsuario = usuario.Id;
+        item.IdUsuario = usuario.Id; // Siempre de sesión
+
+        int idReceta;
+        
+        // Si el usuario quiere agregar receta completa Y proporcionó datos válidos
+        if (AgregarReceta && 
+            !string.IsNullOrWhiteSpace(NombreMedico) &&
+            FechaEmision.HasValue && 
+            FechaCaducacion.HasValue)
+        {
+            // Validar que las fechas estén en rango válido
+            DateTime fechaMinima = new DateTime(1753, 1, 1);
+            DateTime fechaMaxima = new DateTime(9999, 12, 31);
+            
+            DateTime fechaEmisionValida = FechaEmision.Value;
+            DateTime fechaCaducacionValida = FechaCaducacion.Value;
+            
+            if (fechaEmisionValida < fechaMinima || fechaEmisionValida > fechaMaxima)
+                fechaEmisionValida = DateTime.Today;
+            
+            if (fechaCaducacionValida < fechaMinima || fechaCaducacionValida > fechaMaxima)
+                fechaCaducacionValida = DateTime.Today.AddYears(1);
+            
+            // Crear receta con datos proporcionados
+            idReceta = BD.AgregarRecetaYDevolverId(
+                NombreMedico, 
+                ApellidoMedico ?? string.Empty, 
+                fechaEmisionValida, 
+                fechaCaducacionValida, 
+                Observaciones ?? string.Empty
+            );
+        }
+        else
+        {
+            // Crear receta por defecto (sin datos del médico)
+            idReceta = BD.CrearRecetaPorDefecto();
+        }
+        
+        item.IdReceta = idReceta; // Siempre asignar un IdReceta válido
 
         if (ModelState.IsValid)
         {

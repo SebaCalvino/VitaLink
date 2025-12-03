@@ -9,7 +9,7 @@ using System.Linq;
 
 public static class BD
 {
-    private static string _connectionString = @"Server=localhost;Database=BDVitalink;Integrated Security=True;TrustServerCertificate=True;";
+    private static string _connectionString = @"Server=MSI\SQLEXPRESS03;Database=BDVitalink;Integrated Security=True;TrustServerCertificate=True;";
 
 
     public static Usuario LoginUsuario(string email, string contrasena)
@@ -317,17 +317,54 @@ public static class BD
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
+            // Validar que las fechas estén en el rango válido de SQL Server
+            DateTime fechaMinima = new DateTime(1753, 1, 1);
+            DateTime fechaMaxima = new DateTime(9999, 12, 31);
+            
+            if (FechaEmision < fechaMinima || FechaEmision > fechaMaxima)
+                FechaEmision = DateTime.Today; // Valor por defecto si está fuera de rango
+            
+            if (FechaCaducacion < fechaMinima || FechaCaducacion > fechaMaxima)
+                FechaCaducacion = DateTime.Today.AddYears(1); // Valor por defecto
+            
             string sql = @"INSERT INTO Recetas(
                             NombreMedico, ApellidoMedico, FechaEmision, FechaCaducacion, Observaciones
                             ) 
                             VALUES(
                                 @pNombreMedico, @pApellidoMedico, @pFechaEmision, @pFechaCaducacion, @pObservaciones
-                            )";
-            db.Execute(sql, new { @pNombreMedico = NombreMedico, @pApellidoMedico = ApellidoMedico, @pFechaEmision = FechaEmision, @pFechaCaducacion = FechaCaducacion, @pObservaciones = Observaciones });
-            string sql2 = @"
-                            SELECT SCOPE_IDENTITY()
-                            ";
-            int IdReceta = db.Execute(sql);
+                            );
+                            SELECT CAST(SCOPE_IDENTITY() AS int);";
+            
+            int IdReceta = db.ExecuteScalar<int>(sql, new { 
+                @pNombreMedico = NombreMedico ?? string.Empty, 
+                @pApellidoMedico = ApellidoMedico ?? string.Empty, 
+                @pFechaEmision = FechaEmision, 
+                @pFechaCaducacion = FechaCaducacion, 
+                @pObservaciones = Observaciones ?? string.Empty 
+            });
+            return IdReceta;
+        }
+    }
+
+    public static int CrearRecetaPorDefecto()
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = @"INSERT INTO Recetas(
+                            NombreMedico, ApellidoMedico, FechaEmision, FechaCaducacion, Observaciones
+                            ) 
+                            VALUES(
+                                '', '', @pFechaEmision, @pFechaCaducacion, ''
+                            );
+                            SELECT CAST(SCOPE_IDENTITY() AS int);";
+            
+            DateTime fechaHoy = DateTime.Today;
+            DateTime fechaFutura = DateTime.Today.AddYears(1);
+            
+            int IdReceta = db.ExecuteScalar<int>(sql, new { 
+                @pFechaEmision = fechaHoy, 
+                @pFechaCaducacion = fechaFutura
+            });
             return IdReceta;
         }
     }

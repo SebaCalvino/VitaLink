@@ -10,36 +10,50 @@
 
     <section class="agregar-medicamento-form-container">
         <form asp-action="Agregar" asp-controller="Home" method="post" class="agregar-medicamento-form">
+            @Html.AntiForgeryToken()
 
-            @* IdReceta lo completa el código, no el usuario *@
-            <input asp-for="IdReceta" type="hidden" />
+            @* IdUsuario y IdReceta se manejan en el controlador *@
+            <input asp-for="IdUsuario" type="hidden" />
+            <input asp-for="IdReceta" type="hidden" value="0" />
 
-            <!-- ================= DATOS DE LA RECETA ================= -->
-            <h2>Datos de la receta</h2>
-
+            <!-- ================= RECETA OPCIONAL ================= -->
             <div class="campo-grupo">
-                <label for="NombreMedico">Nombre del médico:</label>
-                <input id="NombreMedico" name="NombreMedico" class="form-control" />
+                <label>
+                    <input type="checkbox" id="chkAgregarReceta" name="AgregarReceta" />
+                    Agregar datos de receta médica (opcional)
+                </label>
+                <small style="display: block; color: #666; margin-top: 5px;">
+                    Si no marcas esta opción, se creará una receta sin datos del médico.
+                </small>
             </div>
 
-            <div class="campo-grupo">
-                <label for="ApellidoMedico">Apellido del médico:</label>
-                <input id="ApellidoMedico" name="ApellidoMedico" class="form-control" />
-            </div>
+            <div id="seccion-receta" style="display: none;">
+                <h2>Datos de la receta</h2>
 
-            <div class="campo-grupo">
-                <label for="FechaEmision">Fecha de emisión:</label>
-                <input id="FechaEmision" name="FechaEmision" type="date" class="form-control" />
-            </div>
+                <div class="campo-grupo">
+                    <label for="NombreMedico">Nombre del médico: *</label>
+                    <input id="NombreMedico" name="NombreMedico" class="form-control" />
+                </div>
 
-            <div class="campo-grupo">
-                <label for="FechaCaducacion">Fecha de caducación:</label>
-                <input id="FechaCaducacion" name="FechaCaducacion" type="date" class="form-control" />
-            </div>
+                <div class="campo-grupo">
+                    <label for="ApellidoMedico">Apellido del médico:</label>
+                    <input id="ApellidoMedico" name="ApellidoMedico" class="form-control" />
+                </div>
 
-            <div class="campo-grupo">
-                <label for="Observaciones">Observaciones:</label>
-                <textarea id="Observaciones" name="Observaciones" class="form-control"></textarea>
+                <div class="campo-grupo">
+                    <label for="FechaEmision">Fecha de emisión: *</label>
+                    <input id="FechaEmision" name="FechaEmision" type="date" class="form-control" />
+                </div>
+
+                <div class="campo-grupo">
+                    <label for="FechaCaducacion">Fecha de caducación: *</label>
+                    <input id="FechaCaducacion" name="FechaCaducacion" type="date" class="form-control" />
+                </div>
+
+                <div class="campo-grupo">
+                    <label for="Observaciones">Observaciones:</label>
+                    <textarea id="Observaciones" name="Observaciones" class="form-control"></textarea>
+                </div>
             </div>
 
             <hr />
@@ -78,8 +92,9 @@
             </div>
 
             <div class="campo-grupo">
-                <label asp-for="HoraProgramada">Hora Programada:</label>
-                <input asp-for="HoraProgramada" type="time" class="form-control" />
+                <label asp-for="HoraProgramada">Hora de primera toma:</label>
+                <input asp-for="HoraProgramada" type="time" step="60" class="form-control" 
+                       value="@(Model.HoraProgramada?.ToString("HH:mm"))" />
                 <span asp-validation-for="HoraProgramada" class="text-danger"></span>
             </div>
 
@@ -108,3 +123,25 @@
         </form>
     </section>
 </main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const checkbox = document.getElementById('chkAgregarReceta');
+        const seccionReceta = document.getElementById('seccion-receta');
+        
+        if (checkbox && seccionReceta) {
+            checkbox.addEventListener('change', function() {
+                seccionReceta.style.display = this.checked ? 'block' : 'none';
+                
+                // Si se desmarca, limpiar los campos
+                if (!this.checked) {
+                    document.getElementById('NombreMedico').value = '';
+                    document.getElementById('ApellidoMedico').value = '';
+                    document.getElementById('FechaEmision').value = '';
+                    document.getElementById('FechaCaducacion').value = '';
+                    document.getElementById('Observaciones').value = '';
+                }
+            });
+        }
+    });
+</script>
