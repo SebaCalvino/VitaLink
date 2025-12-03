@@ -171,9 +171,9 @@ public class HomeController : Controller
         ViewBag.Encuentros = BD.ObtenerEncuentrosConDireccionPorUsuario(usuario.Id);
         return View("Calendario");
     }
-    public IActionResult Crianzas()
+    public IActionResult Familia()
     {
-        return View("Crianzas");
+        return View("Familia");
     }
 
 

@@ -2780,4 +2780,188 @@ body:has(.Historial-Medico) {
         font-size: 17px;
     }
 }
+
+/* ======================= FAMILIA ======================= */
+
+.Familia-App {
+    max-width: 95%;
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background-color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.familia-mensaje {
+    background-color: #A8D5BA;
+    border-radius: 25px;
+    padding: 50px 40px;
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(45, 122, 107, 0.2);
+}
+
+.familia-icono {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 50%;
+    padding: 15px;
+}
+
+.familia-icono svg {
+    width: 100%;
+    height: 100%;
+}
+
+.familia-mensaje h2 {
+    color: #2D7A6B;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.familia-texto-principal {
+    color: #1a5a4f;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.familia-texto-fecha {
+    color: #2D7A6B;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+/* Responsive para Familia */
+@media (max-width: 768px) {
+    .Familia-App {
+        padding: 30px 15px;
+    }
+    
+    .familia-mensaje {
+        padding: 40px 30px;
+    }
+    
+    .familia-icono {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 20px;
+    }
+    
+    .familia-mensaje h2 {
+        font-size: 24px;
+    }
+    
+    .familia-texto-principal {
+        font-size: 16px;
+    }
+    
+    .familia-texto-fecha {
+        font-size: 15px;
+    }
+}
+
+/* ======================= AGREGAR AUTOMATICAMENTE ======================= */
+
+.AgregarAutomaticamente-App {
+    max-width: 95%;
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background-color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.agregar-automaticamente-mensaje {
+    background-color: #A8D5BA;
+    border-radius: 25px;
+    padding: 50px 40px;
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(45, 122, 107, 0.2);
+}
+
+.agregar-automaticamente-icono {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 50%;
+    padding: 15px;
+}
+
+.agregar-automaticamente-icono svg {
+    width: 100%;
+    height: 100%;
+}
+
+.agregar-automaticamente-mensaje h2 {
+    color: #2D7A6B;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.agregar-automaticamente-texto-principal {
+    color: #1a5a4f;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.agregar-automaticamente-texto-fecha {
+    color: #2D7A6B;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+/* Responsive para Agregar Automaticamente */
+@media (max-width: 768px) {
+    .AgregarAutomaticamente-App {
+        padding: 30px 15px;
+    }
+    
+    .agregar-automaticamente-mensaje {
+        padding: 40px 30px;
+    }
+    
+    .agregar-automaticamente-icono {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 20px;
+    }
+    
+    .agregar-automaticamente-mensaje h2 {
+        font-size: 24px;
+    }
+    
+    .agregar-automaticamente-texto-principal {
+        font-size: 16px;
+    }
+    
+    .agregar-automaticamente-texto-fecha {
+        font-size: 15px;
+    }
+}
     
