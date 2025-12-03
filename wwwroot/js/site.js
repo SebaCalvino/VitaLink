@@ -222,6 +222,7 @@ function cambiarContrasena() {
     const detalleHora = document.querySelector("[data-detalle-hora]");
     const detalleDescripcion = document.querySelector("[data-detalle-descripcion]");
     const detalleCerrar = document.querySelector(".Detalle-Cerrar");
+    const detalleInfo = document.querySelector(".Detalle-Info");
     const mesActual = document.querySelector(".Calendario-MesActual");
 
 
@@ -347,14 +348,9 @@ function cambiarContrasena() {
                 if (detalleTitulo) {
                     detalleTitulo.textContent = "No hay eventos programados para este día";
                 }
-                if (detalleDireccion) {
-                    detalleDireccion.textContent = "";
-                }
-                if (detalleHora) {
-                    detalleHora.textContent = "";
-                }
-                if (detalleDescripcion) {
-                    detalleDescripcion.textContent = "";
+                // Ocultar la sección de información cuando no hay eventos
+                if (detalleInfo) {
+                    detalleInfo.style.display = "none";
                 }
             }
             return;
@@ -362,6 +358,11 @@ function cambiarContrasena() {
 
         const evento = eventosDia[0];
         const fechaEvento = new Date(evento.fecha);
+        
+        // Mostrar la sección de información cuando hay eventos
+        if (detalleInfo) {
+            detalleInfo.style.display = "flex";
+        }
         
         if (detalleFecha) {
             detalleFecha.textContent = fecha.toLocaleDateString("es-AR", { 

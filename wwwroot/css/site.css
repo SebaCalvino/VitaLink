@@ -1526,22 +1526,22 @@ body.body-calendario {
 .Calendario-App {
     min-height: 100vh;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    padding: 40px 16px;
+    padding: 15px 16px 20px;
 }
 
 /* ---------------------- PANEL PRINCIPAL ---------------------- */
 .Calendario-Panel {
     background: #ffffff;
-    border-radius: 30px;
+    border-radius: 25px;
     box-shadow: var(--vl-shadow);
-    padding: 24px 32px 24px;
-    max-width: 1100px;
+    padding: 16px 24px 16px;
+    max-width: 1000px;
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 12px;
 }
 
 /* ---------------------- HEADER (barra con degradé) ---------------------- */
@@ -1549,31 +1549,31 @@ body.body-calendario {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 12px;
 
     /* que se pegue a los bordes del panel y forme la barra superior */
-    margin: -24px -32px 0 -32px;
-    padding: 18px 32px;
+    margin: -16px -24px 0 -24px;
+    padding: 12px 24px;
 
     background: linear-gradient(90deg, #0f766e, #06b6d4);
-    border-radius: 30px 30px 0 0;
+    border-radius: 25px 25px 0 0;
     color: #ffffff;
 }
 
 .Calendario-Titulo {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
 }
 
 .Calendario-Titulo h2 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: #ffffff;
 }
 
 .Calendario-MesActual {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.7);
 }
@@ -1589,8 +1589,8 @@ body.body-calendario {
 .Cal-BtnNext {
     border: none;
     border-radius: 999px;
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1598,7 +1598,13 @@ body.body-calendario {
     color: var(--vl-secondary);
     cursor: pointer;
     transition: transform 0.08s ease, box-shadow 0.18s ease, background 0.18s ease;
-    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2);
+    box-shadow: 0 3px 8px rgba(15, 23, 42, 0.2);
+}
+
+.Cal-BtnPrev svg,
+.Cal-BtnNext svg {
+    width: 18px;
+    height: 18px;
 }
 
 .Cal-BtnPrev:hover,
@@ -1621,24 +1627,24 @@ body.body-calendario {
 /* ---------------------- CARD DEL CALENDARIO ---------------------- */
 .Calendario-Card {
     background: var(--vl-bg-soft);
-    border-radius: 22px;
-    padding: 20px 24px 18px;
+    border-radius: 18px;
+    padding: 12px 16px 10px;
     border: 1px solid var(--vl-border);
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
 }
 
 /* Días de la semana */
 .Calendario-Semanas {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
-    font-size: 0.75rem;
+    gap: 3px;
+    font-size: 0.7rem;
     font-weight: 600;
     text-align: center;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     color: var(--vl-text-muted);
 }
 
@@ -1646,18 +1652,18 @@ body.body-calendario {
 .Calendario-Dias {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: 10px;
+    gap: 6px;
 }
 
 /* Cada día */
 .Calendario-Dias > * {
     position: relative;
-    border-radius: 18px;
+    border-radius: 14px;
     background: #ffffff;
-    min-height: 72px;
-    padding: 8px 10px 6px;
+    min-height: 50px;
+    padding: 5px 6px 4px;
     border: 1px solid #e5e7eb;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: var(--vl-text-main);
     cursor: pointer;
     display: flex;
@@ -1669,7 +1675,7 @@ body.body-calendario {
 .Calendario-Dias > * span,
 .Calendario-Dias > * .dia-numero {
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
 }
 
 /* Hover suave */
@@ -1696,11 +1702,11 @@ body.body-calendario {
 .Calendario-Dias > *.con-evento::after {
     content: "";
     position: absolute;
-    bottom: 7px;
+    bottom: 4px;
     left: 50%;
     transform: translateX(-50%);
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     border-radius: 999px;
     background: var(--vl-primary);
 }
@@ -1719,24 +1725,24 @@ body.body-calendario {
 
 /* ---------------------- BOTONES DE ACCIÓN ---------------------- */
 .Calendario-Acciones {
-    margin-top: 18px;
+    margin-top: 10px;
     display: flex;
     justify-content: flex-end;
-    gap: 12px;
+    gap: 10px;
 }
 
 .btn-calendario {
     border-radius: 999px;
     border: none;
-    padding: 10px 26px;
-    font-size: 0.9rem;
+    padding: 8px 20px;
+    font-size: 0.85rem;
     font-weight: 600;
     letter-spacing: 0.02em;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 5px;
     transition: background 0.16s ease, transform 0.08s ease, box-shadow 0.18s ease;
 }
 
@@ -1785,15 +1791,15 @@ body.body-calendario {
 
 .Detalle-Contenido {
     background: #ffffff;
-    border-radius: 20px;
-    padding: 20px 22px 18px;
+    border-radius: 18px;
+    padding: 16px 18px 14px;
     width: 100%;
-    max-width: 420px;
+    max-width: 380px;
     box-shadow: 0 24px 55px rgba(15, 23, 42, 0.45);
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .Detalle-Cerrar {
