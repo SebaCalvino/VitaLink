@@ -7,8 +7,8 @@ public class MedicacionesPaciente{
     public string Via{get; set;}
     public string Frecuencia{get; set;}
     public string Indicacion{get; set;}
-    public DateTime HoraProgramada{get; set;}
-    public DateTime FechaFabricacion{get; set;}
-    public DateTime FechaVencimiento{get; set;}
-    public bool Estado{get; set;}
+    public DateTime? HoraProgramada{get; set;}
+    public DateTime? FechaFabricacion{get; set;}
+    public DateTime? FechaVencimiento{get; set;}
+    public bool? Estado{get; set;}
 }

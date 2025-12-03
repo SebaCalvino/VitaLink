@@ -186,6 +186,47 @@ public class HomeController : Controller
         return View("Medicamentos");
     }
 
+    [HttpGet]
+    public IActionResult Agregar()
+    {
+        Usuario usuario = ObtenerUsuario();
+        if (usuario == null) return RedirectToAction("LogIn");
+
+        // Inicializar un objeto MedicacionesPaciente con valores por defecto
+        var model = new MedicacionesPaciente
+        {
+            IdReceta = 0, // O un valor por defecto adecuado
+            IdUsuario = usuario.Id,
+            Nombre_Comercial = string.Empty,
+            Dosis = string.Empty,
+            Via = string.Empty,
+            Frecuencia = string.Empty,
+            Indicacion = string.Empty,
+            HoraProgramada = DateTime.Now,
+            FechaFabricacion = DateTime.Today,
+            FechaVencimiento = DateTime.Today,
+            Estado = false
+        };
+        return View("AgregarMedicamento", model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Agregar(MedicacionesPaciente item)
+    {
+        Usuario usuario = ObtenerUsuario();
+        if (usuario == null) return RedirectToAction("LogIn");
+
+        item.IdUsuario = usuario.Id;
+
+        if (ModelState.IsValid)
+        {
+            BD.AgregarMedicacionPaciente(item);
+            return RedirectToAction("Medicamentos");
+        }
+        return View("AgregarMedicamento", item);
+    }
+
 
  [HttpPost]
         [ValidateAntiForgeryToken]

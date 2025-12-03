@@ -9,7 +9,7 @@ using System.Linq;
 
 public static class BD
 {
-    private static string _connectionString = @"Server=LocalHost;Database=BDVitalink;Integrated Security=True;TrustServerCertificate=True;";
+    private static string _connectionString = @"Server=DESKTOP-VVC8EFP\SQLEXPRESS;Database=BDVitalink;Integrated Security=True;TrustServerCertificate=True;";
 
 
 public static Usuario LoginUsuario(string email, string contrasena)
@@ -309,6 +309,22 @@ public static Usuario LoginUsuario(string email, string contrasena)
             string sql = @"DELETE FROM MedicacionesPaciente WHERE Id = @id AND IdUsuario = @idUsuario";
             int filasAfectadas = db.Execute(sql, new { id, idUsuario });
             return filasAfectadas > 0;
+        }
+    }
+
+    public static void AgregarMedicacionPaciente(MedicacionesPaciente medicacion)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = @"INSERT INTO MedicacionesPaciente (
+                                IdReceta, IdUsuario, Nombre_Comercial, Dosis, Via, Frecuencia,
+                                Indicacion, HoraProgramada, FechaFabricacion, FechaVencimiento, Estado
+                            )
+                            VALUES (
+                                @IdReceta, @IdUsuario, @Nombre_Comercial, @Dosis, @Via, @Frecuencia,
+                                @Indicacion, @HoraProgramada, @FechaFabricacion, @FechaVencimiento, @Estado
+                            )";
+            db.Execute(sql, medicacion);
         }
     }
 
