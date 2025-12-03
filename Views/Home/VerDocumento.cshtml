@@ -1,0 +1,152 @@
+@{
+    ViewData["Title"] = "Ver Documento - VitaLink";
+    var documento = ViewBag.Documento as DocumentoClinico;
+}
+
+<main class="ver-documento-main">
+    <section class="ver-documento-header">
+        <h2>@(documento?.Titulo ?? documento?.NombreArchivo ?? "Documento")</h2>
+        <a href="@Url.Action("HistorialMedico", "Home")" class="btn-volver">← Volver</a>
+    </section>
+
+    <section class="ver-documento-content">
+        @if (documento != null)
+        {
+            <div class="documento-info">
+                <div class="info-item">
+                    <strong>Nombre del archivo:</strong>
+                    <span>@documento.NombreArchivo</span>
+                </div>
+                <div class="info-item">
+                    <strong>Fecha:</strong>
+                    <span>@documento.Fecha.ToString("dd/MM/yyyy")</span>
+                </div>
+                <div class="info-item">
+                    <strong>Tipo de archivo:</strong>
+                    <span>@documento.TipoArchivo</span>
+                </div>
+            </div>
+
+            @if (documento.TipoArchivo != null && documento.TipoArchivo.ToLower().Contains("pdf"))
+            {
+                <div class="pdf-viewer">
+                    <p class="mensaje-info">
+                        La vista previa de PDF se mostrará aquí cuando se implemente el almacenamiento de archivos.
+                    </p>
+                    <p class="mensaje-info">
+                        Por ahora, puedes descargar el documento desde el historial médico.
+                    </p>
+                </div>
+            }
+            else
+            {
+                <div class="documento-sin-preview">
+                    <p>Este tipo de archivo no se puede previsualizar en el navegador.</p>
+                    <p>Por favor, descárgalo para verlo.</p>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="error-mensaje">Documento no encontrado.</p>
+        }
+    </section>
+</main>
+
+<style>
+.ver-documento-main {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f5f5f5;
+    min-height: 100vh;
+}
+
+.ver-documento-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 10px 20px;
+}
+
+.ver-documento-header h2 {
+    font-size: 24px;
+    color: #1e8c7f;
+    font-weight: 700;
+    margin: 0;
+}
+
+.btn-volver {
+    color: #1e8c7f;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 12px;
+    border: 2px solid #1e8c7f;
+    transition: 0.2s;
+}
+
+.btn-volver:hover {
+    background: #1e8c7f;
+    color: white;
+}
+
+.ver-documento-content {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.documento-info {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.info-item {
+    margin-bottom: 15px;
+}
+
+.info-item strong {
+    color: #1e8c7f;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.info-item span {
+    color: #333;
+    font-size: 15px;
+}
+
+.pdf-viewer {
+    min-height: 400px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+}
+
+.mensaje-info {
+    color: #666;
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+.documento-sin-preview {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+.error-mensaje {
+    text-align: center;
+    color: #d32f2f;
+    font-size: 16px;
+    padding: 40px;
+}
+</style>
+

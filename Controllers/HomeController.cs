@@ -660,6 +660,61 @@ public class HomeController : Controller
         public DateTime Fecha { get; set; }
     }
 
+    // ==================== ENDPOINTS PARA DOCUMENTOS PDF ====================
+
+    [HttpGet]
+    public IActionResult DescargarDocumento(int id, int? idArchivo)
+    {
+        Usuario usuario = ObtenerUsuario();
+        if (usuario == null) return RedirectToAction("LogIn");
+
+        // Verificar que el documento pertenece al usuario
+        var encuentros = BD.ObtenerEncuentrosPorUsuario(usuario.Id);
+        var documentos = encuentros.SelectMany(e => BD.ObtenerDocumentosPorEncuentro(e.Id)).ToList();
+        var documento = documentos.FirstOrDefault(d => d.Id == id);
+
+        if (documento == null)
+        {
+            return NotFound("Documento no encontrado");
+        }
+
+        if (!idArchivo.HasValue || idArchivo.Value <= 0)
+        {
+            return BadRequest("No hay archivo asociado a este documento");
+        }
+
+        // Por ahora, retornamos un mensaje ya que no tenemos el sistema de archivos implementado
+        // En producción, aquí se leería el archivo físico y se retornaría como FileResult
+        return Json(new { message = "Funcionalidad de descarga en desarrollo. El archivo se descargará cuando se implemente el almacenamiento de archivos." });
+    }
+
+    [HttpGet]
+    public IActionResult VerDocumento(int id, int? idArchivo)
+    {
+        Usuario usuario = ObtenerUsuario();
+        if (usuario == null) return RedirectToAction("LogIn");
+
+        // Verificar que el documento pertenece al usuario
+        var encuentros = BD.ObtenerEncuentrosPorUsuario(usuario.Id);
+        var documentos = encuentros.SelectMany(e => BD.ObtenerDocumentosPorEncuentro(e.Id)).ToList();
+        var documento = documentos.FirstOrDefault(d => d.Id == id);
+
+        if (documento == null)
+        {
+            return NotFound("Documento no encontrado");
+        }
+
+        if (!idArchivo.HasValue || idArchivo.Value <= 0)
+        {
+            return BadRequest("No hay archivo asociado a este documento");
+        }
+
+        // Por ahora, retornamos una vista con información del documento
+        // En producción, aquí se leería el archivo PDF y se mostraría en un iframe o viewer
+        ViewBag.Documento = documento;
+        return View("VerDocumento");
+    }
+
 }
      
 

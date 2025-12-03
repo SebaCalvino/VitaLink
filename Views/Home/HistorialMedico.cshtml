@@ -21,7 +21,15 @@
                             <span class="Historial-Item-Texto">@enf.NombrePatologia</span>
                             <span class="Historial-Item-Fecha">@(enf.FechaInicio?.ToString("dd MMM, yyyy") ?? "")</span>
                         </div>
-                        <button class="btn-vermas">Ver Mas</button>
+                        <button class="btn-vermas" 
+                                data-tipo="enfermedad" 
+                                data-id="@enf.Id"
+                                data-nombre="@enf.NombrePatologia"
+                                data-descripcion="@enf.Descripcion"
+                                data-fechainicio="@(enf.FechaInicio?.ToString("dd/MM/yyyy") ?? "")"
+                                data-fechafin="@(enf.FechaFin?.ToString("dd/MM/yyyy") ?? "")"
+                                data-estado="@enf.Estado"
+                                onclick="verMasHistorial(this)">Ver Mas</button>
                     </div>
                 }
             </div>
@@ -45,7 +53,15 @@
                             <span class="Historial-Item-Texto">@diag.NombrePatologia</span>
                             <span class="Historial-Item-Fecha">@(diag.FechaInicio?.ToString("dd MMM, yyyy") ?? "")</span>
                         </div>
-                        <button class="btn-vermas">Ver Mas</button>
+                        <button class="btn-vermas" 
+                                data-tipo="diagnostico" 
+                                data-id="@diag.Id"
+                                data-nombre="@diag.NombrePatologia"
+                                data-descripcion="@diag.Descripcion"
+                                data-fechainicio="@(diag.FechaInicio?.ToString("dd/MM/yyyy") ?? "")"
+                                data-fechafin="@(diag.FechaFin?.ToString("dd/MM/yyyy") ?? "")"
+                                data-estado="@diag.Estado"
+                                onclick="verMasHistorial(this)">Ver Mas</button>
                     </div>
                 }
             </div>
@@ -69,7 +85,15 @@
                             <span class="Historial-Item-Texto">@doc.NombreArchivo</span>
                             <span class="Historial-Item-Fecha">@(doc.Fecha?.ToString("dd MMM, yyyy") ?? "")</span>
                         </div>
-                        <button class="btn-vermas">Ver Mas</button>
+                        <button class="btn-vermas" 
+                                data-tipo="documento" 
+                                data-id="@doc.Id"
+                                data-nombre="@doc.NombreArchivo"
+                                data-titulo="@doc.Titulo"
+                                data-fecha="@(doc.Fecha?.ToString("dd/MM/yyyy") ?? "")"
+                                data-tipoarchivo="@doc.TipoArchivo"
+                                data-idarchivo="@doc.IdArchivo"
+                                onclick="verMasHistorial(this)">Ver Mas</button>
                     </div>
                 }
             </div>
@@ -93,7 +117,14 @@
                             <span class="Historial-Item-Texto">@vac.NombreVacuna</span>
                             <span class="Historial-Item-Fecha">@(vac.FechaAplicacion?.ToString("dd MMM, yyyy") ?? "")</span>
                         </div>
-                        <button class="btn-vermas">Ver Mas</button>
+                        <button class="btn-vermas" 
+                                data-tipo="vacuna" 
+                                data-id="@vac.Id"
+                                data-nombre="@vac.NombreVacuna"
+                                data-dosis="@vac.Dosis"
+                                data-aplicacion="@vac.Aplicacion"
+                                data-fecha="@(vac.FechaAplicacion?.ToString("dd/MM/yyyy") ?? "")"
+                                onclick="verMasHistorial(this)">Ver Mas</button>
                     </div>
                 }
             </div>
@@ -135,6 +166,22 @@
     </section>
 
 </main>
+
+<!-- ===================== MODAL DETALLES ===================== -->
+<div id="modal-detalles" class="modal-overlay-historial">
+    <div class="modal-content-historial">
+        <div class="modal-header-historial">
+            <h3 id="modal-titulo">Detalles</h3>
+            <button class="modal-close-historial" onclick="cerrarModalDetalles()">&times;</button>
+        </div>
+        <div class="modal-body-historial" id="modal-body">
+            <!-- Contenido dinámico -->
+        </div>
+        <div class="modal-footer-historial" id="modal-footer">
+            <!-- Botones de acción (descargar PDF, etc.) -->
+        </div>
+    </div>
+</div>
 
 
 

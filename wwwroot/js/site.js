@@ -667,4 +667,151 @@ window.addEventListener('click', function(event) {
     }
 });
 
+// ==================== FUNCIONES PARA HISTORIAL MÉDICO ====================
+
+function verMasHistorial(button) {
+    const tipo = button.getAttribute('data-tipo');
+    
+    if (tipo === 'documento') {
+        mostrarDetallesDocumento(button);
+    } else if (tipo === 'vacuna') {
+        mostrarDetallesVacuna(button);
+    } else if (tipo === 'enfermedad' || tipo === 'diagnostico') {
+        mostrarDetallesDiagnostico(button, tipo);
+    }
+}
+
+function mostrarDetallesDocumento(button) {
+    const nombre = button.getAttribute('data-nombre');
+    const titulo = button.getAttribute('data-titulo') || nombre;
+    const fecha = button.getAttribute('data-fecha');
+    const tipoArchivo = button.getAttribute('data-tipoarchivo');
+    const idArchivo = button.getAttribute('data-idarchivo');
+    const id = button.getAttribute('data-id');
+    
+    document.getElementById('modal-titulo').textContent = 'Detalles del Documento';
+    
+    let contenido = `
+        <div class="detalle-item">
+            <strong>Título:</strong> <span>${titulo || 'Sin título'}</span>
+        </div>
+        <div class="detalle-item">
+            <strong>Nombre del archivo:</strong> <span>${nombre || 'Sin nombre'}</span>
+        </div>
+        <div class="detalle-item">
+            <strong>Fecha:</strong> <span>${fecha || 'No especificada'}</span>
+        </div>
+        <div class="detalle-item">
+            <strong>Tipo de archivo:</strong> <span>${tipoArchivo || 'No especificado'}</span>
+        </div>
+    `;
+    
+    document.getElementById('modal-body').innerHTML = contenido;
+    
+    // Si es PDF, mostrar botones de descarga y vista previa
+    let footer = '';
+    if (tipoArchivo && tipoArchivo.toLowerCase().includes('pdf')) {
+        footer = `
+            <button class="btn-descargar-pdf" onclick="descargarPDF(${id}, ${idArchivo || 'null'})">Descargar PDF</button>
+            <button class="btn-ver-pdf" onclick="verPDF(${id}, ${idArchivo || 'null'})">Ver PDF</button>
+        `;
+    }
+    document.getElementById('modal-footer').innerHTML = footer;
+    
+    document.getElementById('modal-detalles').style.display = 'flex';
+}
+
+function mostrarDetallesVacuna(button) {
+    const nombre = button.getAttribute('data-nombre');
+    const dosis = button.getAttribute('data-dosis');
+    const aplicacion = button.getAttribute('data-aplicacion');
+    const fecha = button.getAttribute('data-fecha');
+    
+    document.getElementById('modal-titulo').textContent = 'Detalles de la Vacunación';
+    
+    let contenido = `
+        <div class="detalle-item">
+            <strong>Nombre de la vacuna:</strong> <span>${nombre || 'No especificado'}</span>
+        </div>
+        <div class="detalle-item">
+            <strong>Dosis:</strong> <span>${dosis || 'No especificada'}</span>
+        </div>
+        <div class="detalle-item">
+            <strong>Aplicación:</strong> <span>${aplicacion || 'No especificada'}</span>
+        </div>
+        <div class="detalle-item">
+            <strong>Fecha de aplicación:</strong> <span>${fecha || 'No especificada'}</span>
+        </div>
+    `;
+    
+    document.getElementById('modal-body').innerHTML = contenido;
+    document.getElementById('modal-footer').innerHTML = '';
+    document.getElementById('modal-detalles').style.display = 'flex';
+}
+
+function mostrarDetallesDiagnostico(button, tipo) {
+    const nombre = button.getAttribute('data-nombre');
+    const descripcion = button.getAttribute('data-descripcion');
+    const fechaInicio = button.getAttribute('data-fechainicio');
+    const fechaFin = button.getAttribute('data-fechafin');
+    const estado = button.getAttribute('data-estado') === 'True' ? 'Activo' : 'Inactivo';
+    
+    const tituloTipo = tipo === 'enfermedad' ? 'Enfermedad' : 'Diagnóstico';
+    document.getElementById('modal-titulo').textContent = `Detalles de la ${tituloTipo}`;
+    
+    let contenido = `
+        <div class="detalle-item">
+            <strong>Nombre:</strong> <span>${nombre || 'No especificado'}</span>
+        </div>
+        <div class="detalle-item">
+            <strong>Descripción:</strong> <span>${descripcion || 'Sin descripción'}</span>
+        </div>
+        <div class="detalle-item">
+            <strong>Fecha de inicio:</strong> <span>${fechaInicio || 'No especificada'}</span>
+        </div>
+        ${fechaFin ? `<div class="detalle-item">
+            <strong>Fecha de fin:</strong> <span>${fechaFin}</span>
+        </div>` : ''}
+        <div class="detalle-item">
+            <strong>Estado:</strong> <span>${estado}</span>
+        </div>
+    `;
+    
+    document.getElementById('modal-body').innerHTML = contenido;
+    document.getElementById('modal-footer').innerHTML = '';
+    document.getElementById('modal-detalles').style.display = 'flex';
+}
+
+function cerrarModalDetalles() {
+    document.getElementById('modal-detalles').style.display = 'none';
+}
+
+function descargarPDF(idDocumento, idArchivo) {
+    if (!idArchivo || idArchivo === 'null') {
+        alert('No hay archivo disponible para descargar');
+        return;
+    }
+    window.location.href = `/Home/DescargarDocumento?id=${idDocumento}&idArchivo=${idArchivo}`;
+}
+
+function verPDF(idDocumento, idArchivo) {
+    if (!idArchivo || idArchivo === 'null') {
+        alert('No hay archivo disponible para visualizar');
+        return;
+    }
+    window.open(`/Home/VerDocumento?id=${idDocumento}&idArchivo=${idArchivo}`, '_blank');
+}
+
+// Cerrar modal al hacer clic fuera
+document.addEventListener('DOMContentLoaded', function() {
+    const modalDetalles = document.getElementById('modal-detalles');
+    if (modalDetalles) {
+        modalDetalles.addEventListener('click', function(e) {
+            if (e.target === this) {
+                cerrarModalDetalles();
+            }
+        });
+    }
+});
+
 
