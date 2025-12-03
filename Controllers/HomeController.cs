@@ -187,6 +187,42 @@ public class HomeController : Controller
     }
 
     [HttpGet]
+    [HttpPost]
+    public IActionResult Agregar(//FALTAN LOS PARÁMETROS DEL MEDICAMENTO QUE SE PASAN MEDIANTE EL FORMULARIO
+                                string NombreMedico,
+                                string ApellidoMedico,
+                                DateTime FechaEmision,
+                                DateTime FechaCaducacion,
+                                string Observaciones)
+    {
+        
+        Usuario usuario = ObtenerUsuario();
+
+        // 2) Insertar receta y obtener Id
+        int idReceta = BD.AgregarRecetaYDevolverId(NombreMedico, ApellidoMedico, FechaEmision, FechaCaducacion, Observaciones);  // que devuelva el ID identity
+
+        // 3) crear medicamento
+        MedicacionesPaciente medicacion = new MedicacionesPaciente
+        {
+            IdReceta = idReceta, // -1 como valor por defecto que indica que no tiene ninguna receta asociada al medicamento
+            IdUsuario = usuario.Id,
+            Nombre_Comercial = string.Empty,
+            Dosis = string.Empty,
+            Via = string.Empty,
+            Frecuencia = string.Empty,
+            Indicacion = string.Empty,
+            HoraProgramada = DateTime.Now,
+            FechaFabricacion = DateTime.Today,
+            FechaVencimiento = DateTime.Today,
+            Estado = false
+        };
+
+        // 4) Guardar medicación
+        BD.AgregarMedicacionPaciente(medicacion);
+
+        return RedirectToAction("Medicamentos");
+    }
+
     public IActionResult Agregar()
     {
         Usuario usuario = ObtenerUsuario();
@@ -195,7 +231,7 @@ public class HomeController : Controller
         // Inicializar un objeto MedicacionesPaciente con valores por defecto
         var model = new MedicacionesPaciente
         {
-            IdReceta = 0, // O un valor por defecto adecuado
+            IdReceta = -1, // -1 como valor por defecto que indica que no tiene ninguna receta asociada al medicamento
             IdUsuario = usuario.Id,
             Nombre_Comercial = string.Empty,
             Dosis = string.Empty,

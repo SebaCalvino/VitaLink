@@ -12,15 +12,15 @@ public static class BD
     private static string _connectionString = @"Server=localhost;Database=BDVitalink;Integrated Security=True;TrustServerCertificate=True;";
 
 
-public static Usuario LoginUsuario(string email, string contrasena)
-{
-    using (SqlConnection db = new SqlConnection(_connectionString))
+    public static Usuario LoginUsuario(string email, string contrasena)
     {
-        string sql = "SELECT * FROM Usuarios WHERE Email = @email AND Contraseña = @contrasena";
-        Usuario usuario = db.QueryFirstOrDefault<Usuario>(sql, new { email, contrasena });
-        return usuario;
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = "SELECT * FROM Usuarios WHERE Email = @email AND Contraseña = @contrasena";
+            Usuario usuario = db.QueryFirstOrDefault<Usuario>(sql, new { email, contrasena });
+            return usuario;
+        }
     }
-}
 
     public static int InsertarUsuario(Usuario usuario, string contrasena)
     {
@@ -51,12 +51,13 @@ public static Usuario LoginUsuario(string email, string contrasena)
     }
 
 
-    public static Usuario ObtenerUsuarioPorId(int Id){
-        using(SqlConnection db = new SqlConnection(_connectionString))
+    public static Usuario ObtenerUsuarioPorId(int Id)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
         {
             string query = @"SELECT * FROM Usuarios
                             WHERE Id = @pId";
-            Usuario usuario = db.QueryFirstOrDefault<Usuario>(query, new {pId = Id});
+            Usuario usuario = db.QueryFirstOrDefault<Usuario>(query, new { pId = Id });
             return usuario;
         }
     }
@@ -179,7 +180,7 @@ public static Usuario LoginUsuario(string email, string contrasena)
             return modalidad;
         }
     }
-   
+
     public static List<Encuentro> ObtenerEncuentrosPorUsuario(int idUsuario)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -232,9 +233,9 @@ public static Usuario LoginUsuario(string email, string contrasena)
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
             // Validar que el campo sea uno de los permitidos
-            var camposPermitidos = new[] { "Nombre", "Apellido", "Email", "Doc_nro", "FechaNacimiento", 
+            var camposPermitidos = new[] { "Nombre", "Apellido", "Email", "Doc_nro", "FechaNacimiento",
                 "Sexo", "PesoEnKg", "AlturaEnCm", "Telefono" };
-            
+
             if (!camposPermitidos.Contains(campo))
             {
                 return false;
@@ -242,10 +243,10 @@ public static Usuario LoginUsuario(string email, string contrasena)
 
             // Construir la consulta SQL dinámicamente
             string sql = $"UPDATE Usuarios SET {campo} = @valor WHERE Id = @idUsuario";
-            
+
             // Convertir el valor según el tipo de campo
             object valorConvertido = valor;
-            
+
             if (campo == "Doc_nro" || campo == "Telefono")
             {
                 if (int.TryParse(valor, out int valorInt))
@@ -279,7 +280,7 @@ public static Usuario LoginUsuario(string email, string contrasena)
             return registrosAfectados > 0;
         }
     }
-        public static bool ActualizarMedicamento(int id, int idUsuario, string nombreComercial, string dosis, string frecuencia, string horaProgramada, string indicacion)
+    public static bool ActualizarMedicamento(int id, int idUsuario, string nombreComercial, string dosis, string frecuencia, string horaProgramada, string indicacion)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
@@ -290,13 +291,13 @@ public static Usuario LoginUsuario(string email, string contrasena)
                                HoraProgramada = @horaProgramada,
                                Indicacion = @indicacion
                            WHERE Id = @id AND IdUsuario = @idUsuario";
-            
+
             DateTime hora = DateTime.Today;
             if (TimeSpan.TryParse(horaProgramada, out TimeSpan time))
             {
                 hora = DateTime.Today.Add(time);
             }
-            
+
             int filasAfectadas = db.Execute(sql, new { id, idUsuario, nombreComercial, dosis, frecuencia, horaProgramada = hora, indicacion });
             return filasAfectadas > 0;
         }
@@ -309,6 +310,25 @@ public static Usuario LoginUsuario(string email, string contrasena)
             string sql = @"DELETE FROM MedicacionesPaciente WHERE Id = @id AND IdUsuario = @idUsuario";
             int filasAfectadas = db.Execute(sql, new { id, idUsuario });
             return filasAfectadas > 0;
+        }
+    }
+
+    public static int AgregarRecetaYDevolverId(string NombreMedico, string ApellidoMedico, DateTime FechaEmision, DateTime FechaCaducacion, string Observaciones)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = @"INSERT INTO Recetas(
+                            NombreMedico, ApellidoMedico, FechaEmision, FechaCaducacion, Observaciones
+                            ) 
+                            VALUES(
+                                @pNombreMedico, @pApellidoMedico, @pFechaEmision, @pFechaCaducacion, @pObservaciones
+                            )";
+            db.Execute(sql, new { @pNombreMedico = NombreMedico, @pApellidoMedico = ApellidoMedico, @pFechaEmision = FechaEmision, @pFechaCaducacion = FechaCaducacion, @pObservaciones = Observaciones });
+            string sql2 = @"
+                            SELECT SCOPE_IDENTITY()
+                            ";
+            int IdReceta = db.Execute(sql);
+            return IdReceta;
         }
     }
 
@@ -349,7 +369,7 @@ public static Usuario LoginUsuario(string email, string contrasena)
     /// <summary>
     /// Inserta una vacunación manual usando el SP sp_InsertVacunacionManual
     /// </summary>
-    public static int InsertarVacunacionManual(int idUsuario, string dosis, string nombreVacuna, 
+    public static int InsertarVacunacionManual(int idUsuario, string dosis, string nombreVacuna,
         string datosInteres, DateTime fechaAplicacion, string nombreOrganizacion)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -364,7 +384,7 @@ public static Usuario LoginUsuario(string email, string contrasena)
             parameters.Add("@IdVacunaPaciente", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
 
             db.Execute("sp_InsertVacunacionManual", parameters, commandType: System.Data.CommandType.StoredProcedure);
-            
+
             return parameters.Get<int>("@IdVacunaPaciente");
         }
     }
@@ -372,8 +392,8 @@ public static Usuario LoginUsuario(string email, string contrasena)
     /// <summary>
     /// Inserta un estudio manual usando el SP sp_InsertEstudioManual
     /// </summary>
-    public static int InsertarEstudioManual(int idUsuario, string nombreEstudio, string observacion, 
-        DateTime fecha, string capacidad = null, DateTime? fechaCreacionArchivo = null, 
+    public static int InsertarEstudioManual(int idUsuario, string nombreEstudio, string observacion,
+        DateTime fecha, string capacidad = null, DateTime? fechaCreacionArchivo = null,
         string nombreArchivo = null, string tipoArchivo = null)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -390,7 +410,7 @@ public static Usuario LoginUsuario(string email, string contrasena)
             parameters.Add("@IdEstudio", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
 
             db.Execute("sp_InsertEstudioManual", parameters, commandType: System.Data.CommandType.StoredProcedure);
-            
+
             return parameters.Get<int>("@IdEstudio");
         }
     }
@@ -398,7 +418,7 @@ public static Usuario LoginUsuario(string email, string contrasena)
     /// <summary>
     /// Inserta una enfermedad manual usando el SP sp_InsertEnfermedadManual
     /// </summary>
-    public static int InsertarEnfermedadManual(int idUsuario, string nombreEnfermedad, 
+    public static int InsertarEnfermedadManual(int idUsuario, string nombreEnfermedad,
         string descripcion, DateTime fecha)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -411,7 +431,7 @@ public static Usuario LoginUsuario(string email, string contrasena)
             parameters.Add("@IdDiagnostico", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
 
             db.Execute("sp_InsertEnfermedadManual", parameters, commandType: System.Data.CommandType.StoredProcedure);
-            
+
             return parameters.Get<int>("@IdDiagnostico");
         }
     }
@@ -419,7 +439,7 @@ public static Usuario LoginUsuario(string email, string contrasena)
     /// <summary>
     /// Inserta una consulta manual usando el SP sp_InsertConsultaManual
     /// </summary>
-    public static int InsertarConsultaManual(int idUsuario, string motivo, 
+    public static int InsertarConsultaManual(int idUsuario, string motivo,
         string observaciones, DateTime fecha)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -432,7 +452,7 @@ public static Usuario LoginUsuario(string email, string contrasena)
             parameters.Add("@IdConsulta", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
 
             db.Execute("sp_InsertConsultaManual", parameters, commandType: System.Data.CommandType.StoredProcedure);
-            
+
             return parameters.Get<int>("@IdConsulta");
         }
     }

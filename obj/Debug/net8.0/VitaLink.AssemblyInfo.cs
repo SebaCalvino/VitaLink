@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VitaLink")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+172867d42102e2cbe6dc22cd5293ae2f5df05c1b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ca21dd87b83bb2231ab2ee088cf256931947afc8")]
 [assembly: System.Reflection.AssemblyProductAttribute("VitaLink")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VitaLink")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

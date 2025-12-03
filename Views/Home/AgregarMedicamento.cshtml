@@ -10,11 +10,42 @@
 
     <section class="agregar-medicamento-form-container">
         <form asp-action="Agregar" asp-controller="Home" method="post" class="agregar-medicamento-form">
+
+            @* IdReceta lo completa el código, no el usuario *@
+            <input asp-for="IdReceta" type="hidden" />
+
+            <!-- ================= DATOS DE LA RECETA ================= -->
+            <h2>Datos de la receta</h2>
+
             <div class="campo-grupo">
-                <label asp-for="IdReceta">ID Receta:</label>
-                <input asp-for="IdReceta" type="number" class="form-control" />
-                <span asp-validation-for="IdReceta" class="text-danger"></span>
+                <label for="NombreMedico">Nombre del médico:</label>
+                <input id="NombreMedico" name="NombreMedico" class="form-control" />
             </div>
+
+            <div class="campo-grupo">
+                <label for="ApellidoMedico">Apellido del médico:</label>
+                <input id="ApellidoMedico" name="ApellidoMedico" class="form-control" />
+            </div>
+
+            <div class="campo-grupo">
+                <label for="FechaEmision">Fecha de emisión:</label>
+                <input id="FechaEmision" name="FechaEmision" type="date" class="form-control" />
+            </div>
+
+            <div class="campo-grupo">
+                <label for="FechaCaducacion">Fecha de caducación:</label>
+                <input id="FechaCaducacion" name="FechaCaducacion" type="date" class="form-control" />
+            </div>
+
+            <div class="campo-grupo">
+                <label for="Observaciones">Observaciones:</label>
+                <textarea id="Observaciones" name="Observaciones" class="form-control"></textarea>
+            </div>
+
+            <hr />
+
+            <!-- ============== DATOS DEL MEDICAMENTO ================= -->
+            <h2>Datos del medicamento</h2>
 
             <div class="campo-grupo">
                 <label asp-for="Nombre_Comercial">Nombre Comercial:</label>
