@@ -2627,4 +2627,151 @@ body:has(.Historial-Medico) {
         gap: 10px;
     }
 }
+
+/* ======================= EDITAR PERFIL ======================= */
+
+.Editar-Perfil {
+    max-width: 95%;
+    width: 100%;
+    margin: 0 auto;
+    padding: 25px 20px;
+    background-color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Editar-Perfil h1 {
+    color: #2D7A6B;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+    width: 100%;
+}
+
+.perfil-datos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-width: 900px;
+    width: 100%;
+}
+
+.campo-item {
+    background-color: #A8D5BA;
+    border-radius: 18px;
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 8px rgba(168, 213, 186, 0.3);
+}
+
+.campo-item:hover {
+    background-color: #9adcca;
+    box-shadow: 0 4px 15px rgba(45, 122, 107, 0.2);
+    transform: translateY(-2px);
+}
+
+.campo-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.campo-info label {
+    color: #2D7A6B;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.campo-valor {
+    color: #1a5a4f;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.btn-editar-campo {
+    background-color: #4A9B8C;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, transform 0.1s;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+}
+
+.btn-editar-campo:hover {
+    background-color: #3d8b7a;
+    transform: scale(1.05);
+}
+
+.btn-editar-campo:active {
+    transform: scale(0.95);
+}
+
+.btn-editar-campo svg {
+    width: 20px;
+    height: 20px;
+    stroke: white;
+}
+
+.Editar-Perfil p {
+    color: #666;
+    font-size: 16px;
+    padding: 20px;
+    text-align: center;
+    background-color: #A8D5BA;
+    border-radius: 12px;
+    max-width: 900px;
+    width: 100%;
+}
+
+/* Responsive para Editar Perfil */
+@media (max-width: 768px) {
+    .Editar-Perfil {
+        padding: 20px 15px;
+    }
+    
+    .Editar-Perfil h1 {
+        font-size: 24px;
+        margin-bottom: 25px;
+    }
+    
+    .perfil-datos-container {
+        gap: 15px;
+    }
+    
+    .campo-item {
+        padding: 18px 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .btn-editar-campo {
+        align-self: flex-end;
+    }
+    
+    .campo-info label {
+        font-size: 15px;
+    }
+    
+    .campo-valor {
+        font-size: 17px;
+    }
+}
     
