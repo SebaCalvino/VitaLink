@@ -1,3 +1,4 @@
+@model MedicacionesPaciente
 @{
     ViewData["Title"] = "Agregar Medicamento";
 }
@@ -14,56 +15,61 @@
                 <input asp-for="IdReceta" type="number" class="form-control" />
                 <span asp-validation-for="IdReceta" class="text-danger"></span>
             </div>
-            <div class="campo-grupo">
-                <label asp-for="IdUsuario">ID Usuario:</label>
-                <input asp-for="IdUsuario" type="number" class="form-control" />
-                <span asp-validation-for="IdUsuario" class="text-danger"></span>
-            </div>
+
             <div class="campo-grupo">
                 <label asp-for="Nombre_Comercial">Nombre Comercial:</label>
                 <input asp-for="Nombre_Comercial" class="form-control" />
                 <span asp-validation-for="Nombre_Comercial" class="text-danger"></span>
             </div>
+
             <div class="campo-grupo">
                 <label asp-for="Dosis">Dosis:</label>
                 <input asp-for="Dosis" class="form-control" />
                 <span asp-validation-for="Dosis" class="text-danger"></span>
             </div>
+
             <div class="campo-grupo">
                 <label asp-for="Via">Vía:</label>
                 <input asp-for="Via" class="form-control" />
                 <span asp-validation-for="Via" class="text-danger"></span>
             </div>
+
             <div class="campo-grupo">
                 <label asp-for="Frecuencia">Frecuencia:</label>
                 <input asp-for="Frecuencia" class="form-control" />
                 <span asp-validation-for="Frecuencia" class="text-danger"></span>
             </div>
+
             <div class="campo-grupo">
                 <label asp-for="Indicacion">Indicación:</label>
                 <textarea asp-for="Indicacion" class="form-control"></textarea>
                 <span asp-validation-for="Indicacion" class="text-danger"></span>
             </div>
+
             <div class="campo-grupo">
                 <label asp-for="HoraProgramada">Hora Programada:</label>
                 <input asp-for="HoraProgramada" type="time" class="form-control" />
                 <span asp-validation-for="HoraProgramada" class="text-danger"></span>
             </div>
+
             <div class="campo-grupo">
                 <label asp-for="FechaFabricacion">Fecha Fabricación:</label>
                 <input asp-for="FechaFabricacion" type="date" class="form-control" />
                 <span asp-validation-for="FechaFabricacion" class="text-danger"></span>
             </div>
+
             <div class="campo-grupo">
                 <label asp-for="FechaVencimiento">Fecha Vencimiento:</label>
                 <input asp-for="FechaVencimiento" type="date" class="form-control" />
                 <span asp-validation-for="FechaVencimiento" class="text-danger"></span>
             </div>
+
             <div class="campo-grupo">
                 <label asp-for="Estado">Estado:</label>
-                <input asp-for="Estado" type="checkbox" />
+                <input asp-for="Estado" type="checkbox" class="form-check-input" />
                 <span asp-validation-for="Estado" class="text-danger"></span>
             </div>
+
             <div class="form-buttons">
                 <button type="submit" class="btn-primary">Agregar Medicamento</button>
                 <a asp-action="Medicamentos" asp-controller="Home" class="btn-secondary">Cancelar</a>
@@ -71,4 +77,3 @@
         </form>
     </section>
 </main>
-
