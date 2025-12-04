@@ -199,7 +199,7 @@ public class HomeController : Controller
         
         var model = new MedicacionesPaciente
         {
-            IdReceta = 0, // Se asignará cuando se cree la receta
+            IdReceta = null, // Se asignará cuando se cree la receta, o null si no hay receta
             IdUsuario = usuario.Id, // Se obtiene de sesión
             Nombre_Comercial = string.Empty,
             Dosis = string.Empty,
@@ -209,7 +209,8 @@ public class HomeController : Controller
             HoraProgramada = horaActual,
             FechaFabricacion = DateTime.Today,
             FechaVencimiento = DateTime.Today,
-            Estado = false
+            Estado = true, // Siempre activo por defecto
+            Cantidad = 0
         };
         return View("AgregarMedicamento", model);
     }
@@ -230,7 +231,7 @@ public class HomeController : Controller
 
         item.IdUsuario = usuario.Id; // Siempre de sesión
 
-        int idReceta;
+        int? idReceta;
         
         // Si el usuario quiere agregar receta completa Y proporcionó datos válidos
         if (AgregarReceta && 
@@ -262,11 +263,12 @@ public class HomeController : Controller
         }
         else
         {
-            // Crear receta por defecto (sin datos del médico)
-            idReceta = BD.CrearRecetaPorDefecto();
+            // Si no se agrega receta, IdReceta = null
+            idReceta = null;
         }
         
-        item.IdReceta = idReceta; // Siempre asignar un IdReceta válido
+        item.IdReceta = idReceta; // null si no hay receta, o el ID de la receta creada
+        item.Estado = true; // Siempre activo cuando se agrega un medicamento nuevo
 
         if (ModelState.IsValid)
         {
@@ -483,6 +485,34 @@ public class HomeController : Controller
         {
             _logger.LogError(ex, "Error al eliminar medicamento");
             return Json(new { success = false, message = "Error al eliminar el medicamento" });
+        }
+    }
+
+    [HttpPost]
+    public IActionResult TomarMedicamento([FromBody] EliminarMedicamentoRequest request)
+    {
+        Usuario usuario = ObtenerUsuario();
+        if (usuario == null)
+            return Json(new { success = false, message = "No hay sesión activa" });
+
+        try
+        {
+            bool resultado = BD.RestarPastilla(request.Id, usuario.Id);
+            
+            if (resultado)
+            {
+                int? cantidadRestante = BD.ObtenerCantidadMedicamento(request.Id, usuario.Id);
+                return Json(new { success = true, message = "Medicamento registrado", cantidad = cantidadRestante ?? 0 });
+            }
+            else
+            {
+                return Json(new { success = false, message = "No se pudo registrar la toma o no hay pastillas disponibles" });
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error al tomar medicamento");
+            return Json(new { success = false, message = "Error al registrar la toma del medicamento" });
         }
     }
 

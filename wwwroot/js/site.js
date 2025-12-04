@@ -660,6 +660,61 @@ function confirmarEliminarMedicamento(id) {
     }
 }
 
+function tomarMedicamento(id) {
+    const btn = document.getElementById('btn-tome-' + id);
+    const cantidadElement = document.getElementById('cantidad-' + id);
+    const card = btn.closest('.medicamento-card');
+    
+    // Deshabilitar el botón mientras se procesa
+    btn.disabled = true;
+    btn.textContent = 'Procesando...';
+    
+    fetch('/Home/TomarMedicamento', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ Id: id })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Actualizar la cantidad en la vista
+            if (cantidadElement) {
+                cantidadElement.textContent = data.cantidad;
+                
+                // Si no hay más pastillas, deshabilitar el botón y cambiar el estilo del card
+                if (data.cantidad <= 0) {
+                    btn.disabled = true;
+                    btn.textContent = 'Sin pastillas';
+                    btn.style.opacity = '0.5';
+                    // Agregar clase para el estilo rojo
+                    if (card) {
+                        card.classList.add('sin-pastillas');
+                    }
+                } else {
+                    btn.disabled = false;
+                    btn.textContent = 'Tomé';
+                    // Remover clase si había llegado a 0 antes
+                    if (card) {
+                        card.classList.remove('sin-pastillas');
+                    }
+                }
+            }
+        } else {
+            alert('Error: ' + (data.message || 'No se pudo registrar la toma'));
+            btn.disabled = false;
+            btn.textContent = 'Tomé';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Ocurrió un error al registrar la toma del medicamento.');
+        btn.disabled = false;
+        btn.textContent = 'Tomé';
+    });
+}
+
 // Cerrar modal de medicamento al hacer clic fuera
 window.addEventListener('click', function(event) {
     const modalMed = document.getElementById('modal-medicamento');

@@ -13,7 +13,7 @@
         {
             @foreach (var medicamento in medicaciones)
             {
-                <article class="medicamento-card">
+                <article class="medicamento-card @(medicamento.Cantidad <= 0 ? "sin-pastillas" : "")">
                     <div class="medicamento-contenido">
                         <div class="medicamento-info">
                             <h2>@medicamento.Nombre_Comercial</h2>
@@ -23,12 +23,16 @@
                                     <span>@medicamento.HoraProgramada?.ToString("HH:mm")</span>
                                 </p>
                                 <p>
-                                    <span>Cantidad:</span>
+                                    <span>Dosis:</span>
                                     <span>@medicamento.Dosis</span>
                                 </p>
                                 <p>
                                     <span>Regularidad:</span>
                                     <span>@medicamento.Frecuencia</span>
+                                </p>
+                                <p>
+                                    <span>Pastillas restantes:</span>
+                                    <span id="cantidad-@medicamento.Id" class="cantidad-pastillas">@medicamento.Cantidad</span>
                                 </p>
                                 <div class="medicamento-indicaciones" onclick="toggleIndicaciones(this)">
                                     <span>Indicaciones</span>
@@ -60,7 +64,12 @@
                                 </svg>
                             </button>
                         </div>
-                        <button class="btn-recordatorio">Activar recordatorio</button>
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <button class="btn-tome" onclick="tomarMedicamento(@medicamento.Id)" id="btn-tome-@medicamento.Id" @(medicamento.Cantidad <= 0 ? "disabled" : "")>
+                                @(medicamento.Cantidad <= 0 ? "Sin pastillas" : "Tomé")
+                            </button>
+                            <button class="btn-recordatorio">Activar recordatorio</button>
+                        </div>
                     </div>
                     <div class="medicamento-indicaciones-detalle">
                         <p>@medicamento.Indicacion</p>

@@ -1,27 +1,25 @@
 @{
     ViewData["Title"] = "Iniciar sesión - VitaLink";
 }
-<body>
-    <main class="main-LogIn">
-        <section class="section-LogIn">
-            <div class="login-div">
-                <h1 class="login-title">Iniciar Sesión</h1>
-            </div>
-            <form method="post" action="@Url.Action("LogIn", "Home")" class="login-form">
-                @Html.AntiForgeryToken()
-                <input type="text" placeholder="Email" name="email" required />
-                <input type="password" placeholder="Contraseña" name="contrasena" required />
-                
-                @if (ViewBag.Error != null)
-                {
-                    <p style="color: #ff6b6b; font-weight: 600; margin: 0.5rem 0;">@ViewBag.Error</p>
-                }
+<main class="main-LogIn">
+    <section class="section-LogIn">
+        <div class="login-div">
+            <h1 class="login-title">Iniciar Sesión</h1>
+        </div>
+        <form method="post" action="@Url.Action("LogIn", "Home")" class="login-form">
+            @Html.AntiForgeryToken()
+            <input type="text" placeholder="Email" name="email" required />
+            <input type="password" placeholder="Contraseña" name="contrasena" required />
+            
+            @if (ViewBag.Error != null)
+            {
+                <p style="color: #ff6b6b; font-weight: 600; margin: 0.5rem 0;">@ViewBag.Error</p>
+            }
 
-                <p class="registro">¿No tienes una cuenta?
-                    <a href="@Url.Action("SignUp", "Home")">Regístrate</a>
-                </p>
-                <button type="submit">Ingresar</button>
-            </form>
-        </section>
-    </main>
-</body>
+            <p class="registro">¿No tienes una cuenta?
+                <a href="@Url.Action("SignUp", "Home")">Regístrate</a>
+            </p>
+            <button type="submit">Ingresar</button>
+        </form>
+    </section>
+</main>

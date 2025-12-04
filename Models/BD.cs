@@ -9,7 +9,7 @@ using System.Linq;
 
 public static class BD
 {
-    private static string _connectionString = @"Server=localhost;Database=BDVitalink;Integrated Security=True;TrustServerCertificate=True;";
+    private static string _connectionString = @"Server=MSI\SQLEXPRESS03;Database=BDVitalink;Integrated Security=True;TrustServerCertificate=True;";
 
 
     public static Usuario LoginUsuario(string email, string contrasena)
@@ -313,6 +313,32 @@ public static class BD
         }
     }
 
+    public static bool RestarPastilla(int id, int idUsuario)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = @"UPDATE MedicacionesPaciente 
+                           SET Cantidad = CASE 
+                               WHEN Cantidad > 0 THEN Cantidad - 1 
+                               ELSE 0 
+                           END
+                           WHERE Id = @id AND IdUsuario = @idUsuario AND Cantidad > 0";
+            int filasAfectadas = db.Execute(sql, new { id, idUsuario });
+            return filasAfectadas > 0;
+        }
+    }
+
+    public static int? ObtenerCantidadMedicamento(int id, int idUsuario)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = @"SELECT Cantidad FROM MedicacionesPaciente 
+                           WHERE Id = @id AND IdUsuario = @idUsuario";
+            int? cantidad = db.QueryFirstOrDefault<int?>(sql, new { id, idUsuario });
+            return cantidad;
+        }
+    }
+
     public static int AgregarRecetaYDevolverId(string NombreMedico, string ApellidoMedico, DateTime FechaEmision, DateTime FechaCaducacion, string Observaciones)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -375,11 +401,11 @@ public static class BD
         {
             string sql = @"INSERT INTO MedicacionesPaciente (
                                 IdReceta, IdUsuario, Nombre_Comercial, Dosis, Via, Frecuencia,
-                                Indicacion, HoraProgramada, FechaFabricacion, FechaVencimiento, Estado
+                                Indicacion, HoraProgramada, FechaFabricacion, FechaVencimiento, Estado, Cantidad
                             )
                             VALUES (
                                 @IdReceta, @IdUsuario, @Nombre_Comercial, @Dosis, @Via, @Frecuencia,
-                                @Indicacion, @HoraProgramada, @FechaFabricacion, @FechaVencimiento, @Estado
+                                @Indicacion, @HoraProgramada, @FechaFabricacion, @FechaVencimiento, @Estado, @Cantidad
                             )";
             db.Execute(sql, medicacion);
         }
