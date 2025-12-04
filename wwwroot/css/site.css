@@ -3114,6 +3114,41 @@ body:has(.Historial-Medico) {
     font-size: 16px;
 }
 
+/* Sección de Cerrar Sesión */
+.Perfil-CerrarSesion {
+    margin-top: 30px;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-cerrar-sesion {
+    background-color: #ef4444;
+    color: white;
+    padding: 14px 32px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 17px;
+    transition: background-color 0.2s, transform 0.1s;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-cerrar-sesion:hover {
+    background-color: #dc2626;
+    color: white;
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.btn-cerrar-sesion:active {
+    transform: translateY(0);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .Perfil-App {
@@ -4008,6 +4043,16 @@ body:has(.Historial-Medico) {
     
     .enfermedad-fecha {
         font-size: 14px;
+    }
+    
+    .Perfil-CerrarSesion {
+        margin-top: 20px;
+        padding: 15px 0;
+    }
+    
+    .btn-cerrar-sesion {
+        padding: 12px 28px;
+        font-size: 16px;
     }
     
     /* ===== EDITAR PERFIL ===== */

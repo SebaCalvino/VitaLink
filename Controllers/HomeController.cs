@@ -379,6 +379,12 @@ public class HomeController : Controller
             return View("Perfil");
         }
 
+        public IActionResult CerrarSesion()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("LogIn");
+        }
+
 
    
         public IActionResult HistorialMedico()
