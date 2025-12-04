@@ -313,6 +313,19 @@ public static class BD
         }
     }
 
+    /// <summary>
+    /// Elimina un encuentro de la base de datos
+    /// </summary>
+    public static bool EliminarEncuentro(int id, int idUsuario)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = @"DELETE FROM Encuentros WHERE Id = @id AND IdUsuario = @idUsuario";
+            int filasAfectadas = db.Execute(sql, new { id, idUsuario });
+            return filasAfectadas > 0;
+        }
+    }
+
     public static bool RestarPastilla(int id, int idUsuario)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))

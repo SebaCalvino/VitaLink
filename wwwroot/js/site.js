@@ -56,6 +56,7 @@ function cambiarContrasena() {
     const detalleCerrar = document.querySelector(".Detalle-Cerrar");
     const detalleInfo = document.querySelector(".Detalle-Info");
     const mesActual = document.querySelector(".Calendario-MesActual");
+    let eventoActualId = null; // Guardar el ID del evento que se está mostrando
 
 
     if (!diasContainer || !mesActual) return;
@@ -188,6 +189,9 @@ function cambiarContrasena() {
         const evento = eventosDia[0];
         const fechaEvento = new Date(evento.fecha);
         
+        // Guardar el ID del evento actual para poder eliminarlo
+        eventoActualId = evento.id;
+        
         // Mostrar la sección de información cuando hay eventos
         if (detalleInfo) {
             detalleInfo.style.display = "flex";
@@ -221,9 +225,9 @@ function cambiarContrasena() {
         }
     }
 
-
     detalleCerrar?.addEventListener("click", () => {
         detallePanel.hidden = true;
+        eventoActualId = null;
     });
 
 
@@ -238,6 +242,58 @@ function cambiarContrasena() {
         estadoCalendario.fecha.setMonth(estadoCalendario.fecha.getMonth() + 1);
         renderizarCalendario();
         detallePanel.hidden = true;
+        eventoActualId = null;
+    });
+
+    // Función para eliminar evento
+    function eliminarEvento() {
+        if (!eventoActualId) {
+            alert("No hay evento seleccionado para eliminar.");
+            return;
+        }
+
+        if (!confirm("¿Estás seguro de que deseas eliminar este evento?")) {
+            return;
+        }
+
+        fetch("/Home/EliminarEncuentro", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ id: eventoActualId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Eliminar el evento del array
+                if (window.calendarioEventos) {
+                    window.calendarioEventos = window.calendarioEventos.filter(ev => ev.id !== eventoActualId);
+                }
+                // Re-normalizar y re-renderizar
+                normalizarEventosIniciales();
+                renderizarCalendario();
+                // Cerrar el panel de detalle
+                if (detallePanel) {
+                    detallePanel.hidden = true;
+                }
+                eventoActualId = null;
+                alert("Evento eliminado correctamente.");
+            } else {
+                alert("Error al eliminar el evento: " + (data.message || "Error desconocido"));
+            }
+        })
+        .catch(error => {
+            console.error("Error al eliminar evento:", error);
+            alert("Error al conectar con el servidor.");
+        });
+    }
+
+    // Event listener para el botón de eliminar (usando delegación de eventos)
+    document.addEventListener("click", function(e) {
+        if (e.target && e.target.closest("[data-action='eliminar-evento']")) {
+            eliminarEvento();
+        }
     });
 
     // ==================== FUNCIONALIDAD PARA AGREGAR ENCUENTRO ====================

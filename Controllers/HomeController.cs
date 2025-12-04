@@ -541,6 +541,32 @@ public class HomeController : Controller
     }
 
     [HttpPost]
+    public IActionResult EliminarEncuentro([FromBody] EliminarEncuentroRequest request)
+    {
+        Usuario usuario = ObtenerUsuario();
+        if (usuario == null)
+            return Json(new { success = false, message = "No hay sesión activa" });
+
+        try
+        {
+            bool resultado = BD.EliminarEncuentro(request.Id, usuario.Id);
+            if (resultado)
+            {
+                return Json(new { success = true, message = "Evento eliminado correctamente" });
+            }
+            else
+            {
+                return Json(new { success = false, message = "No se pudo eliminar el evento" });
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error al eliminar encuentro");
+            return Json(new { success = false, message = "Error al eliminar el evento" });
+        }
+    }
+
+    [HttpPost]
     public IActionResult TomarMedicamento([FromBody] EliminarMedicamentoRequest request)
     {
         Usuario usuario = ObtenerUsuario();
@@ -579,6 +605,11 @@ public class HomeController : Controller
     }
 
     public class EliminarMedicamentoRequest
+    {
+        public int Id { get; set; }
+    }
+
+    public class EliminarEncuentroRequest
     {
         public int Id { get; set; }
     }

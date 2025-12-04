@@ -2375,6 +2375,35 @@ body.body-calendario {
     color: var(--vl-text-muted);
 }
 
+.Detalle-Acciones {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-eliminar-evento {
+    padding: 8px 16px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.btn-eliminar-evento:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+}
+
+.btn-eliminar-evento:active {
+    transform: translateY(0);
+}
+
 /* ---------------------- RESPONSIVE ---------------------- */
 @media (max-width: 768px) {
     .Calendario-Panel {
