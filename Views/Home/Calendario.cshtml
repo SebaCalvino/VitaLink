@@ -1,6 +1,7 @@
 @{
     ViewData["Title"] = "Calendario";
     var encuentros = ViewBag.Encuentros as List<dynamic> ?? new List<dynamic>();
+    var tiposOrganizacion = ViewBag.TiposOrganizacion as List<Tipo_Organizacion>;
 }
 
 <main class="Calendario-App">
@@ -70,6 +71,69 @@
                     <strong>Descripción:</strong>
                     <span data-detalle-descripcion></span>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para agregar encuentro -->
+    <div id="modal-agregar-encuentro" class="modal-overlay" hidden>
+        <div class="modal-content modal-encuentro">
+            <div class="modal-header">
+                <h2>Agregar Turno Médico</h2>
+                <button class="modal-close" type="button" aria-label="Cerrar" data-action="cerrar-modal-encuentro">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="form-agregar-encuentro">
+                    <div class="campo-grupo">
+                        <label for="nombre-medico">Nombre Médico *</label>
+                        <input type="text" id="nombre-medico" name="nombreMedico" required>
+                    </div>
+                    <div class="campo-grupo">
+                        <label for="apellido-medico">Apellido Médico *</label>
+                        <input type="text" id="apellido-medico" name="apellidoMedico" required>
+                    </div>
+                    <div class="campo-grupo">
+                        <label for="fecha-inicio">Fecha Inicio *</label>
+                        <input type="datetime-local" id="fecha-inicio" name="fechaInicio" required>
+                    </div>
+                    <div class="campo-grupo">
+                        <label for="fecha-fin">Fecha Fin (opcional)</label>
+                        <input type="datetime-local" id="fecha-fin" name="fechaFin">
+                    </div>
+                    <div class="campo-grupo">
+                        <label for="estado-motivo">Estado/Motivo *</label>
+                        <input type="text" id="estado-motivo" name="estadoMotivo" required>
+                    </div>
+                    <div class="campo-grupo">
+                        <label for="nombre-organizacion">Nombre Organización *</label>
+                        <input type="text" id="nombre-organizacion" name="nombreOrganizacion" required>
+                    </div>
+                    <div class="campo-grupo">
+                        <label for="tipo-organizacion">Tipo Organización *</label>
+                        <select id="tipo-organizacion" name="idTipoOrganizacion" required>
+                            <option value="">Seleccione un tipo...</option>
+                            @if (tiposOrganizacion != null && tiposOrganizacion.Count > 0)
+                            {
+                                foreach (var tipo in tiposOrganizacion)
+                                {
+                                    <option value="@tipo.Id">@tipo.TipoOrganizacion</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="campo-grupo">
+                        <label for="calle">Calle (opcional, solo si la organización no existe)</label>
+                        <input type="text" id="calle" name="calle">
+                    </div>
+                    <div class="campo-grupo">
+                        <label for="altura">Altura (opcional, solo si la organización no existe)</label>
+                        <input type="text" id="altura" name="altura">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secundario" data-action="cancelar-modal-encuentro">Cancelar</button>
+                <button type="button" class="btn-primario" data-action="guardar-encuentro">Guardar</button>
             </div>
         </div>
     </div>

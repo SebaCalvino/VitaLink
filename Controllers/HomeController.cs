@@ -169,6 +169,7 @@ public class HomeController : Controller
         if (usuario == null) return RedirectToAction("LogIn");
 
         ViewBag.Encuentros = BD.ObtenerEncuentrosConDireccionPorUsuario(usuario.Id);
+        ViewBag.TiposOrganizacion = BD.ObtenerTiposOrganizacion();
         return View("Calendario");
     }
     public IActionResult Familia()
@@ -669,6 +670,104 @@ public class HomeController : Controller
         }
     }
 
+    // ==================== ENDPOINTS PARA ENCUENTROS ====================
+
+    [HttpGet]
+    public IActionResult ObtenerTiposOrganizacion()
+    {
+        try
+        {
+            var tipos = BD.ObtenerTiposOrganizacion();
+            return Json(new { success = true, tipos = tipos });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error al obtener tipos de organización");
+            return Json(new { success = false, message = "Error al obtener tipos de organización" });
+        }
+    }
+
+    [HttpPost]
+    public IActionResult AgregarEncuentro([FromBody] EncuentroRequest request)
+    {
+        Usuario usuario = ObtenerUsuario();
+        if (usuario == null)
+            return Json(new { success = false, message = "No hay sesión activa" });
+
+        try
+        {
+            // Validar que el request no sea null
+            if (request == null)
+                return Json(new { success = false, message = "Los datos del formulario son inválidos" });
+            // Validaciones
+            if (string.IsNullOrWhiteSpace(request.NombreMedico))
+                return Json(new { success = false, message = "El nombre del médico es obligatorio" });
+
+            if (string.IsNullOrWhiteSpace(request.ApellidoMedico))
+                return Json(new { success = false, message = "El apellido del médico es obligatorio" });
+
+            if (string.IsNullOrWhiteSpace(request.EstadoMotivo))
+                return Json(new { success = false, message = "El estado/motivo es obligatorio" });
+
+            if (string.IsNullOrWhiteSpace(request.NombreOrganizacion))
+                return Json(new { success = false, message = "El nombre de la organización es obligatorio" });
+
+            if (request.IdTipoOrganizacion <= 0)
+                return Json(new { success = false, message = "Debe seleccionar un tipo de organización" });
+
+            // Obtener o crear la organización
+            int idOrganizacion = BD.ObtenerOCrearOrganizacion(
+                request.NombreOrganizacion,
+                request.IdTipoOrganizacion,
+                request.Calle,
+                request.Altura
+            );
+
+            // Crear el encuentro
+            var encuentro = new Encuentro
+            {
+                IdUsuario = usuario.Id,
+                IdOrganizacion = idOrganizacion,
+                NombreMedico = request.NombreMedico,
+                ApellidoMedico = request.ApellidoMedico,
+                FechaInicio = request.FechaInicio,
+                FechaFin = request.FechaFin,
+                EstadoMotivo = request.EstadoMotivo
+            };
+
+            int idEncuentro = BD.InsertarEncuentro(encuentro);
+
+            // Construir la dirección si se proporcionó calle o altura
+            string direccion = "";
+            if (!string.IsNullOrWhiteSpace(request.Calle) || !string.IsNullOrWhiteSpace(request.Altura))
+            {
+                direccion = $"{request.Calle ?? ""} {request.Altura ?? ""}".Trim();
+            }
+
+            // Retornar los datos del encuentro agregado para que aparezca en el calendario
+            return Json(new 
+            { 
+                success = true, 
+                message = "Encuentro agregado correctamente",
+                encuentro = new
+                {
+                    id = idEncuentro,
+                    fecha = request.FechaInicio.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    nombreMedico = request.NombreMedico ?? "",
+                    apellidoMedico = request.ApellidoMedico ?? "",
+                    nombreOrganizacion = request.NombreOrganizacion ?? "",
+                    direccion = direccion,
+                    descripcion = request.EstadoMotivo ?? ""
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error al agregar encuentro");
+            return Json(new { success = false, message = "Error al agregar el encuentro: " + ex.Message });
+        }
+    }
+
     // ==================== REQUEST CLASSES ====================
 
     public class VacunacionRequest
@@ -703,6 +802,19 @@ public class HomeController : Controller
         public string Motivo { get; set; }
         public string Observaciones { get; set; }
         public DateTime Fecha { get; set; }
+    }
+
+    public class EncuentroRequest
+    {
+        public string NombreMedico { get; set; }
+        public string ApellidoMedico { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public DateTime? FechaFin { get; set; }
+        public string EstadoMotivo { get; set; }
+        public string NombreOrganizacion { get; set; }
+        public int IdTipoOrganizacion { get; set; }
+        public string Calle { get; set; }
+        public string Altura { get; set; }
     }
 
     // ==================== ENDPOINTS PARA DOCUMENTOS PDF ====================

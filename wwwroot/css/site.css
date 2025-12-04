@@ -1334,6 +1334,10 @@ body {
     z-index: 9999;
 }
 
+.modal-overlay:not([hidden]) {
+    display: flex;
+}
+
 .modal-content {
     background: white;
     border-radius: 12px;
@@ -1545,6 +1549,130 @@ body {
         min-width: 90%;
     }
 }
+
+/* ---- MODAL AGREGAR ENCUENTRO ---- */
+
+.modal-encuentro {
+    min-width: 500px;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-encuentro .modal-body {
+    max-height: calc(90vh - 140px);
+    overflow-y: auto;
+}
+
+.modal-encuentro .campo-grupo {
+    margin-bottom: 18px;
+}
+
+.modal-encuentro .campo-grupo label {
+    display: block;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+}
+
+.modal-encuentro .campo-grupo input[type="text"],
+.modal-encuentro .campo-grupo input[type="datetime-local"],
+.modal-encuentro .campo-grupo select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+    font-family: inherit;
+}
+
+.modal-encuentro .campo-grupo input[type="text"]:focus,
+.modal-encuentro .campo-grupo input[type="datetime-local"]:focus,
+.modal-encuentro .campo-grupo select:focus {
+    border-color: #4a9b8c;
+    outline: none;
+}
+
+.modal-encuentro .campo-grupo select {
+    background-color: white;
+    cursor: pointer;
+}
+
+.modal-encuentro .modal-footer {
+    padding: 16px 24px;
+    background: #f8f8f8;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.modal-encuentro .btn-primario {
+    padding: 10px 24px;
+    border: none;
+    background: linear-gradient(135deg, #4a9b8c, #3d8b7a);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.modal-encuentro .btn-primario:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(74, 155, 140, 0.3);
+}
+
+.modal-encuentro .btn-secundario {
+    padding: 10px 24px;
+    border: 2px solid #ccc;
+    background: white;
+    color: #555;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.modal-encuentro .btn-secundario:hover {
+    background: #f0f0f0;
+    border-color: #999;
+}
+
+@media (max-width: 768px) {
+    .modal-encuentro {
+        min-width: 90%;
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-encuentro {
+        min-width: 95%;
+        max-width: 100%;
+    }
+
+    .modal-encuentro .modal-body {
+        padding: 16px;
+    }
+
+    .modal-encuentro .modal-footer {
+        padding: 12px 16px;
+        flex-direction: column;
+    }
+
+    .modal-encuentro .btn-primario,
+    .modal-encuentro .btn-secundario {
+        width: 100%;
+    }
+}
+
 /* ===========================
    SIGN UP
    =========================== */
@@ -2086,17 +2214,25 @@ body.body-calendario {
     opacity: 0.7;
 }
 
-/* Indicador de evento */
-.Calendario-Dias > *.con-evento::after {
-    content: "";
-    position: absolute;
-    bottom: 4px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 5px;
-    height: 5px;
-    border-radius: 999px;
-    background: var(--vl-primary);
+/* Día con evento - fondo verde completo */
+.Calendario-Dias > *.con-evento {
+    background: #10b981;
+    color: #ffffff;
+    border-color: #059669;
+    font-weight: 600;
+}
+
+.Calendario-Dias > *.con-evento:hover {
+    background: #059669;
+    border-color: #047857;
+    box-shadow: 0 6px 16px rgba(5, 150, 105, 0.3);
+}
+
+/* Si el día con evento es también el día actual */
+.Calendario-Dias > *.con-evento.hoy {
+    background: #10b981;
+    border-color: #047857;
+    box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.3);
 }
 
 /* Día seleccionado */

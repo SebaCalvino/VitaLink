@@ -519,4 +519,128 @@ public static class BD
             return parameters.Get<int>("@IdConsulta");
         }
     }
+
+    // ==================== FUNCIONES PARA ENCUENTROS ====================
+
+    /// <summary>
+    /// Obtiene la lista de tipos de organización
+    /// </summary>
+    public static List<Tipo_Organizacion> ObtenerTiposOrganizacion()
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = "SELECT * FROM Tipo_Organizacion ORDER BY TipoOrganizacion";
+            List<Tipo_Organizacion> listaTipos = db.Query<Tipo_Organizacion>(sql).ToList();
+            return listaTipos;
+        }
+    }
+
+    /// <summary>
+    /// Busca una organización por nombre y retorna su Id, o null si no existe
+    /// </summary>
+    public static int? ObtenerIdOrganizacionPorNombre(string nombre)
+    {
+        if (string.IsNullOrWhiteSpace(nombre))
+            return null;
+
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = "SELECT Id FROM Organizaciones WHERE Nombre = @nombre";
+            int? id = db.QueryFirstOrDefault<int?>(sql, new { nombre = nombre.Trim() });
+            return id;
+        }
+    }
+
+    /// <summary>
+    /// Inserta una nueva dirección y retorna el Id generado
+    /// </summary>
+    public static int InsertarDireccion(string calle, string altura)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = @"INSERT INTO Direcciones (Calle, Altura)
+                           VALUES (@calle, @altura);
+                           SELECT CAST(SCOPE_IDENTITY() AS int);";
+            
+            int idDireccion = db.ExecuteScalar<int>(sql, new 
+            { 
+                calle = calle ?? string.Empty, 
+                altura = altura ?? string.Empty 
+            });
+            return idDireccion;
+        }
+    }
+
+    /// <summary>
+    /// Inserta una nueva organización y retorna el Id generado
+    /// </summary>
+    public static int InsertarOrganizacion(string nombre, int idTipoOrganizacion, int idDireccion)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = @"INSERT INTO Organizaciones (Nombre, Id_Tipo_Organizacion, IdDireccion)
+                           VALUES (@nombre, @idTipoOrganizacion, @idDireccion);
+                           SELECT CAST(SCOPE_IDENTITY() AS int);";
+            
+            int idOrganizacion = db.ExecuteScalar<int>(sql, new 
+            { 
+                nombre = nombre ?? string.Empty, 
+                idTipoOrganizacion, 
+                idDireccion 
+            });
+            return idOrganizacion;
+        }
+    }
+
+    /// <summary>
+    /// Busca una organización por nombre; si existe retorna su Id, si no existe crea la dirección (si se proporciona) y la organización, luego retorna el Id
+    /// </summary>
+    public static int ObtenerOCrearOrganizacion(string nombre, int idTipoOrganizacion, string calle = null, string altura = null)
+    {
+        if (string.IsNullOrWhiteSpace(nombre))
+            throw new ArgumentException("El nombre de la organización es requerido");
+
+        // Primero buscar si existe
+        int? idExistente = ObtenerIdOrganizacionPorNombre(nombre);
+        if (idExistente.HasValue)
+            return idExistente.Value;
+
+        // Si no existe, crear la organización
+        int idDireccion = 0;
+        
+        // Si se proporciona calle o altura, crear la dirección
+        if (!string.IsNullOrWhiteSpace(calle) || !string.IsNullOrWhiteSpace(altura))
+        {
+            idDireccion = InsertarDireccion(calle ?? string.Empty, altura ?? string.Empty);
+        }
+
+        // Crear la organización
+        int idOrganizacion = InsertarOrganizacion(nombre, idTipoOrganizacion, idDireccion);
+        return idOrganizacion;
+    }
+
+    /// <summary>
+    /// Inserta un nuevo encuentro en la BD y retorna el Id generado
+    /// </summary>
+    public static int InsertarEncuentro(Encuentro encuentro)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = @"INSERT INTO Encuentros (IdUsuario, IdOrganizacion, NombreMedico, ApellidoMedico, FechaInicio, FechaFin, EstadoMotivo)
+                           VALUES (@IdUsuario, @IdOrganizacion, @NombreMedico, @ApellidoMedico, @FechaInicio, @FechaFin, @EstadoMotivo);
+                           SELECT CAST(SCOPE_IDENTITY() AS int);";
+            
+            int idEncuentro = db.ExecuteScalar<int>(sql, new 
+            { 
+                encuentro.IdUsuario,
+                encuentro.IdOrganizacion,
+                NombreMedico = encuentro.NombreMedico ?? string.Empty,
+                ApellidoMedico = encuentro.ApellidoMedico ?? string.Empty,
+                encuentro.FechaInicio,
+                FechaFin = encuentro.FechaFin,
+                EstadoMotivo = encuentro.EstadoMotivo ?? string.Empty
+            });
+            return idEncuentro;
+        }
+    }
 }

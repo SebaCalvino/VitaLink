@@ -106,12 +106,9 @@ function cambiarContrasena() {
         btn.dataset.fecha = fecha.toISOString();
 
 
-        if (esActual) btn.classList.add("activo");
+        if (esActual) btn.classList.add("activo", "hoy");
         if (tieneEvento) {
             btn.classList.add("con-evento");
-            const indicador = document.createElement("span");
-            indicador.className = "Indicador-Evento";
-            btn.appendChild(indicador);
         }
 
 
@@ -242,9 +239,159 @@ function cambiarContrasena() {
         renderizarCalendario();
         detallePanel.hidden = true;
     });
-    
-    
 
+    // ==================== FUNCIONALIDAD PARA AGREGAR ENCUENTRO ====================
+
+    const modalAgregarEncuentro = document.getElementById("modal-agregar-encuentro");
+    const formAgregarEncuentro = document.getElementById("form-agregar-encuentro");
+    const selectTipoOrganizacion = document.getElementById("tipo-organizacion");
+
+    function mostrarModalAgregarEncuentro() {
+        if (!modalAgregarEncuentro) return;
+        
+        modalAgregarEncuentro.hidden = false;
+        if (formAgregarEncuentro) {
+            formAgregarEncuentro.reset();
+        }
+        // Los tipos de organización ya están cargados desde el servidor mediante ViewBag
+    }
+
+    function ocultarModalAgregarEncuentro() {
+        if (modalAgregarEncuentro) {
+            modalAgregarEncuentro.hidden = true;
+        }
+    }
+
+    function cargarTiposOrganizacion() {
+        // Obtener el select cada vez que se llama, por si el modal se carga dinámicamente
+        const select = document.getElementById("tipo-organizacion");
+        if (!select) {
+            console.error("No se encontró el select de tipo de organización");
+            return;
+        }
+
+        fetch("/Home/ObtenerTiposOrganizacion")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success && data.tipos && Array.isArray(data.tipos)) {
+                    select.innerHTML = '<option value="">Seleccione un tipo...</option>';
+                    data.tipos.forEach(tipo => {
+                        if (tipo && tipo.Id && tipo.TipoOrganizacion) {
+                            const option = document.createElement("option");
+                            option.value = tipo.Id;
+                            option.textContent = tipo.TipoOrganizacion;
+                            select.appendChild(option);
+                        }
+                    });
+                    console.log(`Tipos de organización cargados: ${data.tipos.length}`);
+                } else {
+                    console.error("Error al cargar tipos de organización:", data.message || "Datos inválidos");
+                    alert("No se pudieron cargar los tipos de organización. Por favor, recarga la página.");
+                }
+            })
+            .catch(error => {
+                console.error("Error al cargar tipos de organización:", error);
+                alert("Error al conectar con el servidor para cargar tipos de organización.");
+            });
+    }
+
+    function guardarEncuentro() {
+        if (!formAgregarEncuentro) return;
+
+        // Obtener el select cada vez, por si no estaba disponible al cargar el script
+        const select = document.getElementById("tipo-organizacion");
+
+        // Validar campos requeridos
+        const nombreMedico = document.getElementById("nombre-medico")?.value.trim();
+        const apellidoMedico = document.getElementById("apellido-medico")?.value.trim();
+        const fechaInicio = document.getElementById("fecha-inicio")?.value;
+        const estadoMotivo = document.getElementById("estado-motivo")?.value.trim();
+        const nombreOrganizacion = document.getElementById("nombre-organizacion")?.value.trim();
+        const idTipoOrganizacion = select?.value;
+
+        if (!nombreMedico || !apellidoMedico || !fechaInicio || !estadoMotivo || !nombreOrganizacion) {
+            alert("Por favor complete todos los campos requeridos.");
+            return;
+        }
+
+        if (!idTipoOrganizacion || idTipoOrganizacion === "" || parseInt(idTipoOrganizacion) <= 0) {
+            alert("Por favor seleccione un tipo de organización.");
+            return;
+        }
+
+        // Recopilar datos del formulario
+        const fechaFin = document.getElementById("fecha-fin")?.value || null;
+        const calle = document.getElementById("calle")?.value.trim() || null;
+        const altura = document.getElementById("altura")?.value.trim() || null;
+
+        // Validar que idTipoOrganizacion sea un número válido
+        const idTipoOrganizacionNum = parseInt(idTipoOrganizacion);
+        if (isNaN(idTipoOrganizacionNum) || idTipoOrganizacionNum <= 0) {
+            alert("El tipo de organización seleccionado no es válido. Por favor, seleccione un tipo válido.");
+            return;
+        }
+
+        const datosEncuentro = {
+            nombreMedico: nombreMedico,
+            apellidoMedico: apellidoMedico,
+            fechaInicio: fechaInicio,
+            fechaFin: fechaFin,
+            estadoMotivo: estadoMotivo,
+            nombreOrganizacion: nombreOrganizacion,
+            idTipoOrganizacion: idTipoOrganizacionNum,
+            calle: calle,
+            altura: altura
+        };
+
+        // Enviar POST a /Home/AgregarEncuentro
+        fetch("/Home/AgregarEncuentro", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(datosEncuentro)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Agregar el evento al array calendarioEventos
+                if (data.encuentro && window.calendarioEventos) {
+                    window.calendarioEventos.push(data.encuentro);
+                    // Re-normalizar y re-renderizar
+                    normalizarEventosIniciales();
+                    renderizarCalendario();
+                }
+                // Ocultar el modal
+                ocultarModalAgregarEncuentro();
+                // Mostrar mensaje de éxito (opcional)
+                alert("Turno agregado correctamente.");
+            } else {
+                alert("Error al agregar el turno: " + (data.message || "Error desconocido"));
+            }
+        })
+        .catch(error => {
+            console.error("Error al agregar encuentro:", error);
+            alert("Error al conectar con el servidor.");
+        });
+    }
+
+    // Event listeners
+    document.querySelector("[data-action='agregar-turno']")?.addEventListener("click", mostrarModalAgregarEncuentro);
+    document.querySelector("[data-action='cerrar-modal-encuentro']")?.addEventListener("click", ocultarModalAgregarEncuentro);
+    document.querySelector("[data-action='cancelar-modal-encuentro']")?.addEventListener("click", ocultarModalAgregarEncuentro);
+    document.querySelector("[data-action='guardar-encuentro']")?.addEventListener("click", guardarEncuentro);
+
+    // Cerrar modal al hacer click fuera de él
+    modalAgregarEncuentro?.addEventListener("click", (e) => {
+        if (e.target === modalAgregarEncuentro) {
+            ocultarModalAgregarEncuentro();
+        }
+    });
 
     normalizarEventosIniciales();
     renderizarCalendario();
@@ -263,6 +410,8 @@ function abrirModal(campo, valor) {
         console.error('Modal no encontrado');
         return;
     }
+    
+    modal.hidden = false;
     
     const campoNombre = document.getElementById('modal-campo-nombre');
     const valorActualSpan = document.getElementById('modal-valor-actual');
@@ -299,12 +448,13 @@ function abrirModal(campo, valor) {
         }
         if (inputFecha) inputFecha.style.display = 'none';
     }
-    
-    modal.style.display = 'flex';
 }
 
 function cerrarModal() {
-    document.getElementById('modal-editar').style.display = 'none';
+    const modal = document.getElementById('modal-editar');
+    if (modal) {
+        modal.hidden = true;
+    }
     campoActual = '';
     valorActual = '';
 }
@@ -394,13 +544,13 @@ function abrirModalMedicamento(id, nombre, dosis, frecuencia, hora, indicacion) 
     document.getElementById('med-hora').value = hora || '';
     document.getElementById('med-indicacion').value = indicacion || '';
     
-    modal.style.display = 'flex';
+    modal.hidden = false;
 }
 
 function cerrarModalMedicamento() {
     const modal = document.getElementById('modal-medicamento');
     if (modal) {
-        modal.style.display = 'none';
+        modal.hidden = true;
     }
 }
 

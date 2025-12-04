@@ -5,6 +5,6 @@ public class Encuentro{
     public string NombreMedico {get;set;}
     public string ApellidoMedico {get;set;}
     public DateTime FechaInicio {get;set;}
-    public DateTime FechaFin {get;set;}
+    public DateTime? FechaFin {get;set;}
     public string EstadoMotivo {get;set;}
 }
