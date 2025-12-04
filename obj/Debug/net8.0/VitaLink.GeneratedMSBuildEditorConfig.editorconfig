@@ -9,87 +9,87 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = VitaLink
 build_property.RootNamespace = VitaLink
-build_property.ProjectDir = C:\Users\machi\VitaLink\
+build_property.ProjectDir = C:\Users\48795975\VitaLink\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\machi\VitaLink
+build_property.MSBuildProjectDirectory = C:\Users\48795975\VitaLink
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/machi/VitaLink/Views/Home/AgregarAutomaticamente.cshtml]
+[C:/Users/48795975/VitaLink/Views/Home/AgregarAutomaticamente.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZ3JlZ2FyQXV0b21hdGljYW1lbnRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/machi/VitaLink/Views/Home/AgregarManualmente.cshtml]
+[C:/Users/48795975/VitaLink/Views/Home/AgregarManualmente.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZ3JlZ2FyTWFudWFsbWVudGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/machi/VitaLink/Views/Home/AgregarMedicamento.cshtml]
+[C:/Users/48795975/VitaLink/Views/Home/AgregarMedicamento.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZ3JlZ2FyTWVkaWNhbWVudG8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/machi/VitaLink/Views/Home/Calendario.cshtml]
+[C:/Users/48795975/VitaLink/Views/Home/Calendario.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDYWxlbmRhcmlvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/machi/VitaLink/Views/Home/CambiarContraseña.cshtml]
+[C:/Users/48795975/VitaLink/Views/Home/CambiarContraseña.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDYW1iaWFyQ29udHJhc2XDsWEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/machi/VitaLink/Views/Home/EditarPerfil.cshtml]
+[C:/Users/48795975/VitaLink/Views/Home/EditarPerfil.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFZGl0YXJQZXJmaWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/machi/VitaLink/Views/Home/Familia.cshtml]
+[C:/Users/48795975/VitaLink/Views/Home/Familia.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxGYW1pbGlhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/machi/VitaLink/Views/Home/HistorialMedico.cshtml]
+[C:/Users/48795975/VitaLink/Views/Home/HistorialMedico.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxIaXN0b3JpYWxNZWRpY28uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/machi/VitaLink/Views/Home/Home.cshtml]
+[C:/Users/48795975/VitaLink/Views/Home/Home.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxIb21lLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/machi/VitaLink/Views/Home/Index.cshtml]
+[C:/Users/48795975/VitaLink/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/machi/VitaLink/Views/Home/LogIn.cshtml]
+[C:/Users/48795975/VitaLink/Views/Home/LogIn.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMb2dJbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/machi/VitaLink/Views/Home/Medicamentos.cshtml]
+[C:/Users/48795975/VitaLink/Views/Home/Medicamentos.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNZWRpY2FtZW50b3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/machi/VitaLink/Views/Home/Perfil.cshtml]
+[C:/Users/48795975/VitaLink/Views/Home/Perfil.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQZXJmaWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/machi/VitaLink/Views/Home/SignUp.cshtml]
+[C:/Users/48795975/VitaLink/Views/Home/SignUp.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTaWduVXAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/machi/VitaLink/Views/Home/VerDocumento.cshtml]
+[C:/Users/48795975/VitaLink/Views/Home/VerDocumento.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxWZXJEb2N1bWVudG8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/machi/VitaLink/Views/Shared/_Layout.cshtml]
+[C:/Users/48795975/VitaLink/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/machi/VitaLink/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/48795975/VitaLink/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/machi/VitaLink/Views/_ViewImports.cshtml]
+[C:/Users/48795975/VitaLink/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/machi/VitaLink/Views/_ViewStart.cshtml]
+[C:/Users/48795975/VitaLink/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

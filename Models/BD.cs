@@ -9,7 +9,7 @@ using System.Linq;
 
 public static class BD
 {
-    private static string _connectionString = @"Server=MSI\SQLEXPRESS03;Database=BDVitalink;Integrated Security=True;TrustServerCertificate=True;";
+    private static string _connectionString = @"Server=localhost;Database=BDVitalink;Integrated Security=True;TrustServerCertificate=True;";
 
 
     public static Usuario LoginUsuario(string email, string contrasena)
