@@ -162,9 +162,88 @@
     font-size: 400%;
 }
 
+/* ==== SECCIÓN APP PREVIEW (texto + imagen) ==== */
+
+.Seccion-AppPreview {
+    background-color: #007f7f;          /* mismo verde del bloque de arriba */
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4rem 8%;
+    gap: 4rem;
+}
+
+/* Columna de texto */
+.AppPreview-Texto {
+    flex: 1 1 50%;
+    max-width: 600px;
+}
+
+.AppPreview-Texto h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.AppPreview-Texto p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 0.8rem;
+}
+
+/* Columna de imagen */
+.AppPreview-Imagen {
+    flex: 1 1 45%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.AppPreview-Imagen img {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .Seccion-AppPreview {
+        flex-direction: column-reverse;
+        text-align: left;
+        padding: 3rem 1.5rem;
+        gap: 2.5rem;
+    }
+
+    .AppPreview-Texto,
+    .AppPreview-Imagen {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+
+    .AppPreview-Imagen {
+        justify-content: center;
+    }
+
+    .AppPreview-Imagen img {
+        max-width: 360px;
+    }
+}
+
+@media (max-width: 600px) {
+    .AppPreview-Texto h2 {
+        font-size: 1.6rem;
+    }
+
+    .AppPreview-Texto p {
+        font-size: 0.95rem;
+    }
+}
 /* ---- ARGUMENTO 2 ---- */
 
 .Argumento-2 {
+    background-color: #004040;
     display: flex;
     color:white;
     justify-content: center;
@@ -181,7 +260,87 @@
 .Texto-Argumento-2 {
     width: 30%;
 }
+.Foto-Argumentos img{
+    width: 70%;
+    margin-left: 15%;
+}
+/* ==== SECCIÓN APP PREVIEW (texto + imagen) ==== */
 
+.Seccion-AppPreview {
+    background-color: #007f7f;          /* mismo verde del bloque de arriba */
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4rem 8%;
+    gap: 4rem;
+}
+
+/* Columna de texto */
+.AppPreview-Texto {
+    flex: 1 1 50%;
+    max-width: 600px;
+}
+
+.AppPreview-Texto h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.AppPreview-Texto p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 0.8rem;
+}
+
+/* Columna de imagen */
+.AppPreview-Imagen {
+    flex: 1 1 45%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.AppPreview-Imagen img {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .Seccion-AppPreview {
+        flex-direction: column-reverse;
+        text-align: left;
+        padding: 3rem 1.5rem;
+        gap: 2.5rem;
+    }
+
+    .AppPreview-Texto,
+    .AppPreview-Imagen {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+
+    .AppPreview-Imagen {
+        justify-content: center;
+    }
+
+    .AppPreview-Imagen img {
+        max-width: 360px;
+    }
+}
+
+@media (max-width: 600px) {
+    .AppPreview-Texto h2 {
+        font-size: 1.6rem;
+    }
+
+    .AppPreview-Texto p {
+        font-size: 0.95rem;
+    }
 /* ---- BENEFICIOS ---- */
 
 .Beneficios {
@@ -235,12 +394,16 @@
     color:white;
     padding: 6% 3%;
 }
-
 .CTA-2 img {
-    width: 30%;
+    width: 70%;
     border-radius: 2%;
     margin-top: 3%;
+    margin-left: 15%;
 }
+.CTA-2 h3{
+    margin-left: 40%;
+}
+
 
 /* ---- SOBRE NOSOTROS ---- */
 
@@ -262,7 +425,8 @@
 }
 
 .Valores-Contenedor div {
-    background-color: rgba(0, 150, 150, 0.2);
+    margin-bottom: 10%;
+    background-color: #007f7f;
     border-radius: 2%;
     padding: 3%;
     width: 25%;
@@ -281,30 +445,58 @@
 
 .Quienes-Somos {
     background-color: #004040;
-    padding: 6% 3%;
-    color:white;
+    padding: 6% 3% 8%;
+    color: white;
+    text-align: center;
 }
 
+.Quienes-Somos h2 {
+    font-size: 2.4rem;
+    font-weight: 700;
+}
+
+/* Más espacio entre las filas (row-gap aumentado) */
 .Equipo {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 3%;
-    margin-top: 3%;
+    max-width: 1150px;
+    margin: 3% auto 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    column-gap: 5%;
+    row-gap: 6rem; /* ← MÁS ESPACIO ENTRE ARRIBA Y ABAJO */
 }
 
+/* Card de cada persona */
 .Persona {
     background-color: rgba(0, 150, 150, 0.25);
-    border-radius: 3%;
-    padding: 3%;
-    width: 20%;
-    min-width: 160px;
+    border-radius: 24px;
+    padding: 3.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
+/* Imagen perfectamente circular */
 .Persona img {
-    width: 50%;
+    width: 230px;      /* mismo ancho */
+    height: 230px;     /* mismo alto → círculo perfecto */
     border-radius: 50%;
-    margin-bottom: 5%;
+    object-fit: cover; /* mantiene proporciones recortando */
+    object-position: center;
+    margin-bottom: 1.6rem;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.Persona h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+}
+
+.Persona p {
+    font-size: 0.95rem;
+    opacity: 0.9;
 }
 
 .Perfil-Container {
@@ -375,57 +567,104 @@ body > header {
 }
 
 
-/* ---- VERSIÓN CELULAR ---- */
 
-@media (max-width:768px)
-{
+/* ---- VERSIÓN CELULAR – LANDING ---- */
+@media (max-width: 768px) {
 
-    .CTA-1 
-    {
-        flex-direction: column;
-        align-items: center;
-        gap: 5%;
-    }
-
-    .Argumento-1, .Argumento-2 {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .Texto-Argumento-1, .Texto-Argumento-2 {
-        width: 90%;
-    }
-
-    .Beneficios-Item {
-        width: 90%;
-        margin: auto;
-    }
-
-    .Valores-Contenedor {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .Valores-Contenedor div {
-        width: 80%;
-    }
-
-    .Persona {
-        width: 70%;
-    }
-
+    /* ===== HERO / BANNER PRINCIPAL ===== */
     .Banner-Principal {
-        height: 60vh;
+        height: auto;
+        padding: 5rem 1.5rem 3rem;
+        background-position: center top;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 1.5rem;
+        text-align: left;
     }
 
-    .CTA-2 img {
-        width: 80%;
+    .Banner-Principal div {
+        width: 100%;
+        margin: 0;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.75rem;
     }
 
-    .Argumento-1 img, .Argumento-2 img {
-        width: 80%;
+    .Banner-Principal div img {
+        width: 22%;
+        max-width: 80px;
     }
-}
+
+    .Banner-Principal div h1 {
+        font-size: 2.3rem;
+        font-weight: 700;
+    }
+
+    .Banner-Principal p {
+        font-size: 1.5rem;
+        font-weight: 500;
+        margin: 0;
+        margin-top: 0.5rem;
+        max-width: 100%;
+    }
+
+    .Banner-Principal a {
+        margin: 1.3rem 0 0 0;
+        padding: 0.75rem 1.9rem;
+        border-radius: 999px;
+        align-self: flex-start;
+    }
+
+    .Banner-Principal a p {
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    /* ===== CTA-1 ===== */
+    .CTA-1 {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        gap: 1.8rem;
+        padding: 2.8rem 1.5rem;
+    }
+
+    .CTA-1 div {
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
+    }
+
+    .CTA-1 div img {
+        width: 60%;
+        max-width: 160px;
+    }
+
+    .CTA-1 div h3 {
+        font-size: 1.3rem;
+    }
+
+    .CTA-1 div p {
+        font-size: 1rem;
+    }
+
+    /* ===== ARGUMENTO 2 (foto) ===== */
+    .Argumento-2 {
+        flex-direction: column;
+        padding: 3rem 1.5rem;
+    }
+
+    .Foto-Argumentos img {
+        width: 100%;
+        max-width: 420px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    /* ===== BENEFICIOS ===== */
+    .Benefici
+
+
 
 /* ---- ESTILOS PÁGINA INICIO (HOME) ---- */
 
