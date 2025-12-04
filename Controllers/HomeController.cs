@@ -306,8 +306,23 @@ public class HomeController : Controller
             if (usuario == null) return RedirectToAction("LogIn");
 
             ViewBag.Usuario = usuario;
-            ViewBag.Medicaciones = BD.ObtenerMedicacionesPorUsuario(usuario.Id);
+            var medicaciones = BD.ObtenerMedicacionesPorUsuario(usuario.Id);
+            ViewBag.Medicaciones = medicaciones;
             ViewBag.Encuentros = BD.ObtenerEncuentrosPorUsuario(usuario.Id);
+
+            // Generar notificaciones para medicamentos sin pastillas
+            var notificaciones = new List<string>();
+            if (medicaciones != null)
+            {
+                foreach (var med in medicaciones)
+                {
+                    if (med.Cantidad <= 0)
+                    {
+                        notificaciones.Add($"Te quedaste sin pastillas de: {med.Nombre_Comercial}");
+                    }
+                }
+            }
+            ViewBag.Notificaciones = notificaciones;
 
             return View("Home");
         }
