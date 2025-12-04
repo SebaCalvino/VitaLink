@@ -323,6 +323,42 @@ public class HomeController : Controller
                     }
                 }
             }
+
+            // Generar notificaciones para eventos próximos
+            var encuentros = BD.ObtenerEncuentrosPorUsuario(usuario.Id);
+            var hoy = DateTime.Today;
+            
+            if (encuentros != null)
+            {
+                foreach (var encuentro in encuentros)
+                {
+                    // Obtener solo la fecha (sin hora) del evento
+                    var fechaEvento = encuentro.FechaInicio.Date;
+                    
+                    // Solo considerar eventos futuros o del día de hoy
+                    if (fechaEvento >= hoy)
+                    {
+                        // Calcular días hasta el evento
+                        int diasHastaEvento = (fechaEvento - hoy).Days;
+                        
+                        // Agregar notificación si es hoy (0 días), mañana (1 día) o en 5 días
+                        if (diasHastaEvento == 0)
+                        {
+                            notificaciones.Add("Hoy tenes un evento");
+                        }
+                        else if (diasHastaEvento == 1)
+                        {
+                            notificaciones.Add("En 1 día tenes un evento");
+                        }
+                        else if (diasHastaEvento == 5)
+                        {
+                            notificaciones.Add("En 5 días tenes un evento");
+                        }
+                    }
+                    // Si el evento ya pasó (fechaEvento < hoy), no se agrega notificación
+                }
+            }
+
             ViewBag.Notificaciones = notificaciones;
 
             return View("Home");
