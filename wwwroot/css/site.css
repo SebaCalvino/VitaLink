@@ -321,7 +321,7 @@
     border-radius: 15px;
 }
 
-header {
+body > header {
     background: linear-gradient(180deg, #004040, #00a0a0);
     width: 100%;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -1434,10 +1434,10 @@ body {
     }
 }
 
-    /*Agregar manualmente*/
-    .agregar-main {
+/*Agregar manualmente*/
+.agregar-main {
     min-height: 100vh;
-    padding: 15px;
+    padding: 40px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1446,93 +1446,163 @@ body {
 /* ===== HEADER ===== */
 .agregar-header {
     width: 100%;
+    max-width: 900px;
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
+    gap: 16px;
+    margin-bottom: 30px;
+    align-self: flex-start;
+    padding-left: 5%;
 }
 
 .agregar-header h1 {
-    font-size: 18px;
-    color: white;
-    font-weight: 600;
+    font-size: 28px;
+    color: #1e8c7f;
+    font-weight: 700;
 }
 
 .btn-volver {
-    color: white;
-    font-size: 22px;
+    color: #1e8c7f;
+    font-size: 28px;
     text-decoration: none;
     font-weight: bold;
+    transition: 0.2s;
+}
+
+.btn-volver:hover {
+    color: #157065;
 }
 
 /* ===== CARD CONTENEDORA ===== */
 .agregar-card {
     width: 100%;
-    max-width: 340px;
+    max-width: 600px;
     background: #9adcca;
-    padding: 22px;
-    border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    padding: 35px 40px;
+    border-radius: 28px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
 /* ===== CAMPOS ===== */
-.campo-grupo {
-    margin-bottom: 12px;
+.agregar-card .campo-grupo {
+    margin-bottom: 18px;
 }
 
 .select-tipo {
     width: 100%;
-    padding: 10px;
-    border-radius: 14px;
+    padding: 16px 50px 16px 18px;
+    border-radius: 16px;
     border: none;
-    font-size: 14px;
+    font-size: 17px;
     outline: none;
     color: #2a7f6a;
     font-weight: 600;
+    background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%232a7f6a' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat;
+    background-position: right 18px center;
+    cursor: pointer;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.select-tipo:focus {
+    box-shadow: 0 0 0 3px rgba(30, 140, 127, 0.3);
+}
+
+.select-tipo option {
+    padding: 12px;
+    font-size: 16px;
 }
 
 /* INPUTS Y TEXTAREA */
-.campo-grupo input,
-.campo-grupo textarea {
+.agregar-card input,
+.agregar-card textarea {
     width: 100%;
-    padding: 10px 12px;
-    border-radius: 14px;
+    padding: 16px 18px;
+    border-radius: 16px;
     border: none;
     outline: none;
-    font-size: 14px;
+    font-size: 17px;
     resize: none;
+    box-sizing: border-box;
+    font-family: inherit;
 }
 
-.campo-grupo input::placeholder,
-.campo-grupo textarea::placeholder {
+.agregar-card input::placeholder,
+.agregar-card textarea::placeholder {
     color: #3a8e79;
     font-weight: 500;
 }
 
+.agregar-card input:focus,
+.agregar-card textarea:focus {
+    box-shadow: 0 0 0 3px rgba(30, 140, 127, 0.3);
+}
+
+.agregar-card textarea {
+    min-height: 100px;
+}
+
+.agregar-card .label-archivo {
+    display: block;
+    color: #1e8c7f;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+.agregar-card input[type="file"] {
+    padding: 0;
+    background: white;
+    cursor: pointer;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.agregar-card input[type="file"]::file-selector-button {
+    padding: 16px 24px;
+    margin-right: 16px;
+    background: #1e8c7f;
+    color: white;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.agregar-card input[type="file"]::file-selector-button:hover {
+    background: #157065;
+}
+
 /* ===== FORMULARIOS ===== */
 .formulario-manual {
-    margin-top: 15px;
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
 }
 
 /* ===== BOTÓN AGREGAR ===== */
 .btn-agregar-form {
-    margin-top: 10px;
+    margin-top: 15px;
     background: #1e8c7f;
     color: white;
-    padding: 10px;
-    border-radius: 16px;
-    font-size: 15px;
+    padding: 16px 24px;
+    border-radius: 20px;
+    font-size: 18px;
     font-weight: 600;
     border: none;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+    transition: 0.2s;
 }
 
 .btn-agregar-form:hover {
     background: #157065;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.25);
 }
 
 /* ===== OCULTAR ===== */
