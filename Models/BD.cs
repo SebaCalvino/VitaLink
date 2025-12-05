@@ -219,7 +219,11 @@ public static class BD
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
-            string sql = @"SELECT DC.*, A.Capacidad, A.FechaCreacion
+            string sql = @"SELECT DC.*, A.Capacidad, A.FechaCreacion, 
+                                  (SELECT TOP 1 IE.Informe_Texto 
+                                   FROM Imagenes_Estudios IE 
+                                   WHERE IE.IdEncuentro = DC.IdEncuentro 
+                                   ORDER BY IE.Id DESC) AS Informe_Texto
                            FROM Documentos_Clinicos DC
                            LEFT JOIN Archivos A ON DC.IdArchivo = A.Id
                            WHERE DC.IdEncuentro = @idEncuentro";

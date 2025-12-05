@@ -7,4 +7,5 @@ public class DocumentoClinico{
     public int? IdArchivo{get; set;}
     public string NombreArchivo {get;set;}
     public string TipoArchivo {get;set;}
+    public string Informe_Texto {get;set;}
 }

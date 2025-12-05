@@ -93,6 +93,7 @@
                                 data-fecha="@(doc.Fecha?.ToString("dd/MM/yyyy") ?? "")"
                                 data-tipoarchivo="@doc.TipoArchivo"
                                 data-idarchivo="@doc.IdArchivo"
+                                data-observacion="@(doc.Informe_Texto ?? "")"
                                 onclick="verMasHistorial(this)">Ver Mas</button>
                     </div>
                 }

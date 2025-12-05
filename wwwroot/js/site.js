@@ -866,6 +866,7 @@ function mostrarDetallesDocumento(button) {
     const tipoArchivo = button.getAttribute('data-tipoarchivo');
     const idArchivo = button.getAttribute('data-idarchivo');
     const id = button.getAttribute('data-id');
+    const observacion = button.getAttribute('data-observacion') || '';
     
     document.getElementById('modal-titulo').textContent = 'Detalles del Documento';
     
@@ -883,6 +884,15 @@ function mostrarDetallesDocumento(button) {
             <strong>Tipo de archivo:</strong> <span>${tipoArchivo || 'No especificado'}</span>
         </div>
     `;
+    
+    // Agregar observación/resultado si existe
+    if (observacion && observacion.trim() !== '') {
+        contenido += `
+        <div class="detalle-item">
+            <strong>Resultado / Observación:</strong> <span>${observacion}</span>
+        </div>
+        `;
+    }
     
     document.getElementById('modal-body').innerHTML = contenido;
     

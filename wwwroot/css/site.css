@@ -1708,73 +1708,115 @@ body {
 
 /* Título */
 .bodySignUp-Contenedor .card-body h2 {
-    font-size: 28px;
-    font-weight: 600;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.2;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.7);
     margin-bottom: 2rem;
-}
-/* Select */
-.bodySignUp-Contenedor .form-select{
-    width: 80%;
 }
 /* Inputs y selects */
 .bodySignUp-Contenedor .form-control,
 .bodySignUp-Contenedor .form-select {
-    width: 80% !important;
-    height: 30px !important; /* mismo alto para TODOS */
+    width: 100% !important;
+    min-height: 50px !important;
     background: rgba(200,255,235,0.28);
     border: 1px solid rgba(255,255,255,0.4);
     border-radius: 999px;
-    padding: 0.9rem 1.2rem;
+    padding: 1.1rem 1.4rem;
 
-    color: #ffffff;
-    font-size: 1rem;
+    color: #ffffff !important;
+    font-size: 1.1rem;
     font-weight: 500;
-    line-height: 1.2;
+    line-height: 1.4;
 
     outline: none;
     box-shadow:
-        inset 0 2px 4px rgba(0,0,0,0.4),
+        0 2px 4px rgba(0,0,0,0.4) inset,
         0 2px 3px rgba(0,0,0,0.4);
 
     display: block;
-    margin: 0.5rem auto; /* centrado, como todos */
+    margin: 0;
 }
 
 /* Select exactamente igual al input */
 .bodySignUp-Contenedor .form-select {
     padding-right: 2.5rem !important;        /* espacio para la flecha */
-    background-position: right 1.2rem center;
+    background-position: right 1.4rem center;
     background-repeat: no-repeat;
-}
-.form-select option{
-    color: black;
+    color: #ffffff !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
-/* Placeholder blanco */
+/* Asegurar que el texto seleccionado se vea en blanco */
+.bodySignUp-Contenedor .form-select,
+.bodySignUp-Contenedor .form-select:focus,
+.bodySignUp-Contenedor .form-select option:checked {
+    color: #ffffff !important;
+}
+
+/* Opciones del dropdown (cuando se abre) */
+.bodySignUp-Contenedor .form-select option {
+    color: #000000;
+    background: #ffffff;
+    padding: 0.5rem;
+}
+
+/* Forzar color blanco en el texto del select */
+.bodySignUp-Contenedor select.form-select {
+    color: #ffffff !important;
+}
+
+/* Placeholder blanco con menor opacidad para distinguirlo del texto */
 .bodySignUp-Contenedor .form-control::placeholder,
 .bodySignUp-Contenedor .form-select::placeholder {
-    color: #ffffff !important;
+    color: rgba(255, 255, 255, 0.6);
     opacity: 1;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 /* Focus */
 .bodySignUp-Contenedor .form-control:focus,
 .bodySignUp-Contenedor .form-select:focus {
     background: rgba(200,255,235,0.4);
-    box-shadow: 0 0 4px rgba(91,195,164,0.4);
+}
+
+/* Formulario apilado */
+.bodySignUp-Contenedor .signup-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.bodySignUp-Contenedor .signup-form-fields {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.bodySignUp-Contenedor .signup-field {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Labels ALINEADOS al borde de los inputs */
 .bodySignUp-Contenedor .form-label {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
-
+    color: #ffffff;
     display: block;
-    width: 80% !important;         /* mismo ancho */
-    margin: 0 auto 4px !important; /* centrado como los inputs */
+    width: 100%;
+    margin: 0 0 6px 0;
     text-align: left;
-    /* sin padding-left: se alinea con el borde del input */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.7);
 }
 
 /* Botón principal */
@@ -1793,10 +1835,12 @@ body {
 
     text-shadow: 0 1px 2px rgba(0,0,0,0.7);
     box-shadow:
-        inset 0 2px 4px rgba(0,0,0,0.4),
+        0 2px 4px rgba(0,0,0,0.4) inset,
         0 2px 3px rgba(0,0,0,0.4);
-    margin-top: 5%;
-    margin-bottom: 2rem;
+    margin-top: 1rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .bodySignUp-Contenedor .btn-primary p a {
@@ -1804,18 +1848,23 @@ body {
 }
 
 .bodySignUp-Contenedor .btn-primary:hover {
-    background-color: #4daf92 !important;
+    filter: brightness(1.08);
 }
 
 /* Texto inferior y enlaces */
 .bodySignUp-Contenedor p {
-    font-size: 14px;
-    margin-top: 14px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    line-height: 1.3;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
 .bodySignUp-Contenedor p a {
-    color: #5bc3a4;
-    font-weight: 600;
+    color: #ffffff;
+    font-weight: 700;
     text-decoration: none;
 }
 
@@ -1915,6 +1964,56 @@ body {
 
 .select-tipo option {
     padding: 12px;
+    font-size: 16px;
+}
+
+/* SELECTS DE MODALIDAD Y TIPO DE ORGANIZACIÓN */
+#tipo-organizacion-vacuna,
+#modalidad-estudio {
+    width: 100%;
+    padding: 16px 50px 16px 18px;
+    border-radius: 16px;
+    border: none;
+    font-size: 17px;
+    outline: none;
+    color: #2a7f6a;
+    font-weight: 600;
+    background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%232a7f6a' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat;
+    background-position: right 18px center;
+    cursor: pointer;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-family: inherit;
+}
+
+#tipo-organizacion-vacuna:focus,
+#modalidad-estudio:focus {
+    box-shadow: 0 0 0 3px rgba(30, 140, 127, 0.3);
+    outline: none;
+}
+
+#tipo-organizacion-vacuna option,
+#modalidad-estudio option {
+    padding: 12px;
+    font-size: 16px;
+    color: #2a7f6a;
+    background: white;
+}
+
+#tipo-organizacion-vacuna option:first-child,
+#modalidad-estudio option:first-child {
+    color: #3a8e79;
+    font-weight: 500;
+}
+
+/* Labels para los selects */
+.agregar-card .campo-grupo label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #1e8c7f;
     font-size: 16px;
 }
 

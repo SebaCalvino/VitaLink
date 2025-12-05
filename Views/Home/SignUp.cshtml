@@ -26,40 +26,40 @@
                         </div>
                     }
 
-                    <form asp-action=SignUp method="post" novalidate>
+                    <form asp-action=SignUp method="post" novalidate class="signup-form">
                         @Html.AntiForgeryToken()
-                        <div class="row g-3">
-                            <div class="col-md-6">
+                        <div class="signup-form-fields">
+                            <div class="signup-field">
                                 <label for="nombre" class="form-label">Nombre</label>
-                                <input id="nombre" placeholder="Uriel" name="nombre" class="form-control" value="@Valor("Nombre")" required />
+                                <input id="nombre" placeholder="Ingrese su nombre" name="nombre" class="form-control" value="@Valor("Nombre")" required />
                             </div>
-                            <div class="col-md-6">
+                            <div class="signup-field">
                                 <label for="apellido" class="form-label">Apellido</label>
-                                <input id="apellido" placeholder="Grinfeld" name="apellido" class="form-control" value="@Valor("Apellido")" required />
+                                <input id="apellido" placeholder="Ingrese su apellido" name="apellido" class="form-control" value="@Valor("Apellido")" required />
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="signup-field">
                                 <label for="email" class="form-label">Email</label>
-                                <input id="email" placeholder="UrielGrinfeld@gmail.com" name="email" class="form-control" type="email" value="@Valor("Email")" required />
+                                <input id="email" placeholder="ejemplo@correo.com" name="email" class="form-control" type="email" value="@Valor("Email")" required />
                             </div>
-                            <div class="col-md-6">
+                            <div class="signup-field">
                                 <label for="contrasena" class="form-label">Contraseña</label>
-                                <input id="contrasena" placeholder="*********" name="contrasena" class="form-control" type="password" value="@Valor("Contrasena")" required />
+                                <input id="contrasena" placeholder="Ingrese su contraseña" name="contrasena" class="form-control" type="password" value="@Valor("Contrasena")" required />
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="signup-field">
                                 <label for="peso" class="form-label">Peso (kg)</label>
-                                <input id="peso" placeholder="71,3" name="peso" class="form-control" type="number" step="0.1" value="@Valor("Peso")" required />
+                                <input id="peso" placeholder="Ej: 70.5" name="peso" class="form-control" type="number" step="0.1" value="@Valor("Peso")" required />
                             </div>
-                            <div class="col-md-6">
+                            <div class="signup-field">
                                 <label for="altura" class="form-label">Altura (cm)</label>
-                                <input id="altura" placeholder="182" name="altura" class="form-control" type="number" step="0.1" value="@Valor("Altura")" required />
+                                <input id="altura" placeholder="Ej: 175" name="altura" class="form-control" type="number" step="0.1" value="@Valor("Altura")" required />
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="signup-field">
                                 <label for="sexo" class="form-label">Sexo</label>
                                 <select id="sexo" name="sexo" class="form-select" required>
-                                    <option value="">Seleccionar...</option>
+                                    <option value="">Seleccione una opción</option>
                                     @if (sexoSeleccionado == "M")
                                     {
                                         <option value="M" selected>Masculino</option>
@@ -94,18 +94,18 @@
                                     }
                                 </select>
                             </div>
-                            <div class="col-md-6">
+                            <div class="signup-field">
                                 <label for="telefono" class="form-label">Teléfono</label>
-                                <input id="telefono" placeholder="1166034802" name="telefono" class="form-control" type="tel" value="@Valor("Telefono")" required />
+                                <input id="telefono" placeholder="Ej: 1123456789" name="telefono" class="form-control" type="tel" value="@Valor("Telefono")" required />
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="signup-field">
                                 <label for="fechaNacimiento" class="form-label">Fecha de nacimiento</label>
                                 <input id="fechaNacimiento" name="fechaNacimiento" class="form-control" type="date" value="@Valor("FechaNacimiento")" required />
                             </div>
-                            <div class="col-md-6">
+                            <div class="signup-field">
                                 <label for="numeroDocumento" class="form-label">Número de documento</label>
-                                <input id="numeroDocumento" placeholder="48793661" name="numeroDocumento" class="form-control" type="number" value="@Valor("NumeroDocumento")" required />
+                                <input id="numeroDocumento" placeholder="Ej: 12345678" name="numeroDocumento" class="form-control" type="number" value="@Valor("NumeroDocumento")" required />
                             </div>
                         </div>
 
