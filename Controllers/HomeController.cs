@@ -490,6 +490,7 @@ public class HomeController : Controller
             if (idUsuario == 0) return RedirectToAction("LogIn");
 
             ViewBag.TiposOrganizacion = BD.ObtenerTiposOrganizacion();
+            ViewBag.Modalidades = BD.ObtenerModalidades();
             return View("AgregarManualmente");
         }
 
@@ -672,9 +673,13 @@ public class HomeController : Controller
             if (string.IsNullOrWhiteSpace(request.NombreEstudio))
                 return Json(new { success = false, message = "El nombre del estudio es obligatorio" });
 
+            if (request.IdModalidad <= 0)
+                return Json(new { success = false, message = "Debe seleccionar una modalidad" });
+
             int idEstudio = BD.InsertarEstudioManual(
                 usuario.Id,
                 request.NombreEstudio,
+                request.IdModalidad,
                 request.Observacion,
                 request.Fecha,
                 request.Capacidad,
@@ -833,6 +838,7 @@ public class HomeController : Controller
     public class EstudioRequest
     {
         public string NombreEstudio { get; set; }
+        public int IdModalidad { get; set; }
         public string Observacion { get; set; }
         public DateTime Fecha { get; set; }
         public string Capacidad { get; set; }

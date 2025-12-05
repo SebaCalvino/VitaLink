@@ -1,3 +1,4 @@
+@using VitaLink.Models
 @{
     ViewData["Title"] = "Agregar Manualmente - VitaLink";
 }
@@ -80,6 +81,23 @@
 
             <div class="campo-grupo">
                 <input type="text" name="nombreEstudio" placeholder="Nombre del estudio" required>
+            </div>
+
+            <div class="campo-grupo">
+                <label for="modalidad-estudio">Tipo de Modalidad *</label>
+                <select id="modalidad-estudio" name="idModalidad" required>
+                    <option value="">Seleccione una modalidad...</option>
+                    @{
+                        var modalidades = ViewBag.Modalidades as List<Modalidad>;
+                    }
+                    @if (modalidades != null && modalidades.Count > 0)
+                    {
+                        foreach (var modalidad in modalidades)
+                        {
+                            <option value="@modalidad.Id">@modalidad.Tipo_ImagenEstudio</option>
+                        }
+                    }
+                </select>
             </div>
 
             <div class="campo-grupo">
@@ -229,6 +247,7 @@ document.getElementById('formEstudio').addEventListener('submit', async function
     
     const data = {
         nombreEstudio: form.querySelector('[name="nombreEstudio"]').value,
+        idModalidad: parseInt(form.querySelector('[name="idModalidad"]').value),
         observacion: form.querySelector('[name="observacion"]').value,
         fecha: form.querySelector('[name="fecha"]').value,
         capacidad: archivo ? (archivo.size / 1024).toFixed(2) + ' KB' : null,

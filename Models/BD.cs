@@ -181,6 +181,19 @@ public static class BD
         }
     }
 
+    /// <summary>
+    /// Obtiene la lista de todas las modalidades
+    /// </summary>
+    public static List<Modalidad> ObtenerModalidades()
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = "SELECT * FROM Modalidad ORDER BY Tipo_ImagenEstudio";
+            List<Modalidad> listaModalidades = db.Query<Modalidad>(sql).ToList();
+            return listaModalidades;
+        }
+    }
+
     public static List<Encuentro> ObtenerEncuentrosPorUsuario(int idUsuario)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -473,8 +486,8 @@ public static class BD
     /// <summary>
     /// Inserta un estudio manual usando el SP sp_InsertEstudioManual
     /// </summary>
-    public static int InsertarEstudioManual(int idUsuario, string nombreEstudio, string observacion,
-        DateTime fecha, string capacidad = null, DateTime? fechaCreacionArchivo = null,
+    public static int InsertarEstudioManual(int idUsuario, string nombreEstudio, int idModalidad,
+        string observacion, DateTime fecha, string capacidad = null, DateTime? fechaCreacionArchivo = null,
         string nombreArchivo = null, string tipoArchivo = null)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -482,6 +495,7 @@ public static class BD
             var parameters = new DynamicParameters();
             parameters.Add("@IdUsuario", idUsuario);
             parameters.Add("@NombreEstudio", nombreEstudio);
+            parameters.Add("@IdModalidad", idModalidad);
             parameters.Add("@Observacion", observacion);
             parameters.Add("@Fecha", fecha);
             parameters.Add("@Capacidad", capacidad);
