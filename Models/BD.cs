@@ -3,6 +3,7 @@ using Microsoft.Data.SqlClient;
 using Dapper;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
 
 
 
@@ -617,52 +618,75 @@ public static class BD
 
     /// <summary>
     /// Busca una organización por nombre; si existe retorna su Id, si no existe crea la dirección (si se proporciona) y la organización, luego retorna el Id
+    /// Usa el stored procedure sp_ObtenerOCrearOrganizacion
     /// </summary>
     public static int ObtenerOCrearOrganizacion(string nombre, int idTipoOrganizacion, string calle = null, string altura = null)
     {
         if (string.IsNullOrWhiteSpace(nombre))
             throw new ArgumentException("El nombre de la organización es requerido");
 
-        // Primero buscar si existe
-        int? idExistente = ObtenerIdOrganizacionPorNombre(nombre);
-        if (idExistente.HasValue)
-            return idExistente.Value;
-
-        // Si no existe, crear la organización
-        int idDireccion = 0;
-        
-        // Si se proporciona calle o altura, crear la dirección
-        if (!string.IsNullOrWhiteSpace(calle) || !string.IsNullOrWhiteSpace(altura))
+        using (SqlConnection db = new SqlConnection(_connectionString))
         {
-            idDireccion = InsertarDireccion(calle ?? string.Empty, altura ?? string.Empty);
-        }
+            var parameters = new DynamicParameters();
+            parameters.Add("@Nombre", nombre.Trim());
+            parameters.Add("@IdTipoOrganizacion", idTipoOrganizacion);
+            parameters.Add("@Calle", calle);
+            parameters.Add("@Altura", altura);
 
-        // Crear la organización
-        int idOrganizacion = InsertarOrganizacion(nombre, idTipoOrganizacion, idDireccion);
-        return idOrganizacion;
+            // El SP devuelve el ID de la organización en un SELECT
+            int idOrganizacion = db.QuerySingle<int>("sp_ObtenerOCrearOrganizacion", parameters, commandType: CommandType.StoredProcedure);
+            return idOrganizacion;
+        }
     }
 
     /// <summary>
-    /// Inserta un nuevo encuentro en la BD y retorna el Id generado
+    /// Inserta un nuevo encuentro en la BD usando el SP sp_InsertarEncuentro y retorna el Id generado
     /// </summary>
     public static int InsertarEncuentro(Encuentro encuentro)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
-            string sql = @"INSERT INTO Encuentros (IdUsuario, IdOrganizacion, NombreMedico, ApellidoMedico, FechaInicio, FechaFin, EstadoMotivo)
-                           VALUES (@IdUsuario, @IdOrganizacion, @NombreMedico, @ApellidoMedico, @FechaInicio, @FechaFin, @EstadoMotivo);
-                           SELECT CAST(SCOPE_IDENTITY() AS int);";
-            
-            int idEncuentro = db.ExecuteScalar<int>(sql, new 
-            { 
-                encuentro.IdUsuario,
-                encuentro.IdOrganizacion,
-                NombreMedico = encuentro.NombreMedico ?? string.Empty,
-                ApellidoMedico = encuentro.ApellidoMedico ?? string.Empty,
-                encuentro.FechaInicio,
-                FechaFin = encuentro.FechaFin,
-                EstadoMotivo = encuentro.EstadoMotivo ?? string.Empty
-            });
+            var parameters = new DynamicParameters();
+            parameters.Add("@IdUsuario", encuentro.IdUsuario);
+            parameters.Add("@NombreMedico", encuentro.NombreMedico ?? string.Empty);
+            parameters.Add("@ApellidoMedico", encuentro.ApellidoMedico ?? string.Empty);
+            parameters.Add("@FechaInicio", encuentro.FechaInicio);
+            parameters.Add("@FechaFin", encuentro.FechaFin);
+            parameters.Add("@EstadoMotivo", encuentro.EstadoMotivo ?? string.Empty);
+            parameters.Add("@NombreOrganizacion", string.Empty); // Se pasará desde el controller
+            parameters.Add("@IdTipoOrganizacion", 0); // Se pasará desde el controller
+            parameters.Add("@Calle", (string)null);
+            parameters.Add("@Altura", (string)null);
+
+            // El SP devuelve el ID del encuentro en un SELECT
+            int idEncuentro = db.QuerySingle<int>("sp_InsertarEncuentro", parameters, commandType: CommandType.StoredProcedure);
+            return idEncuentro;
+        }
+    }
+
+    /// <summary>
+    /// Inserta un nuevo encuentro completo (con organización) usando el SP sp_InsertarEncuentro
+    /// </summary>
+    public static int InsertarEncuentroCompleto(int idUsuario, string nombreMedico, string apellidoMedico, 
+        DateTime fechaInicio, DateTime? fechaFin, string estadoMotivo, string nombreOrganizacion, 
+        int idTipoOrganizacion, string calle = null, string altura = null)
+    {
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@IdUsuario", idUsuario);
+            parameters.Add("@NombreMedico", nombreMedico ?? string.Empty);
+            parameters.Add("@ApellidoMedico", apellidoMedico ?? string.Empty);
+            parameters.Add("@FechaInicio", fechaInicio);
+            parameters.Add("@FechaFin", fechaFin);
+            parameters.Add("@EstadoMotivo", estadoMotivo ?? string.Empty);
+            parameters.Add("@NombreOrganizacion", nombreOrganizacion ?? string.Empty);
+            parameters.Add("@IdTipoOrganizacion", idTipoOrganizacion);
+            parameters.Add("@Calle", calle);
+            parameters.Add("@Altura", altura);
+
+            // El SP devuelve el ID del encuentro en un SELECT
+            int idEncuentro = db.QuerySingle<int>("sp_InsertarEncuentro", parameters, commandType: CommandType.StoredProcedure);
             return idEncuentro;
         }
     }

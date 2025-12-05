@@ -770,27 +770,19 @@ public class HomeController : Controller
             if (request.IdTipoOrganizacion <= 0)
                 return Json(new { success = false, message = "Debe seleccionar un tipo de organización" });
 
-            // Obtener o crear la organización
-            int idOrganizacion = BD.ObtenerOCrearOrganizacion(
+            // Insertar el encuentro completo usando el SP (que maneja la organización internamente)
+            int idEncuentro = BD.InsertarEncuentroCompleto(
+                usuario.Id,
+                request.NombreMedico,
+                request.ApellidoMedico,
+                request.FechaInicio,
+                request.FechaFin,
+                request.EstadoMotivo,
                 request.NombreOrganizacion,
                 request.IdTipoOrganizacion,
                 request.Calle,
                 request.Altura
             );
-
-            // Crear el encuentro
-            var encuentro = new Encuentro
-            {
-                IdUsuario = usuario.Id,
-                IdOrganizacion = idOrganizacion,
-                NombreMedico = request.NombreMedico,
-                ApellidoMedico = request.ApellidoMedico,
-                FechaInicio = request.FechaInicio,
-                FechaFin = request.FechaFin,
-                EstadoMotivo = request.EstadoMotivo
-            };
-
-            int idEncuentro = BD.InsertarEncuentro(encuentro);
 
             // Construir la dirección si se proporcionó calle o altura
             string direccion = "";
