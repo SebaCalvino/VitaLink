@@ -132,6 +132,7 @@ function cambiarContrasena() {
     const detalleDescripcion = document.querySelector("[data-detalle-descripcion]");
     const detalleCerrar = document.querySelector(".Detalle-Cerrar");
     const detalleInfo = document.querySelector(".Detalle-Info");
+    const detalleAcciones = document.querySelector(".Detalle-Acciones");
     const mesActual = document.querySelector(".Calendario-MesActual");
     let eventoActualId = null; // Guardar el ID del evento que se está mostrando
 
@@ -259,6 +260,10 @@ function cambiarContrasena() {
                 if (detalleInfo) {
                     detalleInfo.style.display = "none";
                 }
+                // Ocultar la sección de acciones (botón eliminar) cuando no hay eventos
+                if (detalleAcciones) {
+                    detalleAcciones.style.display = "none";
+                }
             }
             return;
         }
@@ -272,6 +277,11 @@ function cambiarContrasena() {
         // Mostrar la sección de información cuando hay eventos
         if (detalleInfo) {
             detalleInfo.style.display = "flex";
+        }
+        
+        // Mostrar la sección de acciones (botón eliminar) cuando hay eventos
+        if (detalleAcciones) {
+            detalleAcciones.style.display = "flex";
         }
         
         if (detalleFecha) {
