@@ -3,6 +3,83 @@
 
 
 // Write your JavaScript code.
+
+// Menú hamburguesa para móvil
+document.addEventListener('DOMContentLoaded', function() {
+    const navbar = document.querySelector('.navbar');
+    const navLinks = document.querySelector('.navbar ul');
+    
+    if (navbar && navLinks) {
+        // Solo aplicar en móvil
+        function initMobileMenu() {
+            if (window.innerWidth <= 768) {
+                // Verificar si ya existe el botón hamburguesa
+                let hamburger = navbar.querySelector('button[aria-label="Menú"]');
+                
+                if (!hamburger) {
+                    // Crear botón hamburguesa
+                    hamburger = document.createElement('button');
+                    hamburger.innerHTML = '☰';
+                    hamburger.style.cssText = 'font-size: 24px; color: white; background: none; border: none; cursor: pointer; padding: 0; order: 1;';
+                    hamburger.setAttribute('aria-label', 'Menú');
+                    
+                    // Insertar al inicio del navbar
+                    navbar.insertBefore(hamburger, navbar.firstChild);
+                    
+                    // Toggle menú al hacer clic
+                    hamburger.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        navLinks.classList.toggle('active');
+                    });
+                }
+                
+                // Crear contenedor de iconos si no existe
+                let iconsContainer = navbar.querySelector('.navbar-icons');
+                if (!iconsContainer) {
+                    iconsContainer = document.createElement('div');
+                    iconsContainer.className = 'navbar-icons';
+                    
+                    // Crear iconos de notificaciones y perfil
+                    const bellIcon = document.createElement('a');
+                    bellIcon.href = '/Home/Home';
+                    bellIcon.innerHTML = '🔔';
+                    bellIcon.setAttribute('aria-label', 'Notificaciones');
+                    
+                    const userIcon = document.createElement('a');
+                    userIcon.href = '/Home/Perfil';
+                    userIcon.innerHTML = '👤';
+                    userIcon.setAttribute('aria-label', 'Perfil');
+                    
+                    iconsContainer.appendChild(bellIcon);
+                    iconsContainer.appendChild(userIcon);
+                    
+                    // Agregar al final del navbar
+                    navbar.appendChild(iconsContainer);
+                }
+            } else {
+                // En desktop, remover elementos móviles
+                const hamburger = navbar.querySelector('button[aria-label="Menú"]');
+                const iconsContainer = navbar.querySelector('.navbar-icons');
+                if (hamburger) hamburger.remove();
+                if (iconsContainer) iconsContainer.remove();
+                navLinks.classList.remove('active');
+            }
+        }
+        
+        // Inicializar al cargar
+        initMobileMenu();
+        
+        // Reinicializar al cambiar tamaño de ventana
+        window.addEventListener('resize', initMobileMenu);
+        
+        // Cerrar menú al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768 && navLinks && !navbar.contains(e.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+    }
+});
 function cambiarContrasena() {
     const actual = document.getElementById("contrasenaActual").value.trim();
     const nueva = document.getElementById("contrasenaNueva").value.trim();

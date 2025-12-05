@@ -3549,49 +3549,106 @@ body:has(.Historial-Medico) {
         box-sizing: border-box;
     }
     
-    /* ===== NAVBAR ===== */
+    /* ===== HEADER Y NAVBAR MÓVIL ===== */
     body > header {
         width: 100%;
-        overflow: hidden;
+        overflow: visible;
+        background: #4A9B8C;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     
     .navbar {
-        flex-direction: row;
-        flex-wrap: wrap;
-        padding: 12px 10px;
-        gap: 8px;
-        justify-content: center;
+        position: relative;
+        padding: 12px 16px;
+        display: flex;
+        justify-content: space-between;
         align-items: center;
+        flex-wrap: nowrap;
     }
     
-    .navbar div {
-        width: 50px;
-        margin-left: 0;
+    /* Botón hamburguesa creado por JS */
+    .navbar button[aria-label="Menú"] {
+        order: 1;
         flex-shrink: 0;
     }
     
-    .navbar div img {
-        width: 100%;
+    .navbar .logo {
+        order: 2;
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        margin: 0;
+    }
+    
+    .navbar .logo img {
+        height: 32px;
+        width: auto;
+    }
+    
+    /* Contenedor para iconos (se agregará con JS) */
+    .navbar-icons {
+        order: 3;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-shrink: 0;
+    }
+    
+    .navbar-icons a {
+        color: white;
+        font-size: 20px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
     }
     
     .navbar ul {
-        width: calc(100% - 60px);
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #4A9B8C;
+        flex-direction: column;
+        padding: 12px 0;
+        margin: 0;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        z-index: 1000;
+    }
+    
+    .navbar ul.active {
         display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        gap: 6px 12px;
-        margin-right: 0;
-        padding: 0;
     }
     
     .navbar ul li {
         list-style: none;
+        width: 100%;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .navbar ul li:last-child {
+        border-bottom: none;
     }
     
     .navbar ul li a {
-        font-size: 13px;
-        white-space: nowrap;
+        display: block;
+        padding: 12px 20px;
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+        text-decoration: none;
+        width: 100%;
+    }
+    
+    .navbar ul li a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
     }
     
     /* ===== MEDICAMENTOS ===== */
@@ -4157,53 +4214,409 @@ body:has(.Historial-Medico) {
         padding: 2px 4px;
     }
     
-    .medicamentos-main > section:first-of-type h1 {
-        font-size: 20px;
-    }
-    
-    .medicamento-info h2 {
-        font-size: 18px;
-    }
-    
-    .medicamento-detalles p {
-        font-size: 14px;
+    /* ===== LOGIN - CARD CENTRADA Y MEJORADA ===== */
+    .main-LogIn {
+        min-height: 100vh;
+        padding: 20px 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .section-LogIn {
-        padding: 1.5rem 1rem;
+        width: 100%;
+        max-width: 400px;
+        padding: 2rem 1.5rem 2.5rem;
+        background-color: rgba(25, 136, 115, 0.85);
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
     
     .login-title {
-        font-size: 1.3rem;
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .login-form input,
+    .login-form button {
+        width: 100%;
+        padding: 1rem 1.2rem;
+        font-size: 1rem;
+        border-radius: 25px;
+    }
+    
+    .registro {
+        font-size: 0.9rem;
+        margin-top: 1rem;
+    }
+    
+    /* ===== AGREGAR MANUALMENTE - CARD VERDE CLARO ===== */
+    .agregar-main {
+        padding: 20px 15px;
+        min-height: 100vh;
+    }
+    
+    .agregar-header {
+        padding-left: 0;
+        margin-bottom: 20px;
     }
     
     .agregar-header h1 {
-        font-size: 18px;
+        font-size: 20px;
+    }
+    
+    .btn-volver {
+        font-size: 24px;
     }
     
     .agregar-card {
-        padding: 20px 15px;
+        width: 100%;
+        max-width: 100%;
+        padding: 25px 20px;
+        border-radius: 20px;
+        background: #9adcca;
     }
     
     .select-tipo,
     .agregar-card input,
-    .agregar-card textarea {
-        font-size: 14px;
-        padding: 12px 14px;
+    .agregar-card textarea,
+    .agregar-card select {
+        width: 100%;
+        padding: 14px 16px;
+        font-size: 16px;
+        border-radius: 12px;
+        border: none;
+        background: white;
+        margin-bottom: 12px;
     }
     
-    .Calendario-Dias > * {
-        min-height: 38px;
-        font-size: 0.7rem;
+    .btn-agregar-form {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 25px;
+        background: #4A9B8C;
+        color: white;
+        border: none;
+        margin-top: 10px;
+    }
+    
+    /* ===== PERFIL - MEJORADO ===== */
+    .Perfil-App {
+        padding: 15px 12px;
     }
     
     .Perfil-Foto {
-        padding: 30px 15px;
+        padding: 30px 20px;
+        border-radius: 20px;
+        margin-bottom: 15px;
     }
     
     .perfil-icon {
-        width: 100px;
-        height: 100px;
+        width: 120px;
+        height: 120px;
+    }
+    
+    .btn-editar-perfil {
+        padding: 12px 30px;
+        font-size: 16px;
+        border-radius: 25px;
+    }
+    
+    .Perfil-InfoPrincipal {
+        padding: 20px 15px;
+        margin-bottom: 15px;
+    }
+    
+    .Perfil-InfoPrincipal h2 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .Perfil-InfoPrincipal h3 {
+        font-size: 18px;
+        margin-bottom: 12px;
+    }
+    
+    .info-tag {
+        padding: 10px 20px;
+        font-size: 15px;
+        border-radius: 20px;
+    }
+    
+    .Perfil-EnfermedadesRelevantes {
+        padding: 20px 15px;
+        border-radius: 20px;
+    }
+    
+    .Perfil-EnfermedadesRelevantes h2 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .enfermedad-nombre {
+        font-size: 16px;
+    }
+    
+    .enfermedad-fecha {
+        font-size: 14px;
+    }
+    
+    .Perfil-CerrarSesion {
+        margin-top: 25px;
+        padding: 15px 0;
+    }
+    
+    .btn-cerrar-sesion {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 16px;
+        border-radius: 25px;
+    }
+    
+    /* ===== HISTORIAL MÉDICO - CARDS VERTICALES ===== */
+    .Historial-Medico {
+        padding: 15px 12px;
+    }
+    
+    .Historial-Header h2 {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+    
+    .Historial-Seccion {
+        margin-bottom: 20px;
+        padding: 18px 15px;
+        border-radius: 18px;
+    }
+    
+    .Historial-Seccion h3 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .Historial-Item {
+        padding: 15px;
+        border-radius: 15px;
+        margin-bottom: 12px;
+    }
+    
+    .Historial-Item-Texto {
+        font-size: 15px;
+    }
+    
+    .Historial-Item-Fecha {
+        font-size: 13px;
+    }
+    
+    .btn-vermas {
+        padding: 8px 16px;
+        font-size: 14px;
+        border-radius: 20px;
+    }
+    
+    .botones-agregar {
+        padding: 20px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .btn-agregar-manual,
+    .btn-agregar-auto {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 16px;
+        border-radius: 25px;
+    }
+    
+    /* ===== MEDICAMENTOS - MEJORADO (consolidado) ===== */
+    .medicamentos-main {
+        padding: 15px 12px;
+    }
+    
+    .medicamentos-main > section:first-of-type h1 {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+    
+    .medicamento-card {
+        padding: 18px;
+        border-radius: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .medicamento-info h2 {
+        font-size: 18px;
+        margin-bottom: 12px;
+    }
+    
+    .medicamento-detalles p {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+    
+    .btn-tome {
+        padding: 10px 20px;
+        font-size: 14px;
+        border-radius: 20px;
+    }
+    
+    .medicamentos-acciones-bottom {
+        padding: 20px 0;
+    }
+    
+    .btn-agregar {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 16px;
+        border-radius: 25px;
+    }
+    
+    /* ===== HOME - MEJORADO ===== */
+    .Inicio-App {
+        padding: 15px 12px;
+    }
+    
+    .Usuario-Card {
+        padding: 20px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .Usuario-Header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    
+    .Usuario-Foto {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 12px;
+    }
+    
+    .Usuario-Info h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    
+    .btn-principal {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 16px;
+        border-radius: 25px;
+    }
+    
+    .Notificaciones {
+        margin-bottom: 20px;
+    }
+    
+    .Notificacion {
+        padding: 15px;
+        border-radius: 15px;
+        margin-bottom: 12px;
+    }
+    
+    .Accesos {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .Acceso-Boton {
+        padding: 18px;
+        border-radius: 18px;
+    }
+    
+    .Acceso-Boton h3 {
+        font-size: 18px;
+    }
+    
+    /* ===== CALENDARIO - MEJORADO ===== */
+    .Calendario-App {
+        padding: 15px 12px;
+    }
+    
+    .Calendario-Header h1 {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+    
+    .Calendario-Mes {
+        margin-bottom: 20px;
+    }
+    
+    .Calendario-Dias {
+        grid-template-columns: repeat(7, 1fr);
+        gap: 6px;
+    }
+    
+    .Calendario-Dias > * {
+        padding: 10px 4px;
+        font-size: 14px;
+        border-radius: 8px;
+        min-height: 38px;
+    }
+    
+    .btn-agregar-turno {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 16px;
+        border-radius: 25px;
+        margin-top: 20px;
+    }
+    
+    /* ===== MODALES - MEJORADOS ===== */
+    .modal-overlay {
+        padding: 20px 15px;
+    }
+    
+    .modal-content {
+        max-width: 100%;
+        padding: 20px;
+        border-radius: 20px;
+    }
+    
+    .modal-content header h2 {
+        font-size: 20px;
+    }
+    
+    .modal-content .campo-grupo {
+        margin-bottom: 15px;
+    }
+    
+    .modal-content input,
+    .modal-content textarea,
+    .modal-content select {
+        padding: 12px 14px;
+        font-size: 16px;
+        border-radius: 12px;
+    }
+    
+    .btn-guardar,
+    .btn-cancelar {
+        padding: 12px 20px;
+        font-size: 16px;
+        border-radius: 20px;
+    }
+    
+    /* ===== PANTALLAS EXTRA PEQUEÑAS ===== */
+    @media (max-width: 480px) {
+        .navbar {
+            padding: 10px 8px;
+        }
+        
+        .navbar div {
+            width: 40px;
+        }
+        
+        .navbar ul li a {
+            font-size: 14px;
+            padding: 10px 16px;
+        }
     }
 }
 
