@@ -446,7 +446,7 @@ public static class BD
     /// Inserta una vacunación manual usando el SP sp_InsertVacunacionManual
     /// </summary>
     public static int InsertarVacunacionManual(int idUsuario, string dosis, string nombreVacuna,
-        string datosInteres, DateTime fechaAplicacion, string nombreOrganizacion)
+        string datosInteres, DateTime fechaAplicacion, string nombreOrganizacion, int idTipoOrganizacion)
     {
         using (SqlConnection db = new SqlConnection(_connectionString))
         {
@@ -457,11 +457,16 @@ public static class BD
             parameters.Add("@DatosInteres", datosInteres);
             parameters.Add("@FechaAplicacion", fechaAplicacion);
             parameters.Add("@NombreOrganizacion", nombreOrganizacion);
-            parameters.Add("@IdVacunaPaciente", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
+            parameters.Add("@IdTipoOrganizacion", idTipoOrganizacion);
 
-            db.Execute("sp_InsertVacunacionManual", parameters, commandType: System.Data.CommandType.StoredProcedure);
+            // El SP devuelve el ID de la vacunación en un SELECT
+            int idVacunaPaciente = db.QuerySingle<int>(
+                "sp_InsertVacunacionManual", 
+                parameters, 
+                commandType: System.Data.CommandType.StoredProcedure
+            );
 
-            return parameters.Get<int>("@IdVacunaPaciente");
+            return idVacunaPaciente;
         }
     }
 
@@ -483,11 +488,15 @@ public static class BD
             parameters.Add("@FechaCreacionArchivo", fechaCreacionArchivo);
             parameters.Add("@NombreArchivo", nombreArchivo);
             parameters.Add("@TipoArchivo", tipoArchivo);
-            parameters.Add("@IdEstudio", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
 
-            db.Execute("sp_InsertEstudioManual", parameters, commandType: System.Data.CommandType.StoredProcedure);
+            // El SP devuelve el ID del estudio en un SELECT
+            int idEstudio = db.QuerySingle<int>(
+                "sp_InsertEstudioManual", 
+                parameters, 
+                commandType: System.Data.CommandType.StoredProcedure
+            );
 
-            return parameters.Get<int>("@IdEstudio");
+            return idEstudio;
         }
     }
 
@@ -504,32 +513,15 @@ public static class BD
             parameters.Add("@NombreEnfermedad", nombreEnfermedad);
             parameters.Add("@Descripcion", descripcion);
             parameters.Add("@Fecha", fecha);
-            parameters.Add("@IdDiagnostico", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
 
-            db.Execute("sp_InsertEnfermedadManual", parameters, commandType: System.Data.CommandType.StoredProcedure);
+            // El SP devuelve el ID del diagnóstico en un SELECT
+            int idDiagnostico = db.QuerySingle<int>(
+                "sp_InsertEnfermedadManual", 
+                parameters, 
+                commandType: System.Data.CommandType.StoredProcedure
+            );
 
-            return parameters.Get<int>("@IdDiagnostico");
-        }
-    }
-
-    /// <summary>
-    /// Inserta una consulta manual usando el SP sp_InsertConsultaManual
-    /// </summary>
-    public static int InsertarConsultaManual(int idUsuario, string motivo,
-        string observaciones, DateTime fecha)
-    {
-        using (SqlConnection db = new SqlConnection(_connectionString))
-        {
-            var parameters = new DynamicParameters();
-            parameters.Add("@IdUsuario", idUsuario);
-            parameters.Add("@Motivo", motivo);
-            parameters.Add("@Observaciones", observaciones);
-            parameters.Add("@Fecha", fecha);
-            parameters.Add("@IdConsulta", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
-
-            db.Execute("sp_InsertConsultaManual", parameters, commandType: System.Data.CommandType.StoredProcedure);
-
-            return parameters.Get<int>("@IdConsulta");
+            return idDiagnostico;
         }
     }
 

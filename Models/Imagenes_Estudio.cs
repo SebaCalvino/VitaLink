@@ -5,5 +5,5 @@ public class Imagenes_Estudio{
     public string Region {get;set;}
     public DateTime Fecha {get;set;}
     public string Informe_Texto {get;set;}
-    public int IdArchivo {get;set;}
+    public int? IdArchivo {get;set;}
 }

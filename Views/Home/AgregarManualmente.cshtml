@@ -23,7 +23,6 @@
                 <option value="estudio">Estudio</option>
                 <option value="enfermedad">Enfermedad</option>
                 <option value="antecedente">Antecedente</option>
-                <option value="consulta">Consulta</option>
             </select>
         </div>
 
@@ -39,6 +38,23 @@
 
             <div class="campo-grupo">
                 <input type="text" name="nombreOrganizacion" placeholder="Nombre de la organización" required>
+            </div>
+
+            <div class="campo-grupo">
+                <label for="tipo-organizacion-vacuna">Tipo de Organización *</label>
+                <select id="tipo-organizacion-vacuna" name="idTipoOrganizacion" required>
+                    <option value="">Seleccione un tipo...</option>
+                    @{
+                        var tiposOrganizacion = ViewBag.TiposOrganizacion as List<Tipo_Organizacion>;
+                    }
+                    @if (tiposOrganizacion != null && tiposOrganizacion.Count > 0)
+                    {
+                        foreach (var tipo in tiposOrganizacion)
+                        {
+                            <option value="@tipo.Id">@tipo.TipoOrganizacion</option>
+                        }
+                    }
+                </select>
             </div>
 
             <div class="campo-grupo">
@@ -127,27 +143,6 @@
 
         </form>
 
-        <!-- ================= FORMULARIO CONSULTA ================= -->
-        <form id="formConsulta" class="formulario-manual oculto">
-
-            <div class="campo-grupo">
-                <input type="text" name="motivo" placeholder="Motivo de la consulta" required>
-            </div>
-
-            <div class="campo-grupo">
-                <textarea name="observaciones" rows="3" placeholder="Observaciones"></textarea>
-            </div>
-
-            <div class="campo-grupo">
-                <input type="date" name="fecha" required>
-            </div>
-
-            <button type="submit" class="btn-agregar-form">
-                Agregar
-            </button>
-
-        </form>
-
     </section>
 
 </main>
@@ -200,6 +195,7 @@ document.getElementById('formVacunacion').addEventListener('submit', async funct
     const data = {
         dosis: form.querySelector('[name="dosis"]').value,
         nombreOrganizacion: form.querySelector('[name="nombreOrganizacion"]').value,
+        idTipoOrganizacion: parseInt(form.querySelector('[name="idTipoOrganizacion"]').value),
         nombreVacuna: form.querySelector('[name="nombreVacuna"]').value,
         datosInteres: form.querySelector('[name="datosInteres"]').value,
         fechaAplicacion: form.querySelector('[name="fechaAplicacion"]').value
@@ -294,34 +290,6 @@ document.getElementById('formAntecedente').addEventListener('submit', async func
     mostrarMensaje('Funcionalidad de antecedentes próximamente disponible', false);
 });
 
-// ==================== SUBMIT CONSULTA ====================
-document.getElementById('formConsulta').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const form = e.target;
-    const data = {
-        motivo: form.querySelector('[name="motivo"]').value,
-        observaciones: form.querySelector('[name="observaciones"]').value,
-        fecha: form.querySelector('[name="fecha"]').value
-    };
-
-    try {
-        const response = await fetch('/Home/InsertarConsulta', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-        
-        const result = await response.json();
-        mostrarMensaje(result.message, result.success);
-        
-        if (result.success) {
-            limpiarFormulario(form);
-        }
-    } catch (error) {
-        mostrarMensaje('Error de conexión', false);
-    }
-});
 </script>
 
 <style>

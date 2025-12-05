@@ -489,6 +489,7 @@ public class HomeController : Controller
             int idUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
             if (idUsuario == 0) return RedirectToAction("LogIn");
 
+            ViewBag.TiposOrganizacion = BD.ObtenerTiposOrganizacion();
             return View("AgregarManualmente");
         }
 
@@ -637,13 +638,17 @@ public class HomeController : Controller
             if (string.IsNullOrWhiteSpace(request.NombreOrganizacion))
                 return Json(new { success = false, message = "El nombre de la organización es obligatorio" });
 
+            if (request.IdTipoOrganizacion <= 0)
+                return Json(new { success = false, message = "Debe seleccionar un tipo de organización" });
+
             int idVacunaPaciente = BD.InsertarVacunacionManual(
                 usuario.Id,
                 request.Dosis,
                 request.NombreVacuna,
                 request.DatosInteres,
                 request.FechaAplicacion,
-                request.NombreOrganizacion
+                request.NombreOrganizacion,
+                request.IdTipoOrganizacion
             );
 
             return Json(new { success = true, message = "Vacunación agregada correctamente", id = idVacunaPaciente });
@@ -682,8 +687,8 @@ public class HomeController : Controller
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error al insertar estudio");
-            return Json(new { success = false, message = "Error al agregar el estudio" });
+            _logger.LogError(ex, "Error al insertar estudio: {Message}", ex.Message);
+            return Json(new { success = false, message = $"Error al agregar el estudio: {ex.Message}" });
         }
     }
 
@@ -712,34 +717,6 @@ public class HomeController : Controller
         {
             _logger.LogError(ex, "Error al insertar enfermedad");
             return Json(new { success = false, message = "Error al agregar la enfermedad" });
-        }
-    }
-
-    [HttpPost]
-    public IActionResult InsertarConsulta([FromBody] ConsultaRequest request)
-    {
-        Usuario usuario = ObtenerUsuario();
-        if (usuario == null)
-            return Json(new { success = false, message = "No hay sesión activa" });
-
-        try
-        {
-            if (string.IsNullOrWhiteSpace(request.Motivo))
-                return Json(new { success = false, message = "El motivo de la consulta es obligatorio" });
-
-            int idConsulta = BD.InsertarConsultaManual(
-                usuario.Id,
-                request.Motivo,
-                request.Observaciones,
-                request.Fecha
-            );
-
-            return Json(new { success = true, message = "Consulta agregada correctamente", id = idConsulta });
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error al insertar consulta");
-            return Json(new { success = false, message = "Error al agregar la consulta" });
         }
     }
 
@@ -850,6 +827,7 @@ public class HomeController : Controller
         public string DatosInteres { get; set; }
         public DateTime FechaAplicacion { get; set; }
         public string NombreOrganizacion { get; set; }
+        public int IdTipoOrganizacion { get; set; }
     }
 
     public class EstudioRequest
@@ -867,13 +845,6 @@ public class HomeController : Controller
     {
         public string NombreEnfermedad { get; set; }
         public string Descripcion { get; set; }
-        public DateTime Fecha { get; set; }
-    }
-
-    public class ConsultaRequest
-    {
-        public string Motivo { get; set; }
-        public string Observaciones { get; set; }
         public DateTime Fecha { get; set; }
     }
 

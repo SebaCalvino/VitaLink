@@ -716,9 +716,6 @@ function cambiarFormulario() {
     if (valor === "antecedente") {
         document.getElementById("formAntecedente").classList.remove("oculto");
     }
-    if (valor === "consulta") {
-        document.getElementById("formConsulta").classList.remove("oculto");
-    }
 }
 
 function guardarMedicamento() {
