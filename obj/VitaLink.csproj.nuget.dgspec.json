@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\machi\\VitaLink\\VitaLink.csproj": {}
+    "C:\\Users\\Adriana\\Downloads\\VitaLink\\VitaLink.csproj": {}
   },
   "projects": {
-    "C:\\Users\\machi\\VitaLink\\VitaLink.csproj": {
+    "C:\\Users\\Adriana\\Downloads\\VitaLink\\VitaLink.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\machi\\VitaLink\\VitaLink.csproj",
+        "projectUniqueName": "C:\\Users\\Adriana\\Downloads\\VitaLink\\VitaLink.csproj",
         "projectName": "VitaLink",
-        "projectPath": "C:\\Users\\machi\\VitaLink\\VitaLink.csproj",
-        "packagesPath": "C:\\Users\\machi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\machi\\VitaLink\\obj\\",
+        "projectPath": "C:\\Users\\Adriana\\Downloads\\VitaLink\\VitaLink.csproj",
+        "packagesPath": "C:\\Users\\Adriana\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Adriana\\Downloads\\VitaLink\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\machi\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Adriana\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -79,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.409/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.416/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

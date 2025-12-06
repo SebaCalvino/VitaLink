@@ -150,3 +150,21 @@ VitaLink aspira a integrarse con hospitales, clínicas y sistemas de salud públ
   <sub>💙 Desarrollado con empatía, tecnología y propósito.</sub><br>
   <sub><strong>VitaLink</strong> — Conectando tu salud con tu vida.</sub>
 </p>
+
+
+Pasos para ejecutar:
+
+1. Abrir la el proyecto
+2. Abrir la base de datos
+3. Modificar en el model Bd.cs el atributo _connection y en donde dice el nombre de la base de datos y el nombre del programa sql cambiar y poner la conexión de nuestra pc que se encuentra en la base de datos(el primer cartel que salta). Copiar esa conexión y pegarla en elapartado nombrado enteriormente.
+Ejemplo:     private static string _connectionString = @"Server=MSI\SQLEXPRESS03;Database=BDVitalink;Integrated Security=True;TrustServerCertificate=True;";
+Cambiarlo y poner(el cambio está escrito en mayúscula):
+    private static string _connectionString = @"Server=LOCALHOST;Database=BDVitalink;Integrated Security=True;TrustServerCertificate=True;";
+4. Ejecutar el proyecto con dotnet run/dotnet watch run
+
+Enlaces de las herramientas que utilizamos:
+
+- Figma: https://www.figma.com/design/Xw0xlx4wg92k6lbo788Q2x/Vitalink?node-id=125-119&t=YAsQObIHJJpEPYP8-0.
+- Trello: https://trello.com/b/L2UByGBv/vitalink.
+- Miro: https://miro.com/app/board/uXjVIpazVfc=/.
+- Github(repo): https://github.com/SebaCalvino/VitaLink.
